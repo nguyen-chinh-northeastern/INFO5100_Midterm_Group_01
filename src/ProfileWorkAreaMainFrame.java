@@ -5,6 +5,7 @@
  */
 package Business;
 
+import Business.Faculty.FacultyProfile;
 import Business.Profiles.EmployeeProfile;
 import Business.Profiles.Profile;
 import Business.Profiles.StudentProfile;
@@ -33,7 +34,9 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
         initComponents();
         business = ConfigureABusiness.initialize();
         
-
+        // Set the main window size and center it on the screen
+        setSize(850, 500);
+        setLocationRelativeTo(null);
     }
 
     public void insert(JPanel jpanel) {
@@ -166,14 +169,13 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
 
         }
 
- /*      if (profile instanceof FacultyProfile) {
+        if (profile instanceof FacultyProfile) {
             facultyworkarea = new FacultyWorkAreaJPanel(business, CardSequencePanel);
             CardSequencePanel.removeAll();
             CardSequencePanel.add("faculty", facultyworkarea);
             ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
         }
-*/
 
     }//GEN-LAST:event_LoginButtonActionPerformed
 
