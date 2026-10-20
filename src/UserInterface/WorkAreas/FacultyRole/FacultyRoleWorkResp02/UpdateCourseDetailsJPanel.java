@@ -38,7 +38,7 @@ public class UpdateCourseDetailsJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         titleLabel = new javax.swing.JLabel();
-        lblId = new javax.swing.JLabel();
+        lblCourseNumber = new javax.swing.JLabel();
         txtCourseNumber = new javax.swing.JTextField();
         lblCourseName = new javax.swing.JLabel();
         txtCourseName = new javax.swing.JTextField();
@@ -59,10 +59,10 @@ public class UpdateCourseDetailsJPanel extends javax.swing.JPanel {
         add(titleLabel);
         titleLabel.setBounds(21, 20, 550, 28);
 
-        lblId.setLabelFor(txtCourseNumber);
-        lblId.setText("Course Number");
-        add(lblId);
-        lblId.setBounds(150, 80, 90, 16);
+        lblCourseNumber.setLabelFor(txtCourseNumber);
+        lblCourseNumber.setText("Course Number");
+        add(lblCourseNumber);
+        lblCourseNumber.setBounds(150, 80, 90, 16);
         add(txtCourseNumber);
         txtCourseNumber.setBounds(250, 75, 220, 26);
 
@@ -237,8 +237,8 @@ public class UpdateCourseDetailsJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel lblCourseName;
+    private javax.swing.JLabel lblCourseNumber;
     private javax.swing.JLabel lblCredits;
-    private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblPrice;
     private javax.swing.JLabel lblTotalPrice;
     private javax.swing.JLabel titleLabel;
