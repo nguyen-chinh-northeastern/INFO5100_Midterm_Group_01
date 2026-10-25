@@ -11,7 +11,10 @@
 package UserInterface.WorkAreas.FacultyRole;
 
 import Business.Business;
+import Business.Faculty.FacultyProfile;
+import UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp.AdministerPersonJPanel;
 import UserInterface.WorkAreas.FacultyRole.FacultyRoleWorkResp02.ManageCoursesJPanel;
+import UserInterface.WorkAreas.FacultyRole.ManageProfileWorkResp.ManageProfileJPanel;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 
@@ -21,16 +24,18 @@ import javax.swing.JPanel;
  */
 public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
 
-    javax.swing.JPanel CardSequencePanel;
-    Business business;
+    private JPanel CardSequencePanel;
+    private Business business;
+    private FacultyProfile profile;
 
     /**
      * Creates new form UnitRiskWorkArea
      */
 
-    public FacultyWorkAreaJPanel(Business b, JPanel clp) {
+    public FacultyWorkAreaJPanel(Business b, FacultyProfile profile, JPanel clp) {
 
         business = b;
+        this.profile = profile;
         this.CardSequencePanel = clp;
         initComponents();
 
@@ -164,13 +169,11 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnManageStudentProfilesActionPerformed
 
     private void btnMyProfileIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMyProfileIdentifyEventsActionPerformed
-        // TODO add your handling code here:
-        CardSequencePanel.removeAll();
-        //    IdentifyEventTypes iet= new IdentifyEventTypes(businessunit, CardSequencePanel);
+        
+        ManageProfileJPanel panel = new ManageProfileJPanel(business, profile, CardSequencePanel);
 
-        //    CardSequencePanel.add("IdentifyEventTypes", iet);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-        //((java.awt.CardLayout)CardSequencePanel.getLayout()).show(CardSequencePanel, "IdentifyEventTypes");
+        CardSequencePanel.add("My Profile (Faculty)", panel);
+        ((CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 }//GEN-LAST:event_btnMyProfileIdentifyEventsActionPerformed
 
     private void btnPerformanceReportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerformanceReportsActionPerformed
