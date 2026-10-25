@@ -25,6 +25,7 @@ import Business.UserAccounts.UserAccountDirectory;
 /**
  *
  * @author kal bugrara
+ * @author Chinh Nguyen (update)
  */
 class ConfigureABusiness {
 
@@ -35,14 +36,40 @@ class ConfigureABusiness {
         PersonDirectory persondirectory = business.getPersonDirectory();
         // person representing sales organization        
         Person person001 = persondirectory.newPerson("John Smith");
+        initializePerson(person001, "110000001", "john.smith@northeastern.edu",
+                "617-555-0101", "Administration");
+        
         Person person002 = persondirectory.newPerson("Gina Montana");
+        initializePerson(person002, "110000002", "gina.montana@northeastern.edu",
+                "617-555-0102", "Human Resources");
+        
         Person person003 = persondirectory.newPerson("Adam Rollen");
+        initializePerson(person003, "110000003", "adam.rollen@northeastern.edu",
+                "617-555-0103", "Information Systems");
+        
+        Person person004 = persondirectory.newPerson("Sarah Mitchell");
+        initializePerson(person004, "001000004", "sarah.mitchell@northeastern.edu",
+                "617-555-0104", "Computer Science");
  
         Person person005 = persondirectory.newPerson("Jim Dellon");
+        initializePerson(person005, "001000005", "jim.dellon@northeastern.edu",
+                "617-555-0105", "Finance");
+        
         Person person006 = persondirectory.newPerson("Anna Shnider");
+        initializePerson(person006, "001000006", "anna.shnider@northeastern.edu",
+                "617-555-0106", "Computer Science");
+
         Person person007 = persondirectory.newPerson("Laura Brown");
+        initializePerson(person007, "220000007", "laura.brown@northeastern.edu",
+                "617-555-0107", "Student Services");
+        
         Person person008 = persondirectory.newPerson("Jack While");
+        initializePerson(person008, "220000008", "jack.while@northeastern.edu",
+                "617-555-0108", "Information Systems");
+        
         Person person009 = persondirectory.newPerson("Fidelity"); //we use this as customer
+        initializePerson(person009, "220000009", "contact@fidelity.example",
+                "", "External Organization");
 
         // Create Admins to manage the business
         EmployeeDirectory employeedirectory = business.getEmployeeDirectory();
@@ -67,6 +94,22 @@ class ConfigureABusiness {
         
         return business;
 
+    }
+
+    /**
+     * Initializes the contact and department details of a person.
+     *
+     * @param person the person to initialize
+     * @param nuid the person's NUID
+     * @param email the person's email address
+     * @param phone the person's phone number
+     * @param department the person's department
+     */
+    private static void initializePerson(Person person, String nuid, String email, String phone, String department) {
+        person.setNuid(nuid);
+        person.setEmail(email);
+        person.setPhone(phone);
+        person.setDepartment(department);
     }
 
 }
