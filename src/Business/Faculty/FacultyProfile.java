@@ -13,10 +13,13 @@ import java.util.ArrayList;
 /**
  *
  * @author kal bugrara
+ * @author Chinh Nguyen (update)
  */
 public class FacultyProfile extends Profile {
 
     ArrayList <FacultyAssignment> facultyassignments; 
+    private String academicRank;
+    private String officeLocation;
     
     public FacultyProfile(Person p) {
 
@@ -27,6 +30,22 @@ public class FacultyProfile extends Profile {
     @Override
     public String getRole() {
         return "Faculty";
+    }
+    
+    public String getAcademicRank() {
+        return academicRank;
+    }
+
+    public void setAcademicRank(String academicRank) {
+        this.academicRank = academicRank;
+    }
+
+    public String getOfficeLocation() {
+        return officeLocation;
+    }
+
+    public void setOfficeLocation(String officeLocation) {
+        this.officeLocation = officeLocation;
     }
     
     public  double getProfAverageOverallRating(){

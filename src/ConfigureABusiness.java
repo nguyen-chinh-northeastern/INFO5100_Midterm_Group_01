@@ -80,6 +80,8 @@ class ConfigureABusiness {
         
         FacultyDirectory facultydirectory = business.getFacultyDirectory();
         FacultyProfile facultyprofile0 = facultydirectory.newFacultyProfile(person007);
+        facultyprofile0.setAcademicRank("Associate Teaching Professor");
+        facultyprofile0.setOfficeLocation("Snell Engineering 410");
    
         // Create User accounts that link to specific profiles
         UserAccountDirectory uadirectory = business.getUserAccountDirectory();
