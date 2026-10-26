@@ -7,22 +7,28 @@ package Business.Faculty;
 
 import Business.CourseSchedule.CourseOffer;
 import Business.Persona.Person;
+import Business.Profiles.Profile;
 import java.util.ArrayList;
 
 /**
  *
  * @author kal bugrara
  */
-public class FacultyProfile {
+public class FacultyProfile extends Profile {
 
-    Person person;
     ArrayList <FacultyAssignment> facultyassignments; 
     
     public FacultyProfile(Person p) {
 
-        person = p;
+        super(p);
         facultyassignments = new ArrayList();
     }
+
+    @Override
+    public String getRole() {
+        return "Faculty";
+    }
+    
     public  double getProfAverageOverallRating(){
         
         double sum = 0.0;
@@ -52,6 +58,7 @@ public class FacultyProfile {
     }
 
     public boolean isMatch(String id) {
+        Person person = getPerson();
         if (person.getPersonId().equals(id)) {
             return true;
         }
