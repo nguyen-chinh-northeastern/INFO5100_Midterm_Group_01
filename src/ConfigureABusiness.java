@@ -6,6 +6,8 @@
 */
 package Business;
 
+import Business.CourseCatalog.Course;
+import Business.CourseCatalog.CourseCatalog;
 import Business.Department.Department;
 import Business.Faculty.FacultyDirectory;
 import Business.Faculty.FacultyProfile;
@@ -57,6 +59,11 @@ class ConfigureABusiness {
         UserAccount ua3 = uadirectory.newUserAccount(employeeprofile0, "admin", "****"); /// order products for one of the customers and performed by a sales person
         UserAccount ua4 = uadirectory.newUserAccount(studentprofile0, "adam", "****"); /// order products for one of the customers and performed by a sales person
         UserAccount ua5 = uadirectory.newUserAccount(facultyprofile0, "laura", "****");
+        
+        Department department = business.getDepartment();
+        CourseCatalog courseCatalog = department.getCourseCatalog();
+        Course course1 = courseCatalog.newCourse("Application Engineering & Development", "INFO 5100", 4);
+        Course course2 = courseCatalog.newCourse("User Experience Design & Testing", "CSYE 7280", 4);
         
         return business;
 
