@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author rachel macaulay
+ * @author rmacc
  */
 public class ManageStudentCoursesJPanel extends javax.swing.JPanel {
 

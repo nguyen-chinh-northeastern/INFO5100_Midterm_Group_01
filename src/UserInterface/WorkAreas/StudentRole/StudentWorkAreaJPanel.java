@@ -13,7 +13,6 @@ package UserInterface.WorkAreas.StudentRole;
 import Business.Business;
 import Business.Profiles.StudentProfile;
 import javax.swing.JPanel;
-import UserInterface.WorkAreas.StudentRole.StudentRoleWorkResp.RegistrationJPanel;
 
 /**
  *
@@ -191,16 +190,10 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
         // Update to pass local student variable directly into next sub-panel constructor
+
+
+
         CardSequencePanel.removeAll();
-        
-        RegistrationJPanel registrationPanel = new RegistrationJPanel(business, student, CardSequencePanel);
-        
-        CardSequencePanel.add("RegistrationPanel", registrationPanel);
-        
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-
-
-        
 }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
