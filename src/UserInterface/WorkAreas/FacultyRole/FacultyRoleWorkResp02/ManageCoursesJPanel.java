@@ -152,7 +152,38 @@ public class ManageCoursesJPanel extends javax.swing.JPanel {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
 
-        // TODO
+        Course selectedCourse = getSelectedCourse();
+        if (selectedCourse == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Please select a course from the list to delete.",
+                    "No Course Selected",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        int choice = JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure you want to delete course '" + selectedCourse.getCourseNumber() + "'?",
+            "Confirm Delete",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE);
+
+        if (choice != JOptionPane.YES_OPTION) {
+            return;
+        }
+        
+        // Delete course from CourseCatalog and refresh table display
+        Department department = business.getDepartment();
+        CourseCatalog catalog = department.getCourseCatalog();
+        catalog.getCourseList().remove(selectedCourse);
+
+        refreshTable();
+
+        JOptionPane.showMessageDialog(
+            this,
+            "Course deleted successfully.",
+            "Success",
+            JOptionPane.INFORMATION_MESSAGE);
 
     }//GEN-LAST:event_btnDeleteActionPerformed
 
