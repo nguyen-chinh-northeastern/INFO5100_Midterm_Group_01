@@ -6,6 +6,7 @@
 package Business.Persona;
 
 import Business.CourseSchedule.CourseLoad;
+import Business.CourseSchedule.CourseOffer;
 import Business.CourseSchedule.SeatAssignment;
 import Business.Profiles.StudentProfile;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 /**
  *
  * @author kal bugrara
+ * @author Chinh Nguyen (update)
  */
 public class Transcript {
 
@@ -92,4 +94,25 @@ public class Transcript {
 
     }
 
+    /**
+     * Finds the SeatAssignment for a specific course offer taken by this student.
+     * 
+     * @param co the CourseOffer to look for
+     * @return the SeatAssignment if enrolled, otherwise null
+     */
+    public SeatAssignment findSeatAssignment(CourseOffer co) {
+        if (courseloadlist == null)
+            return null;
+        
+        for (CourseLoad cl : courseloadlist.values()) {
+            ArrayList<SeatAssignment> saList = cl.getSeatAssignments();
+            if (saList != null) {
+                for (SeatAssignment sa : saList) {
+                    if (sa.getCourseOffer() == co)
+                        return sa;
+                }
+            }
+        }
+        return null;
+    }
 }

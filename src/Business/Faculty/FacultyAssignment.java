@@ -10,26 +10,33 @@ import Business.CourseSchedule.CourseOffer;
 /**
  *
  * @author kal bugrara
+ * @author Chinh Nguyen (update)
  */
 public class FacultyAssignment {
-    double tracerating;
-    CourseOffer courseoffer;
-    FacultyProfile facultyprofile;
+    double traceRating;
+    CourseOffer courseOffer;
+    FacultyProfile facultyProfile;
     public FacultyAssignment(FacultyProfile fp, CourseOffer co){
-        courseoffer = co;
-        facultyprofile = fp;
+        courseOffer = co;
+        facultyProfile = fp;
     }
 
-       public double getRating(){
+    public double getRating(){
         
-        return tracerating;
+        return traceRating;
     }
-       public void seProfRating(double r){
+    
+    public void seProfRating(double r){
            
-           tracerating = r;
-       }
+        traceRating = r;
+    }
+    
     public FacultyProfile getFacultyProfile(){
-        return facultyprofile;
+        return facultyProfile;
+    }
+
+    public CourseOffer getCourseOffer() {
+        return courseOffer;
     }
     
 }

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 /**
  *
  * @author kal bugrara
+ * @author Chinh Nguyen (update)
  */
 public class CourseOffer {
 
@@ -38,7 +39,7 @@ public class CourseOffer {
         return course.getCourseNumber();
     }
 
-    public void generatSeats(int n) {
+    public void generateSeats(int n) {
 
         for (int i = 0; i < n; i++) {
 
@@ -83,11 +84,17 @@ public class CourseOffer {
         }
         return sum;
     }
+    
     public Course getSubjectCourse(){
         return course;
     }
+    
     public int getCreditHours(){
         return course.getCredits();
+    }
+
+    public ArrayList<Seat> getSeatList() {
+        return seatlist;
     }
 
 }
