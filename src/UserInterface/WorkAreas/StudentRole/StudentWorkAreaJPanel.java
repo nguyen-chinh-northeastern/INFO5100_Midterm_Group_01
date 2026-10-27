@@ -176,7 +176,7 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
-        // Update to pass local student variable directly into next sub-panel constructor
+
 
 
 }//GEN-LAST:event_jButton9ActionPerformed
@@ -189,18 +189,12 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
-        // Update to pass local student variable directly into next sub-panel constructor
-
-
 
         CardSequencePanel.removeAll();
 }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         // TODO add your handling code here:
-        // Update to pass local student variable directly into next sub-panel constructor
-
-
     }//GEN-LAST:event_jButton12ActionPerformed
 
 
