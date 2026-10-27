@@ -389,7 +389,7 @@ public class RegistrationJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnDropActionPerformed
 
     private void cmbSemesterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSemesterActionPerformed
-        // TODO add your handling code here:
+        refreshTable();
     }//GEN-LAST:event_cmbSemesterActionPerformed
 
     // Auto-populate course name based on number
@@ -475,9 +475,11 @@ public class RegistrationJPanel extends javax.swing.JPanel {
             return;
         }
 
-        ArrayList<SeatAssignment> courseList = student.getCourseList(); //using seat assignment based on structure in existing code as the only means to tie a student to a course
+        String currentSemester = (String) cmbSemester.getSelectedItem();
+        CourseLoad courseLoad = student.getCourseLoadBySemester(currentSemester); //using seat assignment based on structure in existing code as the only means to tie a student to a course
 
-        if(courseList != null){
+        if(courseLoad != null) {
+            ArrayList<SeatAssignment> courseList = courseLoad.getSeatAssignments();
             for (SeatAssignment sa : courseList) {
                 Course course = sa.getAssociatedCourse();
 
