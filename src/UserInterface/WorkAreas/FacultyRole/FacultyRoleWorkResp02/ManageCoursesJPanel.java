@@ -5,6 +5,7 @@ import Business.CourseCatalog.Course;
 import Business.CourseCatalog.CourseCatalog;
 import Business.Department.Department;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -21,6 +22,7 @@ public class ManageCoursesJPanel extends javax.swing.JPanel {
      * Creates new form ManageCoursesJPanel
      */
     public ManageCoursesJPanel(Business bz, JPanel jp) {
+        
         CardSequencePanel = jp;
         this.business = bz;
         initComponents();
@@ -133,7 +135,18 @@ public class ManageCoursesJPanel extends javax.swing.JPanel {
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
 
-        // TODO
+        Course selectedCourse = getSelectedCourse();
+        if (selectedCourse == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Please select a course from the list first.",
+                    "No Course Selected",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        UpdateCourseDetailsJPanel panel = new UpdateCourseDetailsJPanel(business, selectedCourse, CardSequencePanel);
+        CardSequencePanel.add("ViewCourseDetailsJPanel", panel);
+        ((CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
         
     }//GEN-LAST:event_btnNextActionPerformed
 
@@ -167,7 +180,7 @@ public class ManageCoursesJPanel extends javax.swing.JPanel {
      * Clears the existing table rows and repopulates the table with
      * each course's number, name, credits, and price.
      */
-    private void refreshTable() {
+    protected final void refreshTable() {
         
         DefaultTableModel model = (DefaultTableModel) courseTable.getModel();
         model.setRowCount(0);
@@ -184,5 +197,13 @@ public class ManageCoursesJPanel extends javax.swing.JPanel {
             model.addRow(row);
         }
         
+    }
+    
+    private Course getSelectedCourse() {
+        int selectedRow = courseTable.getSelectedRow();
+        if (selectedRow < 0) {
+            return null;
+        }
+        return (Course) courseTable.getValueAt(selectedRow, 0);
     }
 }
