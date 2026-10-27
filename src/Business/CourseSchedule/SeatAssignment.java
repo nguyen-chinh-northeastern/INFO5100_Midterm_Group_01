@@ -10,6 +10,7 @@ import Business.CourseCatalog.Course;
 /**
  *
  * @author kal bugrara
+ * @author Chinh Nguyen (update)
  */
 public class SeatAssignment {
     float grade; //(Letter grade mappings: A=4.0, A-=3.7, B+=3.3, B=3.0, )
@@ -46,7 +47,13 @@ public class SeatAssignment {
     public float GetCourseStudentScore(){
         return getCreditHours()*grade;
     }
-    
-    
+
+    public float getGrade() {
+        return grade;
+    }
+
+    public void setGrade(float grade) {
+        this.grade = grade;
+    }
     
 }

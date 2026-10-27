@@ -8,6 +8,7 @@ package Business.CourseSchedule;
 /**
  *
  * @author kal bugrara
+ * @author Chinh Nguyen (update)
  */
 public class Seat {
     
@@ -32,10 +33,17 @@ public class Seat {
         occupied = true;   
         return seatassignment;
     }
+    
     public CourseOffer getCourseOffer(){
         return courseoffer;
     }
+    
     public int getCourseCredits(){
         return courseoffer.getCreditHours();
     }
+
+    public SeatAssignment getSeatAssignment() {
+        return seatassignment;
+    }
+    
 }
