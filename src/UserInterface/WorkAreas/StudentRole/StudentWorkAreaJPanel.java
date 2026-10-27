@@ -193,7 +193,7 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
         // Update to pass local student variable directly into next sub-panel constructor
         CardSequencePanel.removeAll();
         
-        RegistrationJPanel registrationPanel = new RegistrationJPanel(business, CardSequencePanel);
+        RegistrationJPanel registrationPanel = new RegistrationJPanel(business, student, CardSequencePanel);
         
         CardSequencePanel.add("RegistrationPanel", registrationPanel);
         

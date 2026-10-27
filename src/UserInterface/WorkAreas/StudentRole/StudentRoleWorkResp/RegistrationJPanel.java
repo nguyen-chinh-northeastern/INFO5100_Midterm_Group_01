@@ -6,8 +6,14 @@ package UserInterface.WorkAreas.StudentRole.StudentRoleWorkResp;
 
 import Business.Business;
 import Business.CourseCatalog.Course;
+import Business.CourseSchedule.CourseSchedule;
+import Business.CourseSchedule.CourseOffer;
+import Business.CourseSchedule.SeatAssignment;
 import Business.Department.Department;
 import Business.CourseCatalog.CourseCatalog;
+import Business.CourseSchedule.CourseLoad;
+import Business.Profiles.StudentProfile;
+import UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
 import java.awt.CardLayout;
 import java.awt.Component;
 //import java.awt.List;
@@ -27,11 +33,13 @@ public class RegistrationJPanel extends javax.swing.JPanel {
 
     private JPanel CardSequencePanel;
     private Business business;
+    private StudentProfile student;
     /**
      * Creates new form RegistrationJPanel
      */
-    public RegistrationJPanel(Business business, JPanel CardSequencePanel) {
+    public RegistrationJPanel(Business business, StudentProfile student, JPanel CardSequencePanel) {
         this.business = business;
+        this.student = student;
         this.CardSequencePanel = CardSequencePanel;
         initComponents();
         
@@ -68,7 +76,15 @@ public class RegistrationJPanel extends javax.swing.JPanel {
 
         lblCourseNumber.setText("Course Number");
 
+        txtCourseNumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCourseNumberKeyReleased(evt);
+            }
+        });
+
         lblCourseName.setText("Course Name");
+
+        txtCourseName.setEditable(false);
 
         btnBack.setText("<< Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -143,9 +159,10 @@ public class RegistrationJPanel extends javax.swing.JPanel {
                         .addComponent(courseTable, javax.swing.GroupLayout.PREFERRED_SIZE, 568, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblCourseList, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblSemester, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblCourseList, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(129, 129, 129)
+                        .addComponent(lblSemester, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cmbSemester, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(62, Short.MAX_VALUE))
@@ -169,11 +186,11 @@ public class RegistrationJPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(181, Short.MAX_VALUE)
+                .addContainerGap(193, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSemester)
                     .addComponent(cmbSemester, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBack)
                     .addComponent(btnAdd)
@@ -205,62 +222,192 @@ public class RegistrationJPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
 
+        CardSequencePanel.removeAll();
         
-        refreshManageStudentCoursesJPanel();
-        CardSequencePanel.remove(this);
+        StudentWorkAreaJPanel studentDashboard = new StudentWorkAreaJPanel(business,student, CardSequencePanel);
+        
+        CardSequencePanel.add("studentPortal", studentDashboard);
+        
         ((CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
 
         String number = txtCourseNumber.getText().trim();
-        String name = txtCourseName.getText().trim();
-
-        //!!!
-        // Ensure that CourseNumber and CourseName reference the same course -- okay if one is blank
-        if (number.isEmpty() || name.isEmpty()) {
-            // Add check for if number and name reference the same course
+        
+        // Field validation
+        
+        if(number.isEmpty()){
             JOptionPane.showMessageDialog(this,
-                "Course number and name do not match. Please correct entry.",
-                "Validation Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        //!!!
-        // Duplicate course number Check -- Check if already registered for the course
-        CourseCatalog catalog = business.getDepartment().getCourseCatalog();
-        if (catalog.getCourseByNumber(number) != null) {
-            JOptionPane.showMessageDialog(this,
-                "You are already registered for course number " + number + ".",
-                "Duplicate Course", JOptionPane.WARNING_MESSAGE);
+                    "Enter a Course Number",
+                    "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
-        //!!!
-        // Add course to registration -- update for student
+        // Get course from catalog
+        Department department = business.getDepartment();
+        CourseCatalog catalog = department.getCourseCatalog();
+        Course catalogCourse = catalog.getCourseByNumber(number);
         
-        //Course course = catalog.newCourse(name, number, credits);
-        //course.setPrice(price);
+        if (catalogCourse == null){
+            JOptionPane.showMessageDialog(this,
+                    "Course " + number + "not found in the catalog. Try again.",
+                    "Validation Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+        }
+        
+        
+        // (Duplicate) Registration check
+        ArrayList<SeatAssignment> studentRegisteredCourses = student.getCourseList();
+        if (studentRegisteredCourses != null) {
+            for (SeatAssignment sa : studentRegisteredCourses) {
+                if (sa.getAssociatedCourse() != null && sa.getAssociatedCourse().getCourseNumber().equalsIgnoreCase(number)) {
+                    JOptionPane.showMessageDialog(this,
+                        "You are already registered for " + number + ".",
+                        "Duplicate Course", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+            }
+        }
+        
+        //Schedule by Semester
+        String currentSemester = (String) cmbSemester.getSelectedItem();
+        if (department.getCourseSchedule(currentSemester) == null){
+            department.newCourseSchedule(currentSemester);
+        }
+        
+        CourseSchedule schedule = department.getCourseSchedule(currentSemester);
+        CourseOffer officialOffer = schedule.getCourseOfferByNumber(number);
+        if(officialOffer == null){
+            officialOffer = schedule.newCourseOffer(number);
+            if (officialOffer !=null){
+                officialOffer.generatSeats(20); //generat, not generate
+            }
+        }
+        
+       
+        if (officialOffer == null) {
+            JOptionPane.showMessageDialog(this,
+                "System Error: Failed to initialize course offering entries.",
+                "System Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        //Student courses
+        CourseLoad courseLoad = student.getCourseLoadBySemester(currentSemester);
+        if(courseLoad == null){
+            courseLoad = student.newCourseLoad(currentSemester);
+        }
+        
+        //Registration & Confirmation
+        SeatAssignment sa = officialOffer.assignEmptySeat(courseLoad);
+        if (sa == null) {
+            JOptionPane.showMessageDialog(this,
+                "Registration failed. No available seats remaining in this class.",
+                "Registration Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         JOptionPane.showMessageDialog(this,
-            "Course '" + number + "' registered successfully!", //registration success message
+            "Course '" + number + "' registered successfully for " + currentSemester + "!", 
             "Success", JOptionPane.INFORMATION_MESSAGE);
 
-        //!!!
-        // Refresh the course list so it displays the updated details
-        refreshManageStudentCoursesJPanel(); //update for student
-
-        CardSequencePanel.remove(this);
-        ((CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
+        
+        refreshTable();
+  
     }//GEN-LAST:event_btnAddActionPerformed
 
+    // Drop selected course
     private void btnDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDropActionPerformed
         // TODO add your handling code here:
+
+        Course selectedCourse = getSelectedCourse();
+        
+        //error message if no course is selected
+        if (selectedCourse == null){
+            JOptionPane.showMessageDialog(this,
+                    "Please select a course.",
+                    "No course selected",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // confirm drop
+        int choice = JOptionPane.showConfirmDialog(this,"Are you sure you want to drop course '" + selectedCourse.getCourseNumber() + "'?",
+                "Confirm Drop Course",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+        
+        if(choice != JOptionPane.YES_OPTION){
+            return;
+        }
+        
+        // delete from course list
+        try{
+            String currentSemester = (String) cmbSemester.getSelectedItem();
+            CourseLoad courseLoad = student.getCourseLoadBySemester(currentSemester);
+            
+            if(courseLoad != null){
+                SeatAssignment targetAssignment = null;
+                
+                for (SeatAssignment sa : courseLoad.getSeatAssignments()){
+                    if(sa.getAssociatedCourse() != null && sa.getAssociatedCourse().getCourseNumber().equalsIgnoreCase(selectedCourse.getCourseNumber())){
+                        targetAssignment = sa;
+                        break;
+                    }
+                }
+                
+                if(targetAssignment != null){
+                    
+                    courseLoad.getSeatAssignments().remove(targetAssignment);
+            
+            
+
+            
+                    JOptionPane.showMessageDialog(
+                        this,
+                            "Course '" + selectedCourse.getCourseNumber() + "' dropped successfully.",
+                            "Success",
+                            JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                            "Course note found",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (NullPointerException e){
+                JOptionPane.showMessageDialog(this,
+                        "System Error during drop process.",
+                        "System Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        
+        refreshTable();
+        
+            //CardSequencePanel.removeAll();
+            //StudentWorkAreaJPanel studentDashboard = new StudentWorkAreaJPanel(business, student, CardSequencePanel);
+            //CardSequencePanel.add("studentPortal", studentDashboard);
+            //((CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
     }//GEN-LAST:event_btnDropActionPerformed
 
     private void cmbSemesterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSemesterActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbSemesterActionPerformed
+
+    // Auto-populate course name based on number
+    private void txtCourseNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCourseNumberKeyReleased
+        // TODO add your handling code here:
+        String number = txtCourseNumber.getText().trim();
+        CourseCatalog catalog = business.getDepartment().getCourseCatalog();
+        Course catalogCourse = catalog.getCourseByNumber(number);
+        
+        if(catalogCourse != null){
+            txtCourseName.setText(catalogCourse.getName());
+            
+        }else {
+            txtCourseName.setText(""); // keep field blank if course number not found
+        }
+    }//GEN-LAST:event_txtCourseNumberKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -325,18 +472,36 @@ public class RegistrationJPanel extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) courseTable.getModel();
         model.setRowCount(0);
 
-        Department department = business.getDepartment();
-        CourseCatalog catalog = department.getCourseCatalog();
-        for (Course course : catalog.getCourseList()) {
-            Object[] row = new Object[5];
-            row[0] = course;
-            row[1] = course.getName();
-            row[2] = course.getCredits();
-            row[3] = course.getPrice();
-            row[4] = course.getCoursePrice();
-            model.addRow(row);
+        if(student == null){
+            return;
         }
+
+        ArrayList<SeatAssignment> courseList = student.getCourseList(); //using seat assignment based on structure in existing code as the only means to tie a student to a course
+
+        if(courseList != null){
+            for (SeatAssignment sa : courseList) {
+                Course course = sa.getAssociatedCourse();
+
+                Object[] row = new Object[5];
+                row[0] = course;
+                row[1] = course.getName();
+                row[2] = course.getCredits();
+                row[3] = course.getPrice();
+                row[4] = course.getCoursePrice();
+                model.addRow(row);
+            }
         
     }
-}
+    }
+
+    private Course getSelectedCourse() {
+        int selectedRow = courseTable.getSelectedRow();
+        if (selectedRow < 0){
+            return null;
+        }
+        return (Course) courseTable.getValueAt(selectedRow, 0);
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 

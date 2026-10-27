@@ -8,6 +8,7 @@ import Business.Business;
 import Business.CourseCatalog.Course;
 import Business.CourseCatalog.CourseCatalog;
 import Business.Department.Department;
+import Business.Profiles.StudentProfile;
 import UserInterface.WorkAreas.FacultyRole.FacultyRoleWorkResp02.UpdateCourseDetailsJPanel;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
@@ -23,14 +24,16 @@ public class ManageStudentCoursesJPanel extends javax.swing.JPanel {
 
     private JPanel CardSequencePanel;
     private Business business;
+    private StudentProfile student;
     
     /**
      * Creates new form ManageCoursesJPanel
      */
-    public ManageStudentCoursesJPanel(Business bz, JPanel jp) {
+    public ManageStudentCoursesJPanel(Business bz, StudentProfile student, JPanel jp) {
         
         CardSequencePanel = jp;
         this.business = bz;
+        this.student = student;
         initComponents();
         refreshTable();
         
@@ -195,7 +198,8 @@ public class ManageStudentCoursesJPanel extends javax.swing.JPanel {
 
     private void btnAddCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCourseActionPerformed
 
-        RegistrationJPanel panel = new RegistrationJPanel(business, CardSequencePanel);
+        RegistrationJPanel panel = new RegistrationJPanel(business, student, CardSequencePanel);
+
         CardSequencePanel.add("AddCourseJPanel", panel);
         ((CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
