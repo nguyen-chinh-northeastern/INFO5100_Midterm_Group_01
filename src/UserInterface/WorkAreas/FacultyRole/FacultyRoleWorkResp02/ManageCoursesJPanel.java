@@ -158,7 +158,9 @@ public class ManageCoursesJPanel extends javax.swing.JPanel {
 
     private void btnAddCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCourseActionPerformed
 
-        // TODO
+        AddCourseJPanel panel = new AddCourseJPanel(business, CardSequencePanel);
+        CardSequencePanel.add("AddCourseJPanel", panel);
+        ((CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
     }//GEN-LAST:event_btnAddCourseActionPerformed
 
