@@ -1,7 +1,6 @@
 package UserInterface.WorkAreas.StudentRole.ManageProfileWorkResp;
 
 import UserInterface.WorkAreas.StudentRole.StudentRoleWorkResp.*;
-import UserInterface.WorkAreas.StudentRole.StudentRoleWorkResp.ViewCourseDetailsJPanel;
 import UserInterface.WorkAreas.StudentRole.StudentRoleWorkResp.RegistrationJPanel;
 
 import Business.Business;
@@ -18,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author //!!! -- update author name
+ * @author rachel macaulay
  */
 public class ManageStudentCoursesJPanel extends javax.swing.JPanel {
 
