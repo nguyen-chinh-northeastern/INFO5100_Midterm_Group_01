@@ -10,14 +10,15 @@ import java.util.ArrayList;
 /**
  *
  * @author kal bugrara
+ * @author Chinh Nguyen (update)
  */
 public class PersonDirectory {
     
-      ArrayList<Person> personlist ;
+    ArrayList<Person> personlist ;
     
-      public PersonDirectory (){
+    public PersonDirectory (){
           
-       personlist = new ArrayList();
+        personlist = new ArrayList();
 
     }
 
@@ -27,7 +28,13 @@ public class PersonDirectory {
         personlist.add(p);
         return p;
     }
-
+    
+    /**
+     * Finds a person by their existing person ID.
+     *
+     * @param id the person ID to search for
+     * @return the matching person, or null if not found
+     */
     public Person findPerson(String id) {
 
         for (Person p : personlist) {
@@ -36,7 +43,22 @@ public class PersonDirectory {
                 return p;
             }
         }
-            return null; //not found after going through the whole list
-         }
+        return null; //not found after going through the whole list
+    }
+    
+    /**
+     * Finds a person by their NUID.
+     *
+     * @param nuid the NUID to search for
+     * @return the matching person, or null if not found
+     */
+    public Person findPersonByNuid(String nuid) {
+        for (Person p : personlist) {
+            if (p.getNuid().equals(nuid)) {
+                return p;
+            }
+        }
+        return null;
+    }
     
 }
