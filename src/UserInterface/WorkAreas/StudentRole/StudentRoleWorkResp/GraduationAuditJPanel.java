@@ -2,13 +2,18 @@ package UserInterface.WorkAreas.StudentRole.StudentRoleWorkResp;
 
 import Business.Business;
 import Business.CourseCatalog.Course;
+import Business.CourseSchedule.CourseLoad;
 import Business.CourseSchedule.SeatAssignment;
 import Business.Degree.Degree;
 import Business.Faculty.FacultyProfile;
 import Business.Persona.Person;
+import Business.Persona.Transcript;
 import Business.Profiles.StudentProfile;
 import Business.UserAccounts.UserAccount;
+import UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
 import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -75,6 +80,8 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAuditCourses = new javax.swing.JTable();
         lblTitle = new javax.swing.JLabel();
+        lblCreditsPlanned = new javax.swing.JLabel();
+        txtCreditsPlanned = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(0, 153, 153));
         setLayout(null);
@@ -82,7 +89,7 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
         lblAuditStatus.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblAuditStatus.setText("STATUS");
         add(lblAuditStatus);
-        lblAuditStatus.setBounds(250, 20, 320, 22);
+        lblAuditStatus.setBounds(230, 20, 320, 30);
 
         lblName.setLabelFor(txtName);
         lblName.setText("Name");
@@ -121,11 +128,11 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
         lblCreditsRequired.setLabelFor(txtCreditsRequired);
         lblCreditsRequired.setText("Credits Required");
         add(lblCreditsRequired);
-        lblCreditsRequired.setBounds(80, 240, 90, 16);
+        lblCreditsRequired.setBounds(80, 280, 90, 16);
 
         txtCreditsRequired.setEditable(false);
         add(txtCreditsRequired);
-        txtCreditsRequired.setBounds(180, 230, 320, 26);
+        txtCreditsRequired.setBounds(180, 270, 320, 26);
 
         btnBack.setText("<< Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -144,7 +151,7 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Number", "Name", "Units", "Cost", "Status"
+                "Number", "Name", "Units", "Status", "Type"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -158,18 +165,29 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblAuditCourses);
 
         add(jScrollPane1);
-        jScrollPane1.setBounds(30, 290, 540, 180);
+        jScrollPane1.setBounds(30, 360, 540, 110);
 
         lblTitle.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         lblTitle.setText("Graduation Audit:");
         add(lblTitle);
         lblTitle.setBounds(21, 20, 200, 28);
+
+        lblCreditsPlanned.setLabelFor(txtCreditsRequired);
+        lblCreditsPlanned.setText("Credits Planned");
+        add(lblCreditsPlanned);
+        lblCreditsPlanned.setBounds(80, 240, 90, 16);
+
+        txtCreditsPlanned.setEditable(false);
+        add(txtCreditsPlanned);
+        txtCreditsPlanned.setBounds(180, 230, 320, 26);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
 
         CardSequencePanel.remove(this);
-        ((CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
+        CardLayout layout = (CardLayout) CardSequencePanel.getLayout();
+        layout.previous(CardSequencePanel);
+        
     }//GEN-LAST:event_btnBackActionPerformed
 
 
@@ -178,6 +196,7 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAuditStatus;
     private javax.swing.JLabel lblCreditsEarned;
+    private javax.swing.JLabel lblCreditsPlanned;
     private javax.swing.JLabel lblCreditsRequired;
     private javax.swing.JLabel lblDegree;
     private javax.swing.JLabel lblName;
@@ -185,6 +204,7 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblTitle;
     private javax.swing.JTable tblAuditCourses;
     private javax.swing.JTextField txtCreditsEarned;
+    private javax.swing.JTextField txtCreditsPlanned;
     private javax.swing.JTextField txtCreditsRequired;
     private javax.swing.JTextField txtDegree;
     private javax.swing.JTextField txtName;
@@ -203,12 +223,40 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
         ArrayList<SeatAssignment> courseList = studentProfile.getCourseList();
         if (courseList != null){
             for (SeatAssignment sa : courseList){
-                totalCredits += sa.getCreditHours();
+                String semester = getSemesterForSeatAssignment(sa);
+                if(!semester.equals("Unknown") && isPastYearSemester(semester)){
+                    totalCredits += sa.getCreditHours();
                 }
+              
+            
+
             }
         }
-        return totalCredits;
+       
         }
+         return totalCredits;
+    }
+    
+    private int calculateTotalCreditsPlanned(){
+        int totalCredits = 0;
+        if(studentProfile != null){
+        ArrayList<SeatAssignment> courseList = studentProfile.getCourseList();
+        if (courseList != null){
+            for (SeatAssignment sa : courseList){
+                String semester = getSemesterForSeatAssignment(sa);
+                if(!semester.equals("Unknown") || !isPastYearSemester(semester)){
+                    totalCredits += sa.getCreditHours();
+                }
+              
+            
+
+            }
+        }
+        
+        }
+        return totalCredits;
+    }
+    
 
     
     
@@ -226,10 +274,12 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
 
         // Populate/caclulatate credits
         int earned = calculateTotalCreditsEarned();
+        int planned = calculateTotalCreditsPlanned();
         int required = 32; //opportunity to update to be dynamic
 
         txtCreditsEarned.setText(String.valueOf(earned));
-        txtCreditsRequired.setText(required + " credits");
+        txtCreditsPlanned.setText(String.valueOf(planned));
+        txtCreditsRequired.setText(String.valueOf(required));
 
         // Determine readiness to graduate
         boolean isReady = false;
@@ -242,10 +292,15 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
             }
         }
 
+        lblAuditStatus.setOpaque(true);
+        lblAuditStatus.setBackground(Color.GRAY);
+        
         if(isReady){
             lblAuditStatus.setText("Approved to graduation!");
+            lblAuditStatus.setForeground(new Color(0, 153, 51));
         } else {
-            lblAuditStatus.setText("Graduation requirements outstanding.");
+            lblAuditStatus.setText("Graduation requirements outstanding");
+            lblAuditStatus.setForeground(new Color(204, 0, 0));
 
         }
     }
@@ -261,21 +316,128 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
         if (completedCourses == null || completedCourses.isEmpty()) {
             return;
         }
+        
+        // Get Degree from Department
+        Degree degree = null;
+        if(business.getDepartment() != null){
+            degree = business.getDepartment().getCourseCatalog().getCourseList().isEmpty() ?
+                    new Degree("MSIS") : new Degree("MSIS");
+        }
+        
+        // Get transcript data
 
-    for (SeatAssignment sa : completedCourses) {
-        Object[] row = new Object[5];
-        Course course= sa.getAssociatedCourse();
+        Transcript transcript = studentProfile.getTranscript();
+        
+        for (SeatAssignment sa : completedCourses) {
+            Object[] row = new Object[5];
+            Course course= sa.getAssociatedCourse();
+            
+            
+            
+            
 
-        if(course != null){
-            row[0] = course.getCourseNumber();
-            row[1] = course.getName();
-            row[2] = course.getCredits();
-            row[3] = "$" + course.getCoursePrice();
-            row[4] = "COMPLETED";
-            model.addRow(row);
+            if(course != null){
+                row[0] = course.getCourseNumber();
+                row[1] = course.getName();
+                row[2] = course.getCredits();
+                
+                String courseSemester = "Unknown";
+                
+                try{
+                
+                
+                java.lang.reflect.Field field = transcript.getClass().getDeclaredField("courseloadlist");
+                field.setAccessible(true);
+                java.util.HashMap<String, CourseLoad> courseloadlist = (java.util.HashMap<String, CourseLoad>) field.get(transcript);
+
+                if (courseloadlist != null) {
+                    for (java.util.Map.Entry<String, CourseLoad> entry : courseloadlist.entrySet()) {
+                        if (entry.getValue() != null && entry.getValue().getSeatAssignments().contains(sa)) {
+                            courseSemester = entry.getKey(); // e.g., "Fall2027"
+                            break;
+                        }
+                    }
+                } 
+            } catch (Exception e) {
+                // Safe fallback if reflection fails
+                courseSemester = "Unknown";
+            }
+                
+                // Get course status based on year -- opportunity for more nuanced check in future
+                if(courseSemester.equals("Unknown")){
+                    if(isPastYearSemester(courseSemester)){
+                        row[3] = "Completed";
+                    } else {
+                        row[3] = "Registered";
+                    }
+                } else{
+                    row[3] = "Registered";
+                }
+        
+                
+               
+  
+                String courseType = "Other";
+                if(degree != null){
+                    if(degree.isCoreSatisfied(completedCourses, course)){
+                        courseType = "Core";
+                    } else if (degree.isElectiveSatisfied(sa)){
+                        courseType = "Elective";
+                    }
+                }
+                row[4] = courseType;
+                model.addRow(row);
+        }
     }
     }
+    
+    //Check whether course will complete vs has completed
+    private boolean isPastYearSemester(String semesterStr){
+        if (semesterStr == null || semesterStr.isEmpty()){
+            return false;
+        }
+        
+        //assumes 3 semesters per year
+        try{
+            
+            int semesterYear = Integer.parseInt(semesterStr.substring(semesterStr.length()-4));
+           
+            java.time.LocalDate today = java.time.LocalDate.now();
+            int currentYear = today.getYear();
+          
+            return semesterYear < currentYear;
+            
+        } catch (Exception e){
+            return true;
+        }
     }
+
+    private String getSemesterForSeatAssignment(SeatAssignment sa) {
+        if(studentProfile == null) return "Unknown";
+        Transcript transcript = studentProfile.getTranscript();
+        if(transcript == null) return "Unknown";
+        
+        try{
+            java.lang.reflect.Field field = transcript.getClass().getDeclaredField("courseloadlist");
+            field.setAccessible(true);
+            java.util.HashMap<String, CourseLoad> courseloadlist = (java.util.HashMap<String, CourseLoad>) field.get(transcript);
+            
+            if(courseloadlist !=null){
+                for(java.util.Map.Entry<String, CourseLoad> entry : courseloadlist.entrySet()){
+                    if (entry.getValue() != null && entry.getValue().getSeatAssignments().contains(sa)) {
+                        return entry.getKey();
+                    }
+                }
+            }
+        }catch (Exception e){
+
+        }
+
+            //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "Unknown";
+    }
+
+
 
 
 }
