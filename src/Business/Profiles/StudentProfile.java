@@ -80,4 +80,10 @@ public class StudentProfile extends Profile {
     public void setInterests(String interests) {
         this.interests = interests;
     }
+    
+    @Override
+    public String toString() {
+        if (person == null) return null;
+        return person.getPersonId();
+    }
 }

@@ -48,7 +48,7 @@ class ConfigureABusiness {
                 "617-555-0102", "Human Resources");
         
         Person person003 = persondirectory.newPerson("Adam Rollen");
-        initializePerson(person003, "110000003", "adam.rollen@northeastern.edu",
+        initializePerson(person003, "001000003", "adam.rollen@northeastern.edu",
                 "617-555-0103", "Information Systems");
         
         Person person004 = persondirectory.newPerson("Sarah Mitchell");
@@ -82,14 +82,27 @@ class ConfigureABusiness {
         StudentDirectory studentdirectory = business.getStudentDirectory();
         // Adam Rollen
         StudentProfile studentprofile0 = studentdirectory.newStudentProfile(person003);
+        if (studentprofile0 != null) {
+            studentprofile0.setHobbies("Running, Photography");
+            studentprofile0.setInterests("Java Programming, Microservices, Cloud Computing");
+        }
         // Sarah Mitchell
         StudentProfile studentprofile1 = studentdirectory.newStudentProfile(person004);
+        if (studentprofile1 != null) {
+            studentprofile1.setHobbies("Cycling, Chess");
+            studentprofile1.setInterests("Python Programming, Data Engineering, AI/LLM");
+        }
         
         FacultyDirectory facultydirectory = business.getFacultyDirectory();
         FacultyProfile facultyprofile0 = facultydirectory.newFacultyProfile(person007);
         facultyprofile0.setAcademicRank("Associate Teaching Professor");
         facultyprofile0.setOfficeLocation("Snell Engineering 410");
    
+        // Demo credentials for assignment testing:
+        // Admin:   username = admin,  password = ****
+        // Student: username = adam,   password = ****
+        // Faculty: username = laura,  password = ****
+        
         // Create User accounts that link to specific profiles
         UserAccountDirectory uadirectory = business.getUserAccountDirectory();
         UserAccount ua3 = uadirectory.newUserAccount(employeeprofile0, "admin", "****"); /// order products for one of the customers and performed by a sales person
