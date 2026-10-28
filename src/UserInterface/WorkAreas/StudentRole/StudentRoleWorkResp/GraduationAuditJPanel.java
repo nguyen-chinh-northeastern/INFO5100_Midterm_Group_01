@@ -10,6 +10,7 @@ import Business.Persona.Person;
 import Business.Persona.Transcript;
 import Business.Profiles.StudentProfile;
 import Business.UserAccounts.UserAccount;
+import UserInterface.WorkAreas.StudentRole.StudentUIUtils;
 import UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -184,9 +185,17 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
 
-        CardSequencePanel.remove(this);
+        CardSequencePanel.removeAll();
+        
+        UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel studentDashboard = 
+            new UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel(business, studentProfile, CardSequencePanel);
+        
+        CardSequencePanel.add("student", studentDashboard);
+        
         CardLayout layout = (CardLayout) CardSequencePanel.getLayout();
-        layout.previous(CardSequencePanel);
+        
+        CardSequencePanel.revalidate();
+        CardSequencePanel.repaint();
         
     }//GEN-LAST:event_btnBackActionPerformed
 
@@ -223,8 +232,8 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
             ArrayList<SeatAssignment> courseList = studentProfile.getCourseList();
             if (courseList != null){
                 for (SeatAssignment sa : courseList){
-                    String semester = getSemesterForSeatAssignment(sa);
-                    if(!semester.equals("Unknown") && isPastYearSemester(semester)){
+                    String semester = StudentUIUtils.getSemesterForSeatAssignment(studentProfile, sa);
+                    if(!semester.equals("Unknown") && StudentUIUtils.isPastYearSemester(semester)){
                         totalCredits += sa.getCreditHours();
                     }
               
@@ -243,10 +252,10 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
         ArrayList<SeatAssignment> courseList = studentProfile.getCourseList();
         if (courseList != null){
             for (SeatAssignment sa : courseList){
-                String semester = getSemesterForSeatAssignment(sa);
-                if(!semester.equals("Unknown") || !isPastYearSemester(semester)){
-                    totalCredits += sa.getCreditHours();
-                }
+                 String semester = StudentUIUtils.getSemesterForSeatAssignment(studentProfile, sa);
+                    if(!semester.equals("Unknown") && StudentUIUtils.isPastYearSemester(semester)){
+                        totalCredits += sa.getCreditHours();
+                    }
               
             
 
@@ -351,8 +360,9 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
             }
             
             if(matchingAssignment !=null){
-                String courseSemester = getSemesterForSeatAssignment(matchingAssignment);
-                if(!courseSemester.equals("Unknown") && isPastYearSemester(courseSemester)){
+                
+                String courseSemester = StudentUIUtils.getSemesterForSeatAssignment(studentProfile, matchingAssignment);
+                if(!courseSemester.equals("Unknown") && StudentUIUtils.isPastYearSemester(courseSemester)){
                     status = "Completed";
                 } else {
                     status = "Registered";
@@ -376,51 +386,7 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
     }
     
     
-    //Check whether course will complete vs has completed
-    private boolean isPastYearSemester(String semesterStr){
-        if (semesterStr == null || semesterStr.isEmpty()){
-            return false;
-        }
-        
-        //assumes 3 semesters per year
-        try{
-            
-            int semesterYear = Integer.parseInt(semesterStr.substring(semesterStr.length()-4));
-           
-            java.time.LocalDate today = java.time.LocalDate.now();
-            int currentYear = today.getYear();
-          
-            return semesterYear < currentYear;
-            
-        } catch (Exception e){
-            return true;
-        }
-    }
-
-    private String getSemesterForSeatAssignment(SeatAssignment sa) {
-        if(studentProfile == null) return "Unknown";
-        Transcript transcript = studentProfile.getTranscript();
-        if(transcript == null) return "Unknown";
-        
-        try{
-            java.lang.reflect.Field field = transcript.getClass().getDeclaredField("courseloadlist");
-            field.setAccessible(true);
-            java.util.HashMap<String, CourseLoad> courseloadlist = (java.util.HashMap<String, CourseLoad>) field.get(transcript);
-            
-            if(courseloadlist !=null){
-                for(java.util.Map.Entry<String, CourseLoad> entry : courseloadlist.entrySet()){
-                    if (entry.getValue() != null && entry.getValue().getSeatAssignments().contains(sa)) {
-                        return entry.getKey();
-                    }
-                }
-            }
-        }catch (Exception e){
-
-        }
-
-            //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        return "Unknown";
-    }
+    
 
 
 
