@@ -8,11 +8,16 @@ package Business;
 
 import Business.CourseCatalog.Course;
 import Business.CourseCatalog.CourseCatalog;
+import Business.CourseSchedule.CourseLoad;
+import Business.CourseSchedule.CourseOffer;
+import Business.CourseSchedule.CourseSchedule;
+import Business.CourseSchedule.SeatAssignment;
 import Business.Department.Department;
 import Business.Faculty.FacultyDirectory;
 import Business.Faculty.FacultyProfile;
 import Business.Persona.Person;
 import Business.Persona.PersonDirectory;
+import Business.Persona.Transcript;
 import Business.Profiles.EmployeeDirectory;
 import Business.Profiles.EmployeeProfile;
 import Business.Profiles.StudentDirectory;

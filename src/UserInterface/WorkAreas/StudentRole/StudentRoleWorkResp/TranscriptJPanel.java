@@ -8,6 +8,7 @@ import Business.Faculty.FacultyProfile;
 import Business.Persona.Transcript;
 import Business.Profiles.StudentProfile;
 import UserInterface.WorkAreas.StudentRole.StudentUIUtils;
+import static UserInterface.WorkAreas.StudentRole.StudentUIUtils.calculateGPA;
 import static UserInterface.WorkAreas.StudentRole.StudentUIUtils.isPastYearSemester;
 import java.awt.CardLayout;
 import java.util.ArrayList;
@@ -241,7 +242,8 @@ public class TranscriptJPanel extends javax.swing.JPanel {
         }
         
         if(transcript != null){
-            txtGPA.setText(String.valueOf(transcript.getStudentTotalScore()));
+            float gpa = calculateGPA(studentProfile);
+            txtGPA.setText(String.format("%.2f", gpa));
             txtSatisfaction.setText(String.valueOf(transcript.getStudentSatifactionIndex()));
         }
         
