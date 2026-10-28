@@ -220,13 +220,13 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
     private int calculateTotalCreditsEarned(){
         int totalCredits = 0;
         if(studentProfile != null){
-        ArrayList<SeatAssignment> courseList = studentProfile.getCourseList();
-        if (courseList != null){
-            for (SeatAssignment sa : courseList){
-                String semester = getSemesterForSeatAssignment(sa);
-                if(!semester.equals("Unknown") && isPastYearSemester(semester)){
-                    totalCredits += sa.getCreditHours();
-                }
+            ArrayList<SeatAssignment> courseList = studentProfile.getCourseList();
+            if (courseList != null){
+                for (SeatAssignment sa : courseList){
+                    String semester = getSemesterForSeatAssignment(sa);
+                    if(!semester.equals("Unknown") && isPastYearSemester(semester)){
+                        totalCredits += sa.getCreditHours();
+                    }
               
             
 
@@ -310,12 +310,20 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
     private void populateRequirementsTable(){
         DefaultTableModel model = (DefaultTableModel) tblAuditCourses.getModel();
         model.setRowCount(0);
-
-        ArrayList<SeatAssignment> completedCourses = studentProfile.getCourseList();
-
-        if (completedCourses == null || completedCourses.isEmpty()) {
+        
+        //Get courses based on department
+        if(business.getDepartment() == null || business.getDepartment().getCourseCatalog() == null){
             return;
         }
+        ArrayList<Course> catalogCourses = business.getDepartment().getCourseCatalog(). getCourseList();
+        if(catalogCourses == null || catalogCourses.isEmpty()){
+            return;
+        }
+
+        //Get student courses
+
+        ArrayList<SeatAssignment> studentCourses = (studentProfile != null) ? studentProfile.getCourseList() : new ArrayList<>();
+        
         
         // Get Degree from Department
         Degree degree = null;
@@ -324,72 +332,49 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
                     new Degree("MSIS") : new Degree("MSIS");
         }
         
-        // Get transcript data
-
-        Transcript transcript = studentProfile.getTranscript();
-        
-        for (SeatAssignment sa : completedCourses) {
+        for (Course course : catalogCourses) {
             Object[] row = new Object[5];
-            Course course= sa.getAssociatedCourse();
             
+            row[0] = course.getCourseNumber();
+            row[1] = course.getName();
+            row[2] = course.getCredits();
             
+            String status = "Not Registered";
+            SeatAssignment matchingAssignment = null;
             
-            
-
-            if(course != null){
-                row[0] = course.getCourseNumber();
-                row[1] = course.getName();
-                row[2] = course.getCredits();
-                
-                String courseSemester = "Unknown";
-                
-                try{
-                
-                
-                java.lang.reflect.Field field = transcript.getClass().getDeclaredField("courseloadlist");
-                field.setAccessible(true);
-                java.util.HashMap<String, CourseLoad> courseloadlist = (java.util.HashMap<String, CourseLoad>) field.get(transcript);
-
-                if (courseloadlist != null) {
-                    for (java.util.Map.Entry<String, CourseLoad> entry : courseloadlist.entrySet()) {
-                        if (entry.getValue() != null && entry.getValue().getSeatAssignments().contains(sa)) {
-                            courseSemester = entry.getKey(); // e.g., "Fall2027"
-                            break;
-                        }
-                    }
-                } 
-            } catch (Exception e) {
-                // Safe fallback if reflection fails
-                courseSemester = "Unknown";
-            }
-                
-                // Get course status based on year -- opportunity for more nuanced check in future
-                if(courseSemester.equals("Unknown")){
-                    if(isPastYearSemester(courseSemester)){
-                        row[3] = "Completed";
-                    } else {
-                        row[3] = "Registered";
-                    }
-                } else{
-                    row[3] = "Registered";
+            for(SeatAssignment sa : studentCourses){
+                if(sa.getAssociatedCourse() != null && sa.getAssociatedCourse().getCourseNumber().equals(course.getCourseNumber())){
+                    matchingAssignment = sa;
+                    break;
+          
                 }
-        
+            }
+            
+            if(matchingAssignment !=null){
+                String courseSemester = getSemesterForSeatAssignment(matchingAssignment);
+                if(!courseSemester.equals("Unknown") && isPastYearSemester(courseSemester)){
+                    status = "Completed";
+                } else {
+                    status = "Registered";
+                }
+            }
+            row[3] = status;
                 
                
   
-                String courseType = "Other";
-                if(degree != null){
-                    if(degree.isCoreSatisfied(completedCourses, course)){
-                        courseType = "Core";
-                    } else if (degree.isElectiveSatisfied(sa)){
-                        courseType = "Elective";
-                    }
+            String courseType = "Other";
+            if(degree != null){
+                if(degree.isCoreSatisfied(studentCourses, course)){
+                    courseType = "Core";
+                } else if (matchingAssignment != null && degree.isElectiveSatisfied(matchingAssignment)){
+                    courseType = "Elective";
                 }
-                row[4] = courseType;
-                model.addRow(row);
+            }
+            row[4] = courseType;
+            model.addRow(row);
         }
     }
-    }
+    
     
     //Check whether course will complete vs has completed
     private boolean isPastYearSemester(String semesterStr){
