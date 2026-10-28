@@ -6,6 +6,7 @@ import Business.Persona.Person;
 import Business.Profiles.StudentDirectory;
 import Business.Profiles.StudentProfile;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -43,6 +44,7 @@ public class ManageStudentProfilesJPanel extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
         scrollPane = new javax.swing.JScrollPane();
         tblStudents = new javax.swing.JTable();
+        btnViewDetails = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 153, 153));
         setLayout(null);
@@ -59,7 +61,7 @@ public class ManageStudentProfilesJPanel extends javax.swing.JPanel {
             }
         });
         add(btnBack);
-        btnBack.setBounds(30, 350, 74, 23);
+        btnBack.setBounds(30, 260, 74, 23);
 
         tblStudents.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -82,9 +84,21 @@ public class ManageStudentProfilesJPanel extends javax.swing.JPanel {
         });
         tblStudents.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         scrollPane.setViewportView(tblStudents);
+        if (tblStudents.getColumnModel().getColumnCount() > 0) {
+            tblStudents.getColumnModel().getColumn(2).setPreferredWidth(150);
+        }
 
         add(scrollPane);
         scrollPane.setBounds(40, 70, 540, 160);
+
+        btnViewDetails.setText("View Details >>");
+        btnViewDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewDetailsActionPerformed(evt);
+            }
+        });
+        add(btnViewDetails);
+        btnViewDetails.setBounds(460, 260, 120, 23);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -94,9 +108,29 @@ public class ManageStudentProfilesJPanel extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnBackActionPerformed
 
+    private void btnViewDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDetailsActionPerformed
+
+        int selectedRow = tblStudents.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(this, 
+                "Please select a student from the table first.", 
+                "Selection Required", 
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        StudentProfile selectedStudent = (StudentProfile) tblStudents.getValueAt(selectedRow, 0);
+
+        ViewStudentDetailsJPanel viewPanel = new ViewStudentDetailsJPanel(business, selectedStudent, CardSequencePanel);
+        CardSequencePanel.add("View Student Details", viewPanel);
+        ((CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+
+    }//GEN-LAST:event_btnViewDetailsActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnViewDetails;
     private javax.swing.JScrollPane scrollPane;
     private javax.swing.JTable tblStudents;
     private javax.swing.JLabel titleLabel;
