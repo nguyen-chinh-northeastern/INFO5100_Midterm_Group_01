@@ -7,55 +7,118 @@ package Business.UserAccounts;
 
 import Business.Profiles.Profile;
 
-
+import java.time.LocalDateTime;
 
 /**
  *
  * @author kal bugrara
+ * @author Lee Wang (update)
  */
 public class UserAccount {
-    
+
     Profile profile;
     String username;
     String password;
-    
-    public UserAccount (Profile profile, String un, String pw){
-        username = un;
-         password = pw;
-         this.profile = profile;
+    boolean active;
+    LocalDateTime lastUpdated;
+    LocalDateTime lastActivity;
 
+    /** Constructor. */
+    public UserAccount(Profile profile, String un, String pw) {
+        username = un;
+        password = pw;
+        this.profile = profile;
+        active = true;
+        lastUpdated = LocalDateTime.now();
+        lastActivity = null;
     }
 
-    public String getPersonId(){
+    /** Records update. */
+    public void recordUpdate() {
+        lastUpdated = LocalDateTime.now();
+    }
+
+    /** Records activity. */
+    public void recordActivity() {
+        lastActivity = LocalDateTime.now();
+    }
+
+    /** Gets person ID. */
+    public String getPersonId() {
         return profile.getPerson().getPersonId();
     }
-    public String getUserLoginName(){
+
+    /** Gets login name. */
+    public String getUserLoginName() {
         return username;
     }
 
-        public boolean isMatch(String id){
-        if(getPersonId().equals(id)) return true;
-        return false;
+    /** Matches ID. */
+    public boolean isMatch(String id) {
+        return getPersonId().equals(id);
     }
-        public boolean IsValidUser(String un, String pw){
-        
-            if (username.equalsIgnoreCase(un) && password.equals(pw)) return true;
-            else return false;
-        
-        }
-        public String getRole(){
-            return profile.getRole();
-        }
-        
-        public Profile getAssociatedPersonProfile(){
-            return profile;
-        }
-        
-    @Override
-        public String toString(){
-            
-            return getUserLoginName();
-        }
-        
-}
 
+    /** Validates user. */
+    public boolean IsValidUser(String un, String pw) {
+        return username.equalsIgnoreCase(un) && password.equals(pw) && active;
+    }
+
+    /** Gets role. */
+    public String getRole() {
+        return profile.getRole();
+    }
+
+    /** Gets profile. */
+    public Profile getAssociatedPersonProfile() {
+        return profile;
+    }
+
+    /** Gets username. */
+    public String getUsername() {
+        return username;
+    }
+
+    /** Sets username. */
+    protected void setUsername(String username) {
+        this.username = username;
+        recordUpdate();
+    }
+
+    /** Gets password. */
+    public String getPassword() {
+        return password;
+    }
+
+    /** Sets password. */
+    public void setPassword(String password) {
+        this.password = password;
+        recordUpdate();
+    }
+
+    /** Gets active. */
+    public boolean isActive() {
+        return active;
+    }
+
+    /** Sets active. */
+    public void setActive(boolean active) {
+        this.active = active;
+        recordUpdate();
+    }
+
+    /** Gets last updated. */
+    public LocalDateTime getLastUpdated() {
+        return lastUpdated;
+    }
+
+    /** Gets last activity. */
+    public LocalDateTime getLastActivity() {
+        return lastActivity;
+    }
+
+    /** Gets username. */
+    @Override
+    public String toString() {
+        return getUserLoginName();
+    }
+}
