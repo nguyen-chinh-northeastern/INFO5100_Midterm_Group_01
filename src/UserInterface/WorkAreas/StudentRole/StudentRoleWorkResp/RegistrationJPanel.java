@@ -279,7 +279,7 @@ public class RegistrationJPanel extends javax.swing.JPanel {
         if(officialOffer == null){
             officialOffer = schedule.newCourseOffer(number);
             if (officialOffer !=null){
-                officialOffer.generatSeats(20); //generat, not generate
+                officialOffer.generateSeats(20);
             }
         }
         
