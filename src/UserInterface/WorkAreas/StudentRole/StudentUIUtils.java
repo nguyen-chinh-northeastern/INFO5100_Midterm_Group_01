@@ -12,7 +12,7 @@ import Business.Profiles.StudentProfile;
 /**
  * Shared layout utility to streamline shared functionality between multiple student JPanels
  *
- * @author rmacc
+ * @author rachel macaulay
  */
 public class StudentUIUtils {
     

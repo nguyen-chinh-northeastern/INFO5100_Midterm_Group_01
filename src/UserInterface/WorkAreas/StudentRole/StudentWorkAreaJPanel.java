@@ -41,8 +41,10 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
         business = b;
         this.CardSequencePanel = clp;
         student = spp;
-        initComponents();
+        
+        StudentDataInitializer.populateMSISData(business, student);
 
+        initComponents();
     }
 
     /**

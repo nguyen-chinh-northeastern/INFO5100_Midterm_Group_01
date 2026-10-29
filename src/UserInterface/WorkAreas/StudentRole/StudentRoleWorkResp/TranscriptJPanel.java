@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author rmacc
+ * @author rachel macaulay
  */
 public class TranscriptJPanel extends javax.swing.JPanel {
 

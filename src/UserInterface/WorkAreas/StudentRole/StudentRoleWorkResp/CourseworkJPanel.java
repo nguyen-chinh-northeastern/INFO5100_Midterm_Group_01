@@ -7,6 +7,7 @@ package UserInterface.WorkAreas.StudentRole.StudentRoleWorkResp;
 import Business.Business;
 import Business.CourseSchedule.SeatAssignment;
 import Business.Profiles.StudentProfile;
+import UserInterface.WorkAreas.StudentRole.StudentDataInitializer;
 import UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
 import java.awt.CardLayout;
 import java.io.File;
@@ -19,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author rmacc
+ * @author rachel macaulay
  */
 public class CourseworkJPanel extends javax.swing.JPanel {
 
@@ -48,26 +49,16 @@ public class CourseworkJPanel extends javax.swing.JPanel {
             }
         });
         
-        btnAttach.addActionListener(new java.awt.event.ActionListener(){
+        btnViewCourse.addActionListener(new java.awt.event.ActionListener(){
             public void actionPerformed(java.awt.event.ActionEvent evt){
-                btnAttachActionPerformed(evt);
+                btnViewCourseActionPerformed(evt);
             }
         });
         
-        btnRemove.addActionListener(new java.awt.event.ActionListener(){
-            public void actionPerformed(java.awt.event.ActionEvent evt){
-                btnRemoveActionPerformed(evt);
-            }
-        });
-        
-        btnSubmit.addActionListener(new java.awt.event.ActionListener(){
-            public void actionPerformed(java.awt.event.ActionEvent evt){
-                btnSubmitActionPerformed(evt);
-            }
-        });
+
         
         populateCoursesTable();
-        setViewMode();
+
     }
 
     /**
@@ -88,9 +79,7 @@ public class CourseworkJPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCourses = new javax.swing.JTable();
         lblTitle = new javax.swing.JLabel();
-        btnAttach = new javax.swing.JButton();
-        btnRemove = new javax.swing.JButton();
-        btnSubmit = new javax.swing.JButton();
+        btnViewCourse = new javax.swing.JButton();
         lblFileIcon = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 153));
@@ -119,7 +108,7 @@ public class CourseworkJPanel extends javax.swing.JPanel {
             }
         });
         jPanel1.add(btnBack);
-        btnBack.setBounds(30, 490, 74, 23);
+        btnBack.setBounds(20, 280, 74, 23);
 
         tblCourses.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -129,7 +118,7 @@ public class CourseworkJPanel extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Number", "Name", "Units", "Score"
+                "Number", "Name", "Units", "Progress"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -150,17 +139,14 @@ public class CourseworkJPanel extends javax.swing.JPanel {
         jPanel1.add(lblTitle);
         lblTitle.setBounds(21, 20, 200, 28);
 
-        btnAttach.setText("Attach");
-        jPanel1.add(btnAttach);
-        btnAttach.setBounds(30, 280, 72, 23);
-
-        btnRemove.setText("Remove");
-        jPanel1.add(btnRemove);
-        btnRemove.setBounds(30, 320, 73, 23);
-
-        btnSubmit.setText("Submit");
-        jPanel1.add(btnSubmit);
-        btnSubmit.setBounds(30, 360, 72, 23);
+        btnViewCourse.setText("View Course");
+        btnViewCourse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewCourseActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnViewCourse);
+        btnViewCourse.setBounds(350, 270, 200, 23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -205,6 +191,31 @@ public class CourseworkJPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnBackActionPerformed
 
+    private void btnViewCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewCourseActionPerformed
+        // TODO add your handling code here:
+        
+        // Ensure student selects a course
+        if (selectedCourse == null){
+            JOptionPane.showMessageDialog(this, "Please select a course first.", "Selection Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // Notify student that they can't submit to completed courses
+        if (selectedCourse.GetCourseStudentScore() > 0){
+            JOptionPane.showMessageDialog(this, "This course is completed. No more submissions can be made.", "Complete Course Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Go ActiveCourseworkJPanel to view and submit coursework for course selection
+        
+        CardSequencePanel.removeAll();
+        
+        ActiveCourseworkJPanel activeCourseworkPanel = new ActiveCourseworkJPanel(business, studentProfile, CardSequencePanel, selectedCourse);
+        
+        CardSequencePanel.add("ActiveCourseworkJPanel", activeCourseworkPanel);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+    }//GEN-LAST:event_btnViewCourseActionPerformed
+
     private void populateCoursesTable() {
         
         DefaultTableModel model = (DefaultTableModel) tblCourses.getModel();
@@ -220,39 +231,27 @@ public class CourseworkJPanel extends javax.swing.JPanel {
             row[0] = sa;
             row[1] = sa.getAssociatedCourse().getName();
             row[2] = sa.getCreditHours();
-            row[3] = (sa.GetCourseStudentScore() > 0) ? "Graded & Closed" : "1 Assignment Pending";
+            //row[3] = (sa.GetCourseStudentScore() > 0) ? "Graded & Closed" : "1 Assignment Pending";
+           row[3] = StudentDataInitializer.getProgressString(sa); //uses initializer to populate dummy data
             model.addRow(row);
         }
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-    private void setViewMode(){
-        txtSelectedCourse.setEditable(false);
-        txtAssignmentStatus.setEditable(false);
-        btnAttach.setEnabled(false);
-        btnSubmit.setEnabled(false);
-    }
-    
-    private void setEditMode(){
-        btnAttach.setEnabled(true);
-        btnRemove.setEnabled(attachedFile != null);
-        btnSubmit.setEnabled(attachedFile != null);
-    }
+
     
     private void backAction(){
         CardSequencePanel.removeAll();
         StudentWorkAreaJPanel studentDashboard = new StudentWorkAreaJPanel(business, studentProfile, CardSequencePanel);
-        CardSequencePanel.add("studnet", studentDashboard);
+        CardSequencePanel.add("student", studentDashboard);
         CardLayout layout = (CardLayout) CardSequencePanel.getLayout();
         layout.next(CardSequencePanel);
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAttach;
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnRemove;
-    private javax.swing.JButton btnSubmit;
+    private javax.swing.JButton btnViewCourse;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblFileIcon;
@@ -271,41 +270,18 @@ private void tblCoursesMousePressed(java.awt.event.MouseEvent evt){
     selectedCourse = (SeatAssignment) tblCourses.getValueAt(selectedRow, 0);
     if(selectedCourse != null && selectedCourse.getAssociatedCourse() != null){
         txtSelectedCourse.setText(selectedCourse.getAssociatedCourse().getCourseNumber() + " - " + selectedCourse.getAssociatedCourse().getName());
-        
-        if(selectedCourse.GetCourseStudentScore() > 0){
-            txtAssignmentStatus.setText("Course Completed");
-            setViewMode();
-        }else{
-            txtAssignmentStatus.setText("Assignment 1: Project Part 1 (Open)");
-            setEditMode();
-        }
-    }
-}
-
-private void btnAttachActionPerformed(java.awt.event.ActionEvent evt){
-    int selection = fileChooser.showOpenDialog(this);
-    if(selection == JFileChooser.APPROVE_OPTION){
-        attachedFile = fileChooser.getSelectedFile();
-        lblFileIcon.setText(attachedFile.getName());
-        btnSubmit.setEnabled(true);
-    }
-}
-
-private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt){
-    attachedFile = null;
-    lblFileIcon.setText("<No Document Attached>");
-    btnSubmit.setEnabled(false);
-    btnRemove.setEnabled(false);
-}
-
-private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt){
-    if(attachedFile == null || selectedCourse == null) return;
     
-    JOptionPane.showMessageDialog(this,
-            "Assignment successfully submitted!",
-            "Submission Success", JOptionPane.INFORMATION_MESSAGE);
-    btnRemoveActionPerformed(null);
+    if(selectedCourse.GetCourseStudentScore() > 0){
+            txtAssignmentStatus.setText("Course Completed");
+        }else{
+            txtAssignmentStatus.setText("Active Course");
+        }    
+        
+    }
+    
+    
 }
+
 
 private void backButtonActionPerformed(java.awt.event.ActionEvent evt){
     backAction();
