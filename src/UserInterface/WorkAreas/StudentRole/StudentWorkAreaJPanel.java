@@ -186,7 +186,6 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnGraduationAuditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraduationAuditActionPerformed
         // TODO add your handling code here:
-        CardSequencePanel.removeAll();
         
         GraduationAuditJPanel graduationAuditPanel = new GraduationAuditJPanel(business, student, CardSequencePanel);
         
