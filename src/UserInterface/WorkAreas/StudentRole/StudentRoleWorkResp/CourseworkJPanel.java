@@ -267,12 +267,7 @@ private void tblCoursesMousePressed(java.awt.event.MouseEvent evt){
     int selectedRow = tblCourses.getSelectedRow();
     if(selectedRow < 0) return;
     
-    Object cellValue = tblCourses.getValueAt(selectedRow, 0);
-    if(cellValue instanceof SeatAssignment){
-        selectedCourse = (SeatAssignment) cellValue;
-    } else {
-        return;
-    }
+    selectedCourse = studentProfile.getCourseList().get(selectedRow); 
     
     if(selectedCourse != null && selectedCourse.getAssociatedCourse() != null){
         txtSelectedCourse.setText(selectedCourse.getAssociatedCourse().getCourseNumber() + " - " + selectedCourse.getAssociatedCourse().getName());
