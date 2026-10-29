@@ -17,6 +17,7 @@ import Business.Faculty.FacultyDirectory;
 import Business.Faculty.FacultyProfile;
 import Business.Persona.Person;
 import Business.Persona.PersonDirectory;
+import Business.Persona.Transcript;
 import Business.Profiles.EmployeeDirectory;
 import Business.Profiles.EmployeeProfile;
 import Business.Profiles.StudentDirectory;
