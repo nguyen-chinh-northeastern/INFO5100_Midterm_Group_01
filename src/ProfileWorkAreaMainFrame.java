@@ -63,6 +63,7 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1050, 600));
 
         actionsidejpanel.setBackground(new java.awt.Color(0, 153, 153));
         actionsidejpanel.setMinimumSize(new java.awt.Dimension(200, 200));
@@ -117,6 +118,7 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
 
         SplitHomeArea.setLeftComponent(actionsidejpanel);
 
+        CardSequencePanel.setPreferredSize(new java.awt.Dimension(800, 600));
         CardSequencePanel.setLayout(new java.awt.CardLayout());
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N

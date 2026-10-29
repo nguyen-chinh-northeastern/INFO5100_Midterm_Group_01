@@ -228,7 +228,7 @@ public class CourseworkJPanel extends javax.swing.JPanel {
             if(sa.getAssociatedCourse() == null) continue;
             
             Object[] row = new Object[4];
-            row[0] = sa;
+            row[0] = sa.getAssociatedCourse().getCourseNumber();
             row[1] = sa.getAssociatedCourse().getName();
             row[2] = sa.getCreditHours();
             //row[3] = (sa.GetCourseStudentScore() > 0) ? "Graded & Closed" : "1 Assignment Pending";
@@ -267,7 +267,13 @@ private void tblCoursesMousePressed(java.awt.event.MouseEvent evt){
     int selectedRow = tblCourses.getSelectedRow();
     if(selectedRow < 0) return;
     
-    selectedCourse = (SeatAssignment) tblCourses.getValueAt(selectedRow, 0);
+    Object cellValue = tblCourses.getValueAt(selectedRow, 0);
+    if(cellValue instanceof SeatAssignment){
+        selectedCourse = (SeatAssignment) cellValue;
+    } else {
+        return;
+    }
+    
     if(selectedCourse != null && selectedCourse.getAssociatedCourse() != null){
         txtSelectedCourse.setText(selectedCourse.getAssociatedCourse().getCourseNumber() + " - " + selectedCourse.getAssociatedCourse().getName());
     

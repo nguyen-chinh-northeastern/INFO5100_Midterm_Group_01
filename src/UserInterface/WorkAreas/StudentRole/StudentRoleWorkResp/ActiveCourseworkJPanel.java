@@ -103,6 +103,7 @@ public class ActiveCourseworkJPanel extends javax.swing.JPanel {
         lblFileIcon = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 153));
+        jPanel1.setPreferredSize(new java.awt.Dimension(850, 600));
         jPanel1.setLayout(null);
 
         lblSelectedCourse.setText("Selected Course");
