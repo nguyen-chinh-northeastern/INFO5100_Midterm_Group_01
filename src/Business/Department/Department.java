@@ -21,6 +21,7 @@ import java.util.HashMap;
 /**
  *
  * @author kal bugrara
+ * @author Chinh Nguyen (update)
  */
 public class Department {
 
@@ -119,4 +120,9 @@ public class Department {
         co.assignEmptySeat(cl);
 
     }
+
+    public HashMap<String, CourseSchedule> getMasterCourseCatalog() {
+        return mastercoursecatalog;
+    }
+    
 }

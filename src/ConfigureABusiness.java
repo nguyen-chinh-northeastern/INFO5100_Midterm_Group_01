@@ -81,7 +81,10 @@ class ConfigureABusiness {
         EmployeeProfile employeeprofile0 = employeedirectory.newEmployeeProfile(person001);
         
         StudentDirectory studentdirectory = business.getStudentDirectory();
+        // Adam Rollen
         StudentProfile studentprofile0 = studentdirectory.newStudentProfile(person003);
+        // Sarah Mitchell
+        StudentProfile studentprofile1 = studentdirectory.newStudentProfile(person004);
         
         FacultyDirectory facultydirectory = business.getFacultyDirectory();
         FacultyProfile facultyprofile0 = facultydirectory.newFacultyProfile(person007);
@@ -99,6 +102,39 @@ class ConfigureABusiness {
         Course course1 = courseCatalog.newCourse("Application Engineering & Development", "INFO 5100", 4);
         Course course2 = courseCatalog.newCourse("User Experience Design & Testing", "CSYE 7280", 4);
         
+        // Create Course Schedule for Fall 2026
+        CourseSchedule fall2026 = department.newCourseSchedule("Fall 2026");
+        
+        // Create Course Offerings for Laura's classes
+        CourseOffer offer1 = fall2026.newCourseOffer(course1.getCourseNumber());
+        if (offer1 != null) {
+            offer1.generateSeats(25);
+            offer1.AssignAsTeacher(facultyprofile0);
+            facultyprofile0.AssignAsTeacher(offer1);
+        }
+        
+        CourseOffer offer2 = fall2026.newCourseOffer(course2.getCourseNumber());
+        if (offer2 != null) {
+            offer2.generateSeats(25);
+            offer2.AssignAsTeacher(facultyprofile0);
+            facultyprofile0.AssignAsTeacher(offer2);
+        }
+        
+        // Register students and assign grades
+        // Adam Rollen
+        CourseLoad load1 = studentprofile0.getTranscript().newCourseLoad("Fall 2026");
+        SeatAssignment sa1 = load1.newSeatAssignment(offer1);
+        if (sa1 != null) {
+            sa1.setGrade(3.8f);
+        }
+
+        // Sarah Mitchell
+        CourseLoad load2 = studentprofile1.getTranscript().newCourseLoad("Fall 2026");
+        SeatAssignment sa2 = load2.newSeatAssignment(offer1);
+        if (sa2 != null) {
+            sa2.setGrade(4.0f);
+        }
+
         return business;
 
     }
