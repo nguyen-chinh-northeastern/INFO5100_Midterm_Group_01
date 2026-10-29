@@ -42,7 +42,11 @@ public class StudentDataInitializer {
     // populate data for MSIS courses - opportunity to input actual values from faculty in future
     public static void populateMSISData(Business business, StudentProfile studentProfile){
         Department dept = business.getDepartment();
-        if(dept == null) return;
+        if(dept == null || studentProfile == null) return;
+        
+        if(studentProfile.getCourseList() !=null && !studentProfile.getCourseList().isEmpty()){
+            return;
+        }
         
         CourseCatalog catalog = dept.getCourseCatalog();
         
@@ -226,5 +230,8 @@ public class StudentDataInitializer {
         return String.format("%d of %d Submitted (%.1f%%)", completedSubmissions, totalExpected, getCourseProgressPercentage(sa));
     
     }
+    
+    
+    
     
 }

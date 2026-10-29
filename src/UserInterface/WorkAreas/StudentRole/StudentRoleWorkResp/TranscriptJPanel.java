@@ -9,6 +9,7 @@ import Business.Persona.Transcript;
 import Business.Profiles.StudentProfile;
 import UserInterface.WorkAreas.StudentRole.StudentUIUtils;
 import static UserInterface.WorkAreas.StudentRole.StudentUIUtils.calculateGPA;
+import static UserInterface.WorkAreas.StudentRole.StudentUIUtils.convertGpaToLetterGrade;
 import static UserInterface.WorkAreas.StudentRole.StudentUIUtils.isPastYearSemester;
 import java.awt.CardLayout;
 import java.util.ArrayList;
@@ -277,7 +278,7 @@ public class TranscriptJPanel extends javax.swing.JPanel {
             row[1] = sa.getAssociatedCourse().getName();
             row[2] = sa.getCreditHours();
             row[3] = sa.getLike() ? "Yes" : "No";
-            row[4] = sa.GetCourseStudentScore();
+            row[4] = convertGpaToLetterGrade(sa);
             model.addRow(row);
     }
     }

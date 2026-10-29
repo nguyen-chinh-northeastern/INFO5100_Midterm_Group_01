@@ -4,8 +4,10 @@
  */
 package UserInterface.WorkAreas.StudentRole;
 
+import Business.CourseCatalog.Course;
 import Business.CourseSchedule.CourseLoad;
 import Business.CourseSchedule.SeatAssignment;
+import Business.Department.Department;
 import Business.Persona.Transcript;
 import Business.Profiles.StudentProfile;
 
@@ -78,6 +80,99 @@ public class StudentUIUtils {
         
         return (gradedCredits > 0) ? (totalPoints / gradedCredits) : 00f;
     }
+    
+    // set grade to letter value
+    public static String convertGpaToLetterGrade(SeatAssignment sa){
+        if(sa == null) return "N/A";
+        
+        float gradeValue = 0.0f;
+        try{
+            java.lang.reflect.Field gradeField = sa.getClass().getDeclaredField("grade");
+            gradeField.setAccessible(true);
+            gradeValue = ((Number) gradeField.get(sa)).floatValue();
+        } catch (Exception ignored){}
+        
+        if(gradeValue >= 4.0f) return "A";
+        if(gradeValue >= 3.7f) return "A-";
+        if(gradeValue >= 3.3f) return "B+";
+        if(gradeValue >= 3.0f) return "B";
+        if(gradeValue >= 2.7f) return "B-";
+        if(gradeValue >= 2.3f) return "C+";
+        if(gradeValue >= 2.0f) return "C";
+        if(gradeValue >= 1.7f) return "C-";
+        if(gradeValue >= 1.3f) return "D+";
+        if(gradeValue >= 1.0f) return "D";
+        if(gradeValue >= 0.7f) return "D-";
+        if(gradeValue > 0.0f) return "F";
+        // 0.0 is value reserved for ongoing courses
+        return "In Progress";
+        
+    }
+    
+    // track metrics
+    
+    
+     public static int calculateCreditsEarned(StudentProfile student){
+        if (student == null || student.getCourseList() == null) return 0;
+        int totalEarned = 0;
+        
+        for (SeatAssignment sa : student.getCourseList()){
+            if(sa == null || sa.getAssociatedCourse() == null) {
+                continue;
+            }
+            
+            float gradeValue = 0.0f;
+            try{
+                java.lang.reflect.Field gradeField = sa.getClass().getDeclaredField("grade");
+                gradeField.setAccessible(true);
+                gradeValue = ((Number) gradeField.get(sa)).floatValue();
+                
+            }catch(Exception ignored){}
+            
+            if(gradeValue > 0.0f){
+                totalEarned += sa.getCreditHours();
+            }
+        }
+        return totalEarned;
+    }
+    
+    public static int calculateCreditsPlanned(StudentProfile student){
+        if (student == null || student.getCourseList() == null) return 0;
+        int totalPlanned = 0;
+        
+        for (SeatAssignment sa : student.getCourseList()){
+            if(sa.getAssociatedCourse() == null) continue;
+            
+            float gradeValue = 0.0f;
+            try{
+                java.lang.reflect.Field gradeField = sa.getClass().getDeclaredField("grade");
+                gradeField.setAccessible(true);
+                gradeValue = ((Number) gradeField.get(sa)).floatValue();
+                
+            }catch(Exception ignored){}
+            
+            if(gradeValue == 0.0f){
+                totalPlanned += sa.getCreditHours();
+            }
+        }
+        return totalPlanned;
+    }
+    
+   
+    public static String getCourseType(Department dept, Course course){
+        if(dept == null || course == null) return "Elective";
+        
+        if(dept.getCourseCatalog() != null){
+            String courseNo = course.getCourseNumber();
+            if ("INFO 5100".equals(courseNo) || "INFO 6120".equals(courseNo) || "INFO 6250".equals(courseNo)) {
+                return "Core";
+            }
+        }
+        return "Elective";
+    }
+    
+    
+    
     
     
 }
