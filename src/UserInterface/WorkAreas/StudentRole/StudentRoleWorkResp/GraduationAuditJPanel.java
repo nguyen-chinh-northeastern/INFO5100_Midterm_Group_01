@@ -117,6 +117,8 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
         lblDegree.setText("Degree Program");
         add(lblDegree);
         lblDegree.setBounds(80, 160, 90, 16);
+
+        txtDegree.setEditable(false);
         add(txtDegree);
         txtDegree.setBounds(180, 150, 320, 26);
 
