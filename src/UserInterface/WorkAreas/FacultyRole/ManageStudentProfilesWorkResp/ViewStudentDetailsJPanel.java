@@ -98,7 +98,7 @@ public class ViewStudentDetailsJPanel extends javax.swing.JPanel {
         add(lblNuidVal);
         lblNuidVal.setBounds(260, 90, 200, 20);
         add(jSeparator1);
-        jSeparator1.setBounds(20, 120, 520, 10);
+        jSeparator1.setBounds(20, 120, 520, 3);
 
         lblHobbies.setText("Hobbies:");
         add(lblHobbies);
@@ -146,7 +146,7 @@ public class ViewStudentDetailsJPanel extends javax.swing.JPanel {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
