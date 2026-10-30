@@ -9,13 +9,13 @@ import Business.Business;
 import Business.UserAccounts.UserAccount;
 import Business.UserAccounts.UserAccountDirectory;
 
-
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author kal bugrara
+ * @author Lee Wang (update)
  */
 public class ManageUserAccountsJPanel extends javax.swing.JPanel {
 
@@ -25,7 +25,6 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
     JPanel CardSequencePanel;
     Business business;
     UserAccount selecteduseraccount;
-
 
     public ManageUserAccountsJPanel(Business bz, JPanel jp) {
         CardSequencePanel = jp;
@@ -44,26 +43,21 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
             ((DefaultTableModel) UserAccountTable.getModel()).removeRow(i);
         }
 
-
-
         UserAccountDirectory uad = business.getUserAccountDirectory();
-
-       
 
         for (UserAccount ua : uad.getUserAccountList()) {
 
             Object[] row = new Object[5];
             row[0] = ua;
- //           row[1] = ua.getStatus(); //complete this..
- //           row[2] = ua.getLastUpdated()
- //           row[3] = 
+            //           row[1] = ua.getStatus(); //complete this..
+            //           row[2] = ua.getLastUpdated()
+            //           row[3] = 
 
             ((DefaultTableModel) UserAccountTable.getModel()).addRow(row);
         }
 
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -74,6 +68,7 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         Back = new javax.swing.JButton();
+        Delete = new javax.swing.JButton();
         Next = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -91,6 +86,15 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
         });
         add(Back);
         Back.setBounds(30, 300, 75, 24);
+
+        Delete.setText("Delete");
+        Delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteActionPerformed(evt);
+            }
+        });
+        add(Delete);
+        Delete.setBounds(260, 300, 72, 24);
 
         Next.setText("Next >>");
         Next.addActionListener(new java.awt.event.ActionListener() {
@@ -142,17 +146,17 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         CardSequencePanel.remove(this);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
- //       ((java.awt.CardLayout)CardSequencePanel.getLayout()).show(CardSequencePanel, "IdentifyEventTypes");
-
+        //       ((java.awt.CardLayout)CardSequencePanel.getLayout()).show(CardSequencePanel, "IdentifyEventTypes");
     }//GEN-LAST:event_BackActionPerformed
 
     private void NextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextActionPerformed
         // TODO add your handling code here:
-        if(selecteduseraccount==null) return;
+        if (selecteduseraccount == null) {
+            return;
+        }
         AdminUserAccount mppd = new AdminUserAccount(selecteduseraccount, CardSequencePanel);
         CardSequencePanel.add(mppd);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-
     }//GEN-LAST:event_NextActionPerformed
 
     private void UserAccountTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserAccountTableMousePressed
@@ -166,21 +170,20 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
         selecteduseraccount = (UserAccount) UserAccountTable.getValueAt(selectedrow, 0);
         if (selecteduseraccount == null) {
             return;
-        
-        
-            
+        }
     }//GEN-LAST:event_UserAccountTableMousePressed
-    
-    }
-    
+
+    private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DeleteActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Back;
+    private javax.swing.JButton Delete;
     private javax.swing.JButton Next;
     private javax.swing.JTable UserAccountTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
-
 }
