@@ -113,10 +113,7 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
 
         UserAccountTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "User Name", "Status", "Last Activity", "Last Updated"
