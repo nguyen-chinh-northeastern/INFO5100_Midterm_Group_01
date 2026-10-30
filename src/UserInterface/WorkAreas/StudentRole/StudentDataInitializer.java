@@ -45,7 +45,8 @@ public class StudentDataInitializer {
         Department dept = business.getDepartment();
         if(dept == null || studentProfile == null) return;
         
-        if(studentProfile.getCourseList() !=null && !studentProfile.getCourseList().isEmpty()){
+        // skip only if StudentDataInitializer already populated data
+        if(studentProfile.getCourseLoadBySemester("Fall2025") != null){
             return;
         }
         
@@ -106,7 +107,14 @@ public class StudentDataInitializer {
         }
         // Establish grades and submissions - past
         
-        SeatAssignment sa1 = aedOffer.assignEmptySeat(pastLoad);
+        // Skips aed if the student is already enrolled (Laura in ConfigureABusiness)
+        SeatAssignment sa1 = null;
+        for(SeatAssignment sa : studentProfile.getCourseList()){
+            if(sa.getAssociatedCourse() == aed){
+                sa1 = aedOffer.assignEmptySeat(pastLoad);
+                break;
+            }
+        }
         SeatAssignment sa2 = dbOffer.assignEmptySeat(pastLoad);
         
         if(sa1 != null){
