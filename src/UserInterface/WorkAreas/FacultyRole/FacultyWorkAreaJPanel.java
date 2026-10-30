@@ -116,7 +116,7 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
         });
 
         titleLabel.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        titleLabel.setText("My Faculty Profie");
+        titleLabel.setText("My Faculty Profile");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
