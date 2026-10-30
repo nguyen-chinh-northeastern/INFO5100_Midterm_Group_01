@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * @author Lee Wang (update)
  */
 public class UserAccountDirectory {
-
+    
     ArrayList<UserAccount> useraccountlist;
 
     /**
@@ -45,7 +45,7 @@ public class UserAccountDirectory {
         if (findUsername(un) != null) {
             throw new IllegalArgumentException("Username exists: " + un);
         }
-
+        
         UserAccount ua = new UserAccount(p, un, pw);
         useraccountlist.add(ua);
         return ua;
@@ -87,6 +87,9 @@ public class UserAccountDirectory {
      */
     public boolean renameUsername(UserAccount ua, String un) {
         if (un.equalsIgnoreCase(ua.getUsername())) {
+            if (!un.equals(ua.getUsername())) {
+                ua.setUsername(un);
+            }
             return true;
         }
         if (!isUsernameAvailable(un)) {
