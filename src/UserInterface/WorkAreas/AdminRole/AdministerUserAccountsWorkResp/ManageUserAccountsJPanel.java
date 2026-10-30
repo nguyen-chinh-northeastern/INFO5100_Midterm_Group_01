@@ -6,8 +6,12 @@
 package UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp;
 
 import Business.Business;
+import Business.Profiles.EmployeeProfile;
 import Business.UserAccounts.UserAccount;
 import Business.UserAccounts.UserAccountDirectory;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
 
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -24,38 +28,46 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
      */
     JPanel CardSequencePanel;
     Business business;
+    EmployeeProfile profile;
     UserAccount selecteduseraccount;
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    public ManageUserAccountsJPanel(Business bz, JPanel jp) {
+    public ManageUserAccountsJPanel(Business bz, EmployeeProfile p, JPanel jp) {
+        profile = p;
         CardSequencePanel = jp;
         this.business = bz;
         initComponents();
         refreshTable();
+    }
 
+    /**
+     * Formats a LocalDateTime.
+     */
+    private String format(LocalDateTime dt) {
+        if (dt == null) {
+            return "Never";
+        }
+        return dt.format(ManageUserAccountsJPanel.dateTimeFormatter);
     }
 
     public void refreshTable() {
+        selecteduseraccount = null;
 
-//clear supplier table
         int rc = UserAccountTable.getRowCount();
-        int i;
-        for (i = rc - 1; i >= 0; i--) {
+        for (int i = rc - 1; i >= 0; i--) {
             ((DefaultTableModel) UserAccountTable.getModel()).removeRow(i);
         }
 
         UserAccountDirectory uad = business.getUserAccountDirectory();
-
         for (UserAccount ua : uad.getUserAccountList()) {
-
-            Object[] row = new Object[5];
+            Object[] row = new Object[4];
             row[0] = ua;
-            //           row[1] = ua.getStatus(); //complete this..
-            //           row[2] = ua.getLastUpdated()
-            //           row[3] = 
+            row[1] = ua.isActive() ? "Active" : "Inactive";
+            row[2] = format(ua.getLastActivity());
+            row[3] = format(ua.getLastUpdated());
 
             ((DefaultTableModel) UserAccountTable.getModel()).addRow(row);
         }
-
     }
 
     /**
@@ -76,6 +88,11 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
         UserAccountTable = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(0, 153, 153));
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
         setLayout(null);
 
         Back.setText("<< Back");
@@ -146,12 +163,15 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         CardSequencePanel.remove(this);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-        //       ((java.awt.CardLayout)CardSequencePanel.getLayout()).show(CardSequencePanel, "IdentifyEventTypes");
     }//GEN-LAST:event_BackActionPerformed
 
     private void NextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextActionPerformed
-        // TODO add your handling code here:
         if (selecteduseraccount == null) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Please select a user first",
+                    "Warning",
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
         AdminUserAccount mppd = new AdminUserAccount(selecteduseraccount, CardSequencePanel);
@@ -160,7 +180,7 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_NextActionPerformed
 
     private void UserAccountTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserAccountTableMousePressed
-        // Extracts the row (uaser account) in the table that is selected by the user
+        // Extracts the row (user account) in the table that is selected by the user
         int size = UserAccountTable.getRowCount();
         int selectedrow = UserAccountTable.getSelectionModel().getLeadSelectionIndex();
 
@@ -168,14 +188,48 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
             return;
         }
         selecteduseraccount = (UserAccount) UserAccountTable.getValueAt(selectedrow, 0);
-        if (selecteduseraccount == null) {
-            return;
-        }
     }//GEN-LAST:event_UserAccountTableMousePressed
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
-        // TODO add your handling code here:
+        if (selecteduseraccount == null) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Please select a user first",
+                    "Warning",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        // Don't allow admins to delete themselves.
+        if (selecteduseraccount.getAssociatedPersonProfile() == profile) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "You cannot delete your own account",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String un = selecteduseraccount.getUsername();
+        int choice = JOptionPane.showConfirmDialog(
+                this,
+                "Confirm delete user: " + un,
+                "Confirm",
+                JOptionPane.YES_NO_OPTION);
+        if (choice != JOptionPane.YES_OPTION) {
+            return;
+        }
+        business.getUserAccountDirectory().removeUserAccount(selecteduseraccount);
+        JOptionPane.showMessageDialog(
+                this,
+                "Successfully deleted user: " + un,
+                "Success",
+                JOptionPane.INFORMATION_MESSAGE);
+        selecteduseraccount = null;
+        refreshTable();
     }//GEN-LAST:event_DeleteActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        refreshTable();
+    }//GEN-LAST:event_formComponentShown
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Back;
