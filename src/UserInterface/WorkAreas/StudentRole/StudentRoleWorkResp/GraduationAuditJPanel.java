@@ -11,6 +11,9 @@ import Business.Persona.Transcript;
 import Business.Profiles.StudentProfile;
 import Business.UserAccounts.UserAccount;
 import UserInterface.WorkAreas.StudentRole.StudentUIUtils;
+import static UserInterface.WorkAreas.StudentRole.StudentUIUtils.calculateCreditsEarned;
+import static UserInterface.WorkAreas.StudentRole.StudentUIUtils.calculateCreditsPlanned;
+import static UserInterface.WorkAreas.StudentRole.StudentUIUtils.getCourseType;
 import UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -114,6 +117,8 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
         lblDegree.setText("Degree Program");
         add(lblDegree);
         lblDegree.setBounds(80, 160, 90, 16);
+
+        txtDegree.setEditable(false);
         add(txtDegree);
         txtDegree.setBounds(180, 150, 320, 26);
 
@@ -286,8 +291,9 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
         int planned = calculateTotalCreditsPlanned();
         int required = 32; //opportunity to update to be dynamic
 
-        txtCreditsEarned.setText(String.valueOf(earned));
-        txtCreditsPlanned.setText(String.valueOf(planned));
+        txtCreditsEarned.setText(String.valueOf(calculateCreditsEarned(studentProfile)));
+        txtCreditsPlanned.setText(String.valueOf(calculateCreditsPlanned(studentProfile)));
+
         txtCreditsRequired.setText(String.valueOf(required));
 
         // Determine readiness to graduate
@@ -380,7 +386,7 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
                     courseType = "Elective";
                 }
             }
-            row[4] = courseType;
+            row[4] = getCourseType(business.getDepartment(), course);
             model.addRow(row);
         }
     }

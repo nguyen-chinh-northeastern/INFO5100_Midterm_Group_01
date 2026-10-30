@@ -5,23 +5,60 @@
 package UserInterface.WorkAreas.StudentRole.StudentRoleWorkResp;
 
 import Business.Business;
+import Business.CourseSchedule.SeatAssignment;
+import Business.Profiles.StudentProfile;
+import UserInterface.WorkAreas.StudentRole.StudentDataInitializer;
+import UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
+import java.awt.CardLayout;
+import java.io.File;
+import java.util.ArrayList;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author rmacc
+ * @author rachel macaulay
  */
 public class CourseworkJPanel extends javax.swing.JPanel {
 
     private JPanel CardSequencePanel;
     private Business business;
+    private StudentProfile studentProfile;
+    private final JFileChooser fileChooser = new JFileChooser();
+    private File attachedFile;
+    private SeatAssignment selectedCourse;
+    
     /**
      * Creates new form CourseworkJPanel
      */
-    public CourseworkJPanel(Business business, JPanel cardSequencePanel) {
+    public CourseworkJPanel(Business business, StudentProfile student, JPanel cardSequencePanel) {
         this.business = business;
-        this.CardSequencePanel = CardSequencePanel;
+        this.CardSequencePanel = cardSequencePanel;
+        this.studentProfile = student;
         initComponents();
+        
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Documents & Images", "pdf", "docx", "txt", "png", "jpg");
+        fileChooser.setFileFilter(filter);
+        
+        tblCourses.addMouseListener(new java.awt.event.MouseAdapter(){
+            public void mousePressed(java.awt.event.MouseEvent evt){
+                tblCoursesMousePressed(evt);
+            }
+        });
+        
+        btnViewCourse.addActionListener(new java.awt.event.ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent evt){
+                btnViewCourseActionPerformed(evt);
+            }
+        });
+        
+
+        
+        populateCoursesTable();
+
     }
 
     /**
@@ -33,19 +70,223 @@ public class CourseworkJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        lblSelectedCourse = new javax.swing.JLabel();
+        txtSelectedCourse = new javax.swing.JTextField();
+        lblStatus = new javax.swing.JLabel();
+        txtAssignmentStatus = new javax.swing.JTextField();
+        btnBack = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblCourses = new javax.swing.JTable();
+        lblTitle = new javax.swing.JLabel();
+        btnViewCourse = new javax.swing.JButton();
+        lblFileIcon = new javax.swing.JLabel();
+
+        jPanel1.setBackground(new java.awt.Color(0, 153, 153));
+        jPanel1.setLayout(null);
+
+        lblSelectedCourse.setText("Selected Course");
+        jPanel1.add(lblSelectedCourse);
+        lblSelectedCourse.setBounds(20, 180, 170, 16);
+
+        txtSelectedCourse.setEditable(false);
+        jPanel1.add(txtSelectedCourse);
+        txtSelectedCourse.setBounds(210, 180, 290, 26);
+
+        lblStatus.setText("Assignment Status");
+        jPanel1.add(lblStatus);
+        lblStatus.setBounds(20, 220, 170, 16);
+
+        txtAssignmentStatus.setEditable(false);
+        jPanel1.add(txtAssignmentStatus);
+        txtAssignmentStatus.setBounds(210, 220, 290, 26);
+
+        btnBack.setText("<< Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnBack);
+        btnBack.setBounds(20, 280, 74, 23);
+
+        tblCourses.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Number", "Name", "Units", "Progress"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblCourses);
+
+        jPanel1.add(jScrollPane1);
+        jScrollPane1.setBounds(10, 60, 540, 110);
+
+        lblTitle.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        lblTitle.setText("Coursework:");
+        jPanel1.add(lblTitle);
+        lblTitle.setBounds(21, 20, 200, 28);
+
+        btnViewCourse.setText("View Course");
+        btnViewCourse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewCourseActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnViewCourse);
+        btnViewCourse.setBounds(350, 270, 200, 23);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 729, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(127, 127, 127)
+                .addComponent(lblFileIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(385, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 659, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 70, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 480, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(288, Short.MAX_VALUE)
+                .addComponent(lblFileIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(226, 226, 226))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+
+        CardSequencePanel.removeAll();
+
+        UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel studentDashboard =
+        new UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel(business, studentProfile, CardSequencePanel);
+
+        CardSequencePanel.add("student", studentDashboard);
+
+        CardLayout layout = (CardLayout) CardSequencePanel.getLayout();
+
+        CardSequencePanel.revalidate();
+        CardSequencePanel.repaint();
+
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnViewCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewCourseActionPerformed
+        // TODO add your handling code here:
+        
+        // Ensure student selects a course
+        if (selectedCourse == null){
+            JOptionPane.showMessageDialog(this, "Please select a course first.", "Selection Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // Notify student that they can't submit to completed courses
+        if (selectedCourse.GetCourseStudentScore() > 0){
+            JOptionPane.showMessageDialog(this, "This course is completed. No more submissions can be made.", "Complete Course Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Go ActiveCourseworkJPanel to view and submit coursework for course selection
+        
+        CardSequencePanel.removeAll();
+        
+        ActiveCourseworkJPanel activeCourseworkPanel = new ActiveCourseworkJPanel(business, studentProfile, CardSequencePanel, selectedCourse);
+        
+        CardSequencePanel.add("ActiveCourseworkJPanel", activeCourseworkPanel);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+    }//GEN-LAST:event_btnViewCourseActionPerformed
+
+    private void populateCoursesTable() {
+        
+        DefaultTableModel model = (DefaultTableModel) tblCourses.getModel();
+        model.setRowCount(0);
+        
+        if(studentProfile == null || studentProfile.getCourseList() == null) return;
+        
+        ArrayList<SeatAssignment> courses = studentProfile.getCourseList();
+        for(SeatAssignment sa : courses){
+            if(sa.getAssociatedCourse() == null) continue;
+            
+            Object[] row = new Object[4];
+            row[0] = sa.getAssociatedCourse().getCourseNumber();
+            row[1] = sa.getAssociatedCourse().getName();
+            row[2] = sa.getCreditHours();
+            //row[3] = (sa.GetCourseStudentScore() > 0) ? "Graded & Closed" : "1 Assignment Pending";
+           row[3] = StudentDataInitializer.getProgressString(sa); //uses initializer to populate dummy data
+            model.addRow(row);
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+
+    
+    private void backAction(){
+        CardSequencePanel.removeAll();
+        StudentWorkAreaJPanel studentDashboard = new StudentWorkAreaJPanel(business, studentProfile, CardSequencePanel);
+        CardSequencePanel.add("student", studentDashboard);
+        CardLayout layout = (CardLayout) CardSequencePanel.getLayout();
+        layout.next(CardSequencePanel);
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnViewCourse;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblFileIcon;
+    private javax.swing.JLabel lblSelectedCourse;
+    private javax.swing.JLabel lblStatus;
+    private javax.swing.JLabel lblTitle;
+    private javax.swing.JTable tblCourses;
+    private javax.swing.JTextField txtAssignmentStatus;
+    private javax.swing.JTextField txtSelectedCourse;
     // End of variables declaration//GEN-END:variables
+
+private void tblCoursesMousePressed(java.awt.event.MouseEvent evt){
+    int selectedRow = tblCourses.getSelectedRow();
+    if(selectedRow < 0) return;
+    
+    selectedCourse = studentProfile.getCourseList().get(selectedRow); 
+    
+    if(selectedCourse != null && selectedCourse.getAssociatedCourse() != null){
+        txtSelectedCourse.setText(selectedCourse.getAssociatedCourse().getCourseNumber() + " - " + selectedCourse.getAssociatedCourse().getName());
+    
+    if(selectedCourse.GetCourseStudentScore() > 0){
+            txtAssignmentStatus.setText("Course Completed");
+        }else{
+            txtAssignmentStatus.setText("Active Course");
+        }    
+        
+    }
+    
+    
+}
+
+
+private void backButtonActionPerformed(java.awt.event.ActionEvent evt){
+    backAction();
+}
+
+
 }
