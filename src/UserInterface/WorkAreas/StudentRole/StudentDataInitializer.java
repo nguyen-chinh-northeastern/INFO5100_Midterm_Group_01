@@ -109,12 +109,14 @@ public class StudentDataInitializer {
         
         // Skips aed if the student is already enrolled (Laura in ConfigureABusiness)
         SeatAssignment sa1 = null;
+        boolean hasAed = false;
         for(SeatAssignment sa : studentProfile.getCourseList()){
             if(sa.getAssociatedCourse() == aed){
-                sa1 = aedOffer.assignEmptySeat(pastLoad);
-                break;
+                hasAed = true;
             }
         }
+        if (!hasAed)
+            sa1 = aedOffer.assignEmptySeat(pastLoad);
         SeatAssignment sa2 = dbOffer.assignEmptySeat(pastLoad);
         
         if(sa1 != null){
