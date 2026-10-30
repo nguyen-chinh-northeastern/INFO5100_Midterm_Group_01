@@ -85,12 +85,7 @@ public class StudentUIUtils {
     public static String convertGpaToLetterGrade(SeatAssignment sa){
         if(sa == null) return "N/A";
         
-        float gradeValue = 0.0f;
-        try{
-            java.lang.reflect.Field gradeField = sa.getClass().getDeclaredField("grade");
-            gradeField.setAccessible(true);
-            gradeValue = ((Number) gradeField.get(sa)).floatValue();
-        } catch (Exception ignored){}
+        float gradeValue = sa.getGrade();
         
         if(gradeValue >= 4.0f) return "A";
         if(gradeValue >= 3.7f) return "A-";
@@ -121,13 +116,7 @@ public class StudentUIUtils {
                 continue;
             }
             
-            float gradeValue = 0.0f;
-            try{
-                java.lang.reflect.Field gradeField = sa.getClass().getDeclaredField("grade");
-                gradeField.setAccessible(true);
-                gradeValue = ((Number) gradeField.get(sa)).floatValue();
-                
-            }catch(Exception ignored){}
+            float gradeValue = sa.getGrade();
             
             if(gradeValue > 0.0f){
                 totalEarned += sa.getCreditHours();
@@ -143,13 +132,7 @@ public class StudentUIUtils {
         for (SeatAssignment sa : student.getCourseList()){
             if(sa.getAssociatedCourse() == null) continue;
             
-            float gradeValue = 0.0f;
-            try{
-                java.lang.reflect.Field gradeField = sa.getClass().getDeclaredField("grade");
-                gradeField.setAccessible(true);
-                gradeValue = ((Number) gradeField.get(sa)).floatValue();
-                
-            }catch(Exception ignored){}
+            float gradeValue = sa.getGrade();
             
             if(gradeValue == 0.0f){
                 totalPlanned += sa.getCreditHours();
