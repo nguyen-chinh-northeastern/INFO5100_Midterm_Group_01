@@ -220,10 +220,10 @@ public class ActiveCourseworkJPanel extends javax.swing.JPanel {
 
         CardSequencePanel.removeAll();
 
-        UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel studentDashboard =
-        new UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel(business, studentProfile, CardSequencePanel);
+        UserInterface.WorkAreas.StudentRole.StudentRoleWorkResp.CourseworkJPanel courseworkPanel =
+        new UserInterface.WorkAreas.StudentRole.StudentRoleWorkResp.CourseworkJPanel(business, studentProfile, CardSequencePanel);
 
-        CardSequencePanel.add("student", studentDashboard);
+        CardSequencePanel.add("coursework", courseworkPanel);
 
         CardLayout layout = (CardLayout) CardSequencePanel.getLayout();
 
