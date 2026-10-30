@@ -19,6 +19,7 @@ import java.util.Map;
 /**
  *
  * @author rachel macaulay
+ * @author Lee Wang (update)
  */
 public class StudentDataInitializer {
     

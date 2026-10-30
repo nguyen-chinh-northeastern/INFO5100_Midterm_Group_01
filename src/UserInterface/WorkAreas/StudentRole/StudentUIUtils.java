@@ -15,6 +15,7 @@ import Business.Profiles.StudentProfile;
  * Shared layout utility to streamline shared functionality between multiple student JPanels
  *
  * @author rachel macaulay
+ * @author Lee Wang (update)
  */
 public class StudentUIUtils {
     
