@@ -11,6 +11,7 @@
 package UserInterface.WorkAreas.AdminRole;
 
 import Business.Business;
+import Business.Profiles.EmployeeProfile;
 import UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp.ManageUserAccountsJPanel;
 import UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp.ManagePersonsJPanel;
 
@@ -24,17 +25,16 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
     javax.swing.JPanel CardSequencePanel;
     Business business;
+    EmployeeProfile profile;
 
     /**
      * Creates new form UnitRiskWorkArea
      */
-
-    public AdminRoleWorkAreaJPanel(Business b, JPanel clp) {
-
+    public AdminRoleWorkAreaJPanel(Business b, EmployeeProfile ep, JPanel clp) {
         business = b;
+        profile = ep;
         this.CardSequencePanel = clp;
         initComponents();
-
     }
 
     /**
@@ -162,7 +162,7 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     private void jButton4IdentifyResourceAssetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4IdentifyResourceAssetsActionPerformed
         // TODO add your handling code here:
 
-        ManageUserAccountsJPanel aos = new ManageUserAccountsJPanel(business, CardSequencePanel);
+        ManageUserAccountsJPanel aos = new ManageUserAccountsJPanel(business, profile, CardSequencePanel);
 
         CardSequencePanel.add("ManageVulns", aos);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
