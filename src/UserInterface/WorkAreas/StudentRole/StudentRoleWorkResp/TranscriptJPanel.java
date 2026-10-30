@@ -117,6 +117,11 @@ public class TranscriptJPanel extends javax.swing.JPanel {
         lblGPA.setBounds(20, 270, 170, 16);
 
         txtGPA.setEditable(false);
+        txtGPA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtGPAActionPerformed(evt);
+            }
+        });
         add(txtGPA);
         txtGPA.setBounds(210, 270, 290, 26);
 
@@ -184,6 +189,10 @@ public class TranscriptJPanel extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnBackActionPerformed
 
+    private void txtGPAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGPAActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtGPAActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
@@ -211,23 +220,13 @@ public class TranscriptJPanel extends javax.swing.JPanel {
     
     // Calculate credits earned
     private int calculateTotalCreditsEarned(){
-        int totalCredits = 0;
-        if(studentProfile != null){
-            ArrayList<SeatAssignment> courseList = studentProfile.getCourseList();
-            if (courseList != null){
-                for (SeatAssignment sa : courseList){
-                    String semester = StudentUIUtils.getSemesterForSeatAssignment(studentProfile, sa);
-                    if(!semester.equals("Unknown") && isPastYearSemester(semester)){
-                        totalCredits += sa.getCreditHours();
-                    }
-              
-            
-
-            }
-        }
+        
+        if (studentProfile == null) return 0;
+        
+            return StudentUIUtils.calculateCreditsEarned(studentProfile);
        
-        }
-         return totalCredits;
+        
+        
     }
      
 

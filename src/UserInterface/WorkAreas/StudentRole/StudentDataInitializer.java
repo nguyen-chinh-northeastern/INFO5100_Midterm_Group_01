@@ -45,8 +45,22 @@ public class StudentDataInitializer {
         Department dept = business.getDepartment();
         if(dept == null || studentProfile == null) return;
         
+        // check for completed courses to see if all assignments expected
+        for(SeatAssignment sa : studentProfile.getCourseList()){
+            if(sa.getAssociatedCourse() != null){
+                String courseNum = sa.getAssociatedCourse().getCourseNumber();
+                int totalExpected = totalAssignmentsPerCourse.getOrDefault(sa.getAssociatedCourse().getCourseNumber(), 12);
+                submittedAssignments.put(sa, totalExpected);
+                for(int i = 1; i<= totalExpected; i++){
+                    assignmentStatusMap.put(sa.hashCode() + "_Assignment " + i, "Submitted");
+                    
+                   
+                }
+            }
+        }
+        
         // skip only if StudentDataInitializer already populated data
-        if(studentProfile.getCourseLoadBySemester("Fall2025") != null){
+        if(studentProfile.getCourseLoadBySemester("Fall 2025") != null){
             return;
         }
         
@@ -83,7 +97,7 @@ public class StudentDataInitializer {
         
         
         // Establish semesters - past
-        String pastSemester = "Fall2025";
+        String pastSemester = "Fall 2025";
         CourseSchedule pastSchedule = dept.getCourseSchedule(pastSemester);
         boolean isPast = false;
         if(pastSchedule == null){
@@ -132,7 +146,7 @@ public class StudentDataInitializer {
         }
        
        // Establish semesters - current
-        String currentSemester = "Fall2026";
+        String currentSemester = "Fall 2026";
         CourseSchedule currentSchedule = dept.getCourseSchedule(currentSemester);
         boolean isCurrent = false;
         
@@ -209,6 +223,26 @@ public class StudentDataInitializer {
 
     public static String getAssignmentStatus(SeatAssignment sa, String assignmentName) {
         return assignmentStatusMap.getOrDefault(sa.hashCode() + "_" + assignmentName, "Pending Submission");
+    }
+    
+    // Assignment Scores
+    public static String getAssignmentScore(SeatAssignment sa, String assignmentName){
+        String status = getAssignmentStatus(sa, assignmentName);
+        if(!"Submitted".equals(status)){    //if not yet submitted, no score
+            return "-";
+        }
+        
+        float courseGrade = sa.getGrade();
+        // Ensure that course grade reflects data elsewhere in project
+        if(courseGrade >= 4.0f){
+            return"100";
+        }else if(courseGrade > 0.0f){
+            return String.valueOf(Math.round(courseGrade * 25));
+        }
+        
+        // Default dummy score
+        int dummyScore = 85 + (Math.abs(assignmentName.hashCode()) % 15);
+        return String.valueOf(dummyScore);
     }
     
     

@@ -232,43 +232,11 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
     
     // Calculate credits earned
     private int calculateTotalCreditsEarned(){
-        int totalCredits = 0;
-        if(studentProfile != null){
-            ArrayList<SeatAssignment> courseList = studentProfile.getCourseList();
-            if (courseList != null){
-                for (SeatAssignment sa : courseList){
-                    String semester = StudentUIUtils.getSemesterForSeatAssignment(studentProfile, sa);
-                    if(!semester.equals("Unknown") && StudentUIUtils.isPastYearSemester(semester)){
-                        totalCredits += sa.getCreditHours();
-                    }
-              
-            
-
-            }
-        }
-       
-        }
-         return totalCredits;
+        return calculateCreditsEarned(studentProfile);
     }
     
     private int calculateTotalCreditsPlanned(){
-        int totalCredits = 0;
-        if(studentProfile != null){
-        ArrayList<SeatAssignment> courseList = studentProfile.getCourseList();
-        if (courseList != null){
-            for (SeatAssignment sa : courseList){
-                 String semester = StudentUIUtils.getSemesterForSeatAssignment(studentProfile, sa);
-                    if(!semester.equals("Unknown") && StudentUIUtils.isPastYearSemester(semester)){
-                        totalCredits += sa.getCreditHours();
-                    }
-              
-            
-
-            }
-        }
-        
-        }
-        return totalCredits;
+        return calculateCreditsPlanned(studentProfile);
     }
     
 
@@ -367,8 +335,7 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
             
             if(matchingAssignment !=null){
                 
-                String courseSemester = StudentUIUtils.getSemesterForSeatAssignment(studentProfile, matchingAssignment);
-                if(!courseSemester.equals("Unknown") && StudentUIUtils.isPastYearSemester(courseSemester)){
+                if(matchingAssignment.getGrade() > 0.0f){
                     status = "Completed";
                 } else {
                     status = "Registered";

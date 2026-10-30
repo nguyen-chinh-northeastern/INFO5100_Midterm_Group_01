@@ -8,6 +8,7 @@ import Business.Business;
 import Business.CourseSchedule.SeatAssignment;
 import Business.Profiles.StudentProfile;
 import UserInterface.WorkAreas.StudentRole.StudentDataInitializer;
+import static UserInterface.WorkAreas.StudentRole.StudentDataInitializer.getAssignmentScore;
 import static UserInterface.WorkAreas.StudentRole.StudentDataInitializer.getAssignmentStatus;
 import static UserInterface.WorkAreas.StudentRole.StudentDataInitializer.getProgressString;
 import static UserInterface.WorkAreas.StudentRole.StudentDataInitializer.submitAssignment;
@@ -257,11 +258,11 @@ public class ActiveCourseworkJPanel extends javax.swing.JPanel {
         int totalExpected = StudentDataInitializer.getTotalAssignments(selectedCourse);
         for(int i = 1; i <= totalExpected; i++){
             String name = "Assignment " + i;
-            Object[] row = new Object[3];
+            Object[] row = new Object[4];
             row[0] = name;
             row[1] = "100 Pts";
             row[2] = getAssignmentStatus(selectedCourse, name);
-            
+            row[3] = getAssignmentScore(selectedCourse, name);
             model.addRow(row);
         }
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -312,8 +313,10 @@ private void tblAssignmentsMousePressed(java.awt.event.MouseEvent evt){
     if(selectedRow < 0) return;
     
     selectedAssignmentName = (String) tblAssignments.getValueAt(selectedRow, 0);
+    if(selectedAssignmentName == null) return;
+    
     String currentStatus = StudentDataInitializer.getAssignmentStatus(selectedCourse, selectedAssignmentName);
-    txtAssignmentStatus.setText(selectedAssignmentName + "Status:" + currentStatus);
+    txtAssignmentStatus.setText(selectedAssignmentName + " Status: " + currentStatus);
     
     if("Submitted".equals(currentStatus)){
         setViewMode();
