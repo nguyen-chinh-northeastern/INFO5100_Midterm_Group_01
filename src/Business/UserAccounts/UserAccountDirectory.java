@@ -18,12 +18,16 @@ public class UserAccountDirectory {
 
     ArrayList<UserAccount> useraccountlist;
 
-    /** Constructor. */
+    /**
+     * Constructor.
+     */
     public UserAccountDirectory() {
         useraccountlist = new ArrayList();
     }
 
-    /** Adds account. */
+    /**
+     * Adds account.
+     */
     public UserAccount newUserAccount(Profile p, String un, String pw) {
         // Profile must not be null.
         if (p == null) {
@@ -41,13 +45,15 @@ public class UserAccountDirectory {
         if (findUsername(un) != null) {
             throw new IllegalArgumentException("Username exists: " + un);
         }
-        
+
         UserAccount ua = new UserAccount(p, un, pw);
         useraccountlist.add(ua);
         return ua;
     }
 
-    /** Finds account. */
+    /**
+     * Finds account.
+     */
     public UserAccount findUserAccount(String id) {
         for (UserAccount ua : useraccountlist) {
             if (ua.isMatch(id)) {
@@ -57,7 +63,9 @@ public class UserAccountDirectory {
         return null; //not found after going through the whole list
     }
 
-    /** Finds username. */
+    /**
+     * Finds username.
+     */
     public UserAccount findUsername(String un) {
         for (UserAccount ua : useraccountlist) {
             if (ua.getUsername().equalsIgnoreCase(un)) {
@@ -67,13 +75,20 @@ public class UserAccountDirectory {
         return null;
     }
 
-    /** Checks username. */
+    /**
+     * Checks username.
+     */
     public boolean isUsernameAvailable(String un) {
         return findUsername(un) == null;
     }
 
-    /** Rename username. */
+    /**
+     * Rename username.
+     */
     public boolean renameUsername(UserAccount ua, String un) {
+        if (un.equalsIgnoreCase(ua.getUsername())) {
+            return true;
+        }
         if (!isUsernameAvailable(un)) {
             return false;
         }
@@ -81,12 +96,16 @@ public class UserAccountDirectory {
         return true;
     }
 
-    /** Removes account. */
+    /**
+     * Removes account.
+     */
     public void removeUserAccount(UserAccount ua) {
         useraccountlist.remove(ua);
     }
 
-    /** Authenticates user. */
+    /**
+     * Authenticates user.
+     */
     public UserAccount AuthenticateUser(String un, String pw) {
         for (UserAccount ua : useraccountlist) {
             if (ua.IsValidUser(un, pw)) {
@@ -97,7 +116,9 @@ public class UserAccountDirectory {
         return null; //not found after going through the whole list
     }
 
-    /** Gets accounts. */
+    /**
+     * Gets accounts.
+     */
     public ArrayList<UserAccount> getUserAccountList() {
         return useraccountlist;
     }
