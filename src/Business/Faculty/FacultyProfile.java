@@ -17,14 +17,14 @@ import java.util.ArrayList;
  */
 public class FacultyProfile extends Profile {
 
-    ArrayList <FacultyAssignment> facultyassignments; 
+    ArrayList <FacultyAssignment> facultyAssignments; 
     private String academicRank;
     private String officeLocation;
     
     public FacultyProfile(Person p) {
 
         super(p);
-        facultyassignments = new ArrayList();
+        facultyAssignments = new ArrayList();
     }
 
     @Override
@@ -53,21 +53,21 @@ public class FacultyProfile extends Profile {
         double sum = 0.0;
         //for each facultyassignment extract class rating
         //add them up and divide by the number of teaching assignmnet;
-        for(FacultyAssignment fa: facultyassignments){
+        for(FacultyAssignment fa: facultyAssignments){
             
             sum = sum + fa.getRating();
             
         }
         //divide by the total number of faculty assignments
         
-        return sum/(facultyassignments.size()*1.0); //this ensure we have double/double
+        return sum/(facultyAssignments.size()*1.0); //this ensure we have double/double
         
     }
 
     public FacultyAssignment AssignAsTeacher(CourseOffer co){
         
         FacultyAssignment fa = new FacultyAssignment(this, co);
-        facultyassignments.add(fa);
+        facultyAssignments.add(fa);
         
         return fa;
     }
@@ -82,6 +82,10 @@ public class FacultyProfile extends Profile {
             return true;
         }
         return false;
+    }
+
+    public ArrayList<FacultyAssignment> getFacultyAssignments() {
+        return facultyAssignments;
     }
 
 }

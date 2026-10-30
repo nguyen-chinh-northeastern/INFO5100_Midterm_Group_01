@@ -12,6 +12,7 @@ import java.util.ArrayList;
 /**
  *
  * @author kal bugrara
+ * @author Chinh Nguyen (update)
  */
 public class StudentDirectory {
 
@@ -40,7 +41,11 @@ public class StudentDirectory {
                 return sp;
             }
         }
-            return null; //not found after going through the whole list
-         }
+        return null; //not found after going through the whole list
+    }
+
+    public ArrayList<StudentProfile> getStudentList() {
+        return studentlist;
+    }
     
 }

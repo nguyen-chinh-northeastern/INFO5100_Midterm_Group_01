@@ -12,9 +12,10 @@ package UserInterface.WorkAreas.FacultyRole;
 
 import Business.Business;
 import Business.Faculty.FacultyProfile;
-import UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp.AdministerPersonJPanel;
 import UserInterface.WorkAreas.FacultyRole.FacultyRoleWorkResp02.ManageCoursesJPanel;
 import UserInterface.WorkAreas.FacultyRole.ManageProfileWorkResp.ManageProfileJPanel;
+import UserInterface.WorkAreas.FacultyRole.ManageStudentProfilesWorkResp.ManageStudentProfilesJPanel;
+import UserInterface.WorkAreas.FacultyRole.PerformanceReportsWorkResp.PerformanceReportsJPanel;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 
@@ -157,14 +158,17 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
         
         ManageCoursesJPanel panel = new ManageCoursesJPanel(business, CardSequencePanel);
         
-        CardSequencePanel.add("ManageCoursesJPanel", panel);
+        CardSequencePanel.add("Manage Courses", panel);
         ((CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
     }//GEN-LAST:event_btnManageCoursesIdentifyResourceAssetsActionPerformed
 
     private void btnManageStudentProfilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageStudentProfilesActionPerformed
-        // TODO add your handling code here:
-
+        
+        ManageStudentProfilesJPanel panel = new ManageStudentProfilesJPanel(business, profile, CardSequencePanel);
+        
+        CardSequencePanel.add("Manage Student Profiles", panel);
+        ((CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
   
     }//GEN-LAST:event_btnManageStudentProfilesActionPerformed
 
@@ -177,7 +181,11 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
 }//GEN-LAST:event_btnMyProfileIdentifyEventsActionPerformed
 
     private void btnPerformanceReportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerformanceReportsActionPerformed
-        // TODO add your handling code here:
+        
+        PerformanceReportsJPanel panel = new PerformanceReportsJPanel(business, profile, CardSequencePanel);
+        
+        CardSequencePanel.add("Performance Reports", panel);
+        ((CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
 }//GEN-LAST:event_btnPerformanceReportsActionPerformed
 

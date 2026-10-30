@@ -12,6 +12,7 @@ import java.util.ArrayList;
 /**
  *
  * @author kal bugrara
+ * @author Chinh Nguyen (update)
  */
 public class CourseSchedule {
 
@@ -56,6 +57,10 @@ public class CourseSchedule {
 
         }
         return sum;
+    }
+
+    public ArrayList<CourseOffer> getSchedule() {
+        return schedule;
     }
 
 }

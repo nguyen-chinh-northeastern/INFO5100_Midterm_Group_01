@@ -15,11 +15,14 @@ import java.util.ArrayList;
 /**
  *
  * @author kal bugrara
+ * @author Chinh Nguyen (update)
  */
 public class StudentProfile extends Profile {
 
     Transcript transcript;
     EmploymentHistory employmenthistory;
+    private String hobbies;
+    private String interests;
 
     public StudentProfile(Person p) {
 
@@ -60,5 +63,27 @@ public class StudentProfile extends Profile {
 
         return transcript.getCourseList();
 
+    }
+
+    public String getHobbies() {
+        return hobbies;
+    }
+
+    public void setHobbies(String hobbies) {
+        this.hobbies = hobbies;
+    }
+
+    public String getInterests() {
+        return interests;
+    }
+
+    public void setInterests(String interests) {
+        this.interests = interests;
+    }
+    
+    @Override
+    public String toString() {
+        if (person == null) return null;
+        return person.getPersonId();
     }
 }

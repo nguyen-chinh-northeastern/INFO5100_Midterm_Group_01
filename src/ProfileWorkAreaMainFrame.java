@@ -35,7 +35,7 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
         business = ConfigureABusiness.initialize();
         
         // Set the main window size and center it on the screen
-        setSize(850, 500);
+        setSize(850, 550);
         setLocationRelativeTo(null);
     }
 
