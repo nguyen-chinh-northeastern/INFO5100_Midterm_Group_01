@@ -176,13 +176,7 @@ public class StudentDataInitializer {
     // Assign Grade
     
     private static void setGrade(SeatAssignment sa, float gradeValue){
-        try{
-            java.lang.reflect.Field gradeField = sa.getClass().getDeclaredField("grade");
-            gradeField.setAccessible(true);
-            gradeField.set(sa, gradeValue);
-            
-        } catch (Exception ignored) {}
-        
+        sa.setGrade(gradeValue);
     }
     
     public static int getTotalAssignments(SeatAssignment sa) {
