@@ -95,8 +95,8 @@ public class StudentDataInitializer {
         if(dbOffer == null) dbOffer = pastSchedule.newCourseOffer("INFO 6120");
         
         if(isPast){
-            if(aedOffer != null) aedOffer.generatSeats(10);
-            if(dbOffer != null) dbOffer.generatSeats(10);
+            if(aedOffer != null) aedOffer.generateSeats(10);
+            if(dbOffer != null) dbOffer.generateSeats(10);
         }
         
         CourseLoad pastLoad = studentProfile.getCourseLoadBySemester(pastSemester);
@@ -136,8 +136,8 @@ public class StudentDataInitializer {
         if(uxOffer == null) uxOffer = currentSchedule.newCourseOffer("CSYE 7280");
         
         if(isCurrent){
-            if(webOffer != null) webOffer.generatSeats(10);
-            if(uxOffer != null) uxOffer.generatSeats(10);
+            if(webOffer != null) webOffer.generateSeats(10);
+            if(uxOffer != null) uxOffer.generateSeats(10);
         }
         
         CourseLoad currentLoad = studentProfile.getCourseLoadBySemester(currentSemester);
