@@ -33,12 +33,12 @@ public class UserAccountDirectory {
         if (p == null) {
             throw new IllegalArgumentException("Profile is null");
         }
-        // Username must not be null.
-        if (un == null) {
+        // Username must not be null or blank.
+        if (un == null || un.isBlank()) {
             throw new IllegalArgumentException("Username is null");
         }
-        // Password must not be null.
-        if (pw == null) {
+        // Password must not be null or empty.
+        if (pw == null || pw.isEmpty()) {
             throw new IllegalArgumentException("Password is null");
         }
         // Username must be unique.
@@ -79,7 +79,7 @@ public class UserAccountDirectory {
      * Checks username.
      */
     public boolean isUsernameAvailable(String un) {
-        return findUsername(un) == null;
+        return findUsername(un) == null && !un.isBlank();
     }
 
     /**
