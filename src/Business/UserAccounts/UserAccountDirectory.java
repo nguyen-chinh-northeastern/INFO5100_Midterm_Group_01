@@ -34,7 +34,7 @@ public class UserAccountDirectory {
             throw new IllegalArgumentException("Profile is null");
         }
         // Username must not be null or blank.
-        if (un == null || un.isBlank()) {
+        if (un == null || un.trim().isEmpty()) {
             throw new IllegalArgumentException("Username is null");
         }
         // Password must not be null or empty.
@@ -79,7 +79,7 @@ public class UserAccountDirectory {
      * Checks username.
      */
     public boolean isUsernameAvailable(String un) {
-        return findUsername(un) == null && !un.isBlank();
+        return findUsername(un) == null && !un.trim().isEmpty();
     }
 
     /**
