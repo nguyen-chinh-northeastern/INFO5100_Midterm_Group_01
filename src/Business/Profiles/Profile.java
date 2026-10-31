@@ -10,6 +10,7 @@ import Business.Persona.Person;
 /**
  *
  * @author kal bugrara
+ * @author Lee Wang (update)
  */
 public abstract class Profile {
 
@@ -33,10 +34,13 @@ public abstract class Profile {
         return false;
     }
 
+    /**
+     * Gets the person's ID (their name) for display, or the role if no person is linked.
+     */
     @Override
     public String toString() {
         if (person == null) {
-            return null;
+            return getRole();
         }
         return person.getPersonId();
     }

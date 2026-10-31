@@ -16,6 +16,7 @@ import java.util.ArrayList;
  *
  * @author kal bugrara
  * @author Chinh Nguyen (update)
+ * @author Lee Wang (update)
  */
 public class StudentProfile extends Profile {
 

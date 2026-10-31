@@ -13,6 +13,7 @@ import java.util.ArrayList;
 /**
  *
  * @author kal bugrara
+ * @author Lee Wang (update)
  */
 public class EmployeeDirectory {
 
@@ -44,7 +45,10 @@ public class EmployeeDirectory {
             return null; //not found after going through the whole list
          }
     
-    public ArrayList<EmployeeProfile> getEmployeelist() {
+    /**
+     * Gets all employee profiles.
+     */
+    public ArrayList<EmployeeProfile> getEmployeeList() {
         return employeelist;
     }
 }
