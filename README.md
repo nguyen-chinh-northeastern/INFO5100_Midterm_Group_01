@@ -113,36 +113,7 @@ Instanceof checks help ensure that sub-panels cannot be loaded without holding t
  * **3.3 Faculty Profile: **
  * **3.4 Performance Reports: **
    *   (CONTINUE)
-### 4. Student
-* **4.1 Course Work: ** Click **Course Work** from the Student Work Area
-  * 4.1.1
-  * ## 6. Usage Instructions
-
-### 1. Authentication
-* **Accessing Accounts:** Enter your assigned credentials (Username and Password) into the login panel and click **Login**.
-* **System Verification:** The application invokes the background `UserAccountDirectory` and `Access Control Layer` validation routines.
-* **Access Control:** Incorrect credentials deny system entry. 
-* **Dynamic Routing:** Authorized sessions trigger a `CardLayout` update to display the workspace panel dedicated to your specific role.
-
-### 2. Administrator
-* **Manage User Accounts:** Click **Manage User Accounts** from the Admin Work Area to open user directory tools.
-  * Create, view, and update application credentials and assign role profiles to system users.
-* **Manage Personnel:** Click **Manage Persons** to track human resources.
-  * Register new physical identities (Students or Faculty Members) directly into the core university registry.
-
-### 3. Faculty
-* **3.1 Manage Courses:** Click **Manage Courses** from the Faculty Work Area to add, view, and update class offerings.
-  * **3.1.1 Add a Course:** Click **Add Course** and input the *Course Number*, *Course Name*, *Credits*, and *Price*.
-    * Mandatory inputs: All fields are required; the system blocks creation if the price is evaluated at $0.
-    * Automation: The total price computes automatically based on the entered Price and Credits metrics. 
-    * Persistence: Successful entries populate the main Course List data table.
-  * **3.1.2 View & Edit Details:** Highlight a course in the table and click **Next >>** to display item specs.
-    * Modify fields as needed and click **Update** to save the changes back to the system.
-  * **3.1.3 Delete a Course:** Select a record and click **Delete**.
-    * Safety confirmation: A popup dialog verifies your decision before altering data.
-    * Notification: The system provides a success prompt once deletion completes.
-* **3.2 Manage Student Profiles:** Click **Manage Student Profiles** from the Faculty Work Area to inspect student rosters.
-  * Gain direct insights into student academic progress, listed hobbies, and personal interests.
+  
 
 ### 4. Student
 * **4.1 Coursework:** Click **Course Work** from the Student Work Area to track class progress.
@@ -166,6 +137,8 @@ Instanceof checks help ensure that sub-panels cannot be loaded without holding t
   * 4.4.4 Adding a course: Select a valid target semester, click **Add**, and check the updated live workspace tables.
   * 4.4.5 Dropping a course: Select a registered class item, click **Drop**, and verify the operation in the safety alert popup to clear the record.
   * 4.4.6 Redundancy checks: Attempting to register for a course you are already enrolled in prompts an error message.
+
+
 
 ---
 
