@@ -45,6 +45,16 @@ public class StudentDataInitializer {
         Department dept = business.getDepartment();
         if(dept == null || studentProfile == null) return;
         
+        
+        if (studentProfile.getCourseList() != null) {
+            for (SeatAssignment sa : studentProfile.getCourseList()) {
+                if (sa.getGrade() > 0.0f) {
+                    int totalAssignments = getTotalAssignments(sa);
+                    submittedAssignments.put(sa, totalAssignments);
+                }
+            }
+        }
+        
         // skip only if StudentDataInitializer already populated data
         if(studentProfile.getCourseLoadBySemester("Fall 2025") != null){
             return;
@@ -196,6 +206,12 @@ public class StudentDataInitializer {
     }
 
     public static int getSubmittedCount(SeatAssignment sa) {
+        if(sa == null || sa.getAssociatedCourse() == null) return 0;
+        
+        if(sa.getGrade() >0.0f){
+            return getTotalAssignments(sa);
+        }
+        
         return submittedAssignments.getOrDefault(sa, 0);
     }
 
@@ -208,6 +224,9 @@ public class StudentDataInitializer {
     }
 
     public static String getAssignmentStatus(SeatAssignment sa, String assignmentName) {
+        if(sa != null && sa.getGrade() > 0.0f){
+            return "Submitted";
+        }
         return assignmentStatusMap.getOrDefault(sa.hashCode() + "_" + assignmentName, "Pending Submission");
     }
     
