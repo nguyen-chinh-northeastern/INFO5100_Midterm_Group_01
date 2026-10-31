@@ -14,6 +14,7 @@ import Business.Business;
 import Business.Profiles.StudentProfile;
 import UserInterface.WorkAreas.StudentRole.StudentRoleWorkResp.CourseworkJPanel;
 import UserInterface.WorkAreas.StudentRole.StudentRoleWorkResp.GraduationAuditJPanel;
+import UserInterface.WorkAreas.StudentRole.StudentRoleWorkResp.ManageProfileJPanel;
 import javax.swing.JPanel;
 import UserInterface.WorkAreas.StudentRole.StudentRoleWorkResp.RegistrationJPanel;
 import UserInterface.WorkAreas.StudentRole.StudentRoleWorkResp.TranscriptJPanel;
@@ -57,7 +58,7 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         btnCourseWork = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        btnManageProfile = new javax.swing.JButton();
         btnGraduationAudit = new javax.swing.JButton();
         btnRegistration = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -80,17 +81,17 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton9.setBackground(new java.awt.Color(102, 153, 255));
-        jButton9.setFont(getFont());
-        jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setText("Manage Profile");
-        jButton9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton9.setMaximumSize(new java.awt.Dimension(200, 40));
-        jButton9.setMinimumSize(new java.awt.Dimension(20, 20));
-        jButton9.setPreferredSize(new java.awt.Dimension(240, 25));
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
+        btnManageProfile.setBackground(new java.awt.Color(102, 153, 255));
+        btnManageProfile.setFont(getFont());
+        btnManageProfile.setForeground(new java.awt.Color(255, 255, 255));
+        btnManageProfile.setText("Manage Profile");
+        btnManageProfile.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnManageProfile.setMaximumSize(new java.awt.Dimension(200, 40));
+        btnManageProfile.setMinimumSize(new java.awt.Dimension(20, 20));
+        btnManageProfile.setPreferredSize(new java.awt.Dimension(240, 25));
+        btnManageProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+                btnManageProfileActionPerformed(evt);
             }
         });
 
@@ -151,7 +152,7 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(btnTranscript, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(btnCourseWork, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
-                            .addComponent(jButton9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                            .addComponent(btnManageProfile, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
                         .addGap(75, 75, 75)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnRegistration, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -169,7 +170,7 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
                     .addComponent(btnRegistration, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(56, 56, 56)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnManageProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGraduationAudit, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(43, 43, 43)
                 .addComponent(btnTranscript, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -188,12 +189,18 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnCourseWorkIdentifyResourceAssetsActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
+    private void btnManageProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageProfileActionPerformed
+        CardSequencePanel.removeAll();
+        
+        ManageProfileJPanel manageProfilePanel = new ManageProfileJPanel(business, student, CardSequencePanel);
+        
+        CardSequencePanel.add("ManageProfilePanel", manageProfilePanel);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
 
 
-}//GEN-LAST:event_jButton9ActionPerformed
+
+}//GEN-LAST:event_btnManageProfileActionPerformed
 
     private void btnGraduationAuditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraduationAuditActionPerformed
         // TODO add your handling code here:
@@ -232,9 +239,9 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCourseWork;
     private javax.swing.JButton btnGraduationAudit;
+    private javax.swing.JButton btnManageProfile;
     private javax.swing.JButton btnRegistration;
     private javax.swing.JButton btnTranscript;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 
