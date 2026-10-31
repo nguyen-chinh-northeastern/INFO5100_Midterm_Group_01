@@ -46,7 +46,7 @@ public class StudentDataInitializer {
         if(dept == null || studentProfile == null) return;
         
         // skip only if StudentDataInitializer already populated data
-        if(studentProfile.getCourseLoadBySemester("Fall2025") != null){
+        if(studentProfile.getCourseLoadBySemester("Fall 2025") != null){
             return;
         }
         
@@ -83,7 +83,7 @@ public class StudentDataInitializer {
         
         
         // Establish semesters - past
-        String pastSemester = "Fall2025";
+        String pastSemester = "Fall 2025";
         CourseSchedule pastSchedule = dept.getCourseSchedule(pastSemester);
         boolean isPast = false;
         if(pastSchedule == null){
@@ -132,7 +132,7 @@ public class StudentDataInitializer {
         }
        
        // Establish semesters - current
-        String currentSemester = "Fall2026";
+        String currentSemester = "Fall 2026";
         CourseSchedule currentSchedule = dept.getCourseSchedule(currentSemester);
         boolean isCurrent = false;
         
