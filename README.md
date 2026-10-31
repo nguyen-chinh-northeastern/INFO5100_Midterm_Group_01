@@ -22,7 +22,7 @@ INFO 5100 Midterm Project: Digital University System with Role-Based Access Cont
 ## 3. Installation & Setup Instructions
 
 ### Prerequisites
-- **JDK:** Java Development Kit 21 or higher
+- **JDK:** Java Development Kit 19 or higher
 - **IDE:** Apache NetBeans IDE (v16+ recommended)
 
 ### Step-by-Step Setup
@@ -45,7 +45,10 @@ git clone https://github.com/nguyen-chinh-northeastern/INFO5100_Midterm_Group_01
 
 ## 4. Authentication & Access Control
 
-(To be added)
+The Digital University System incorporates Role-Based Access Control (RBAC) architecture that is both localized and decoupled.
+System access requires validation against user profiles, which are credentialed. Username and password are used against a directory (UserAccountDirectory) for the authentication process. Access is granted to each user based on their assigned role. Further description of the parameters of these roles is available based on the features attributed to the implementation of each.
+The utilization of the CardSequencePanel initializes the correct target panel with its required data dependencies and switches views.
+Instanceof checks help ensure that sub-panels cannot be loaded without holding the correct profile type.
 
 ---
 
