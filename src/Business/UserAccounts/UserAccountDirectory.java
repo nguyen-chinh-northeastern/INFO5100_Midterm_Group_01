@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * @author Lee Wang (update)
  */
 public class UserAccountDirectory {
-    
+
     ArrayList<UserAccount> useraccountlist;
 
     /**
@@ -29,23 +29,23 @@ public class UserAccountDirectory {
      * Adds account.
      */
     public UserAccount newUserAccount(Profile p, String un, String pw) {
-        // Profile must not be null.
-        if (p == null) {
-            throw new IllegalArgumentException("Profile is null");
+        // Profile must not be null or already linked.
+        if (p == null || findByProfile(p) != null) {
+            throw new IllegalArgumentException("Profile is invalid");
         }
         // Username must not be null or blank.
         if (un == null || un.trim().isEmpty()) {
-            throw new IllegalArgumentException("Username is null");
+            throw new IllegalArgumentException("Username is invalid");
         }
         // Password must not be null or empty.
         if (pw == null || pw.isEmpty()) {
-            throw new IllegalArgumentException("Password is null");
+            throw new IllegalArgumentException("Password is invalid");
         }
         // Username must be unique.
         if (findUsername(un) != null) {
             throw new IllegalArgumentException("Username exists: " + un);
         }
-        
+
         UserAccount ua = new UserAccount(p, un, pw);
         useraccountlist.add(ua);
         return ua;
@@ -124,5 +124,17 @@ public class UserAccountDirectory {
      */
     public ArrayList<UserAccount> getUserAccountList() {
         return useraccountlist;
+    }
+
+    /**
+     * Return the account linked to a profile.
+     */
+    public UserAccount findByProfile(Profile p) {
+        for (UserAccount ua : useraccountlist) {
+            if (ua.getAssociatedPersonProfile() == p) {
+                return ua;
+            }
+        }
+        return null;
     }
 }

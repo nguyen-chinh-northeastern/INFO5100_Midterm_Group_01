@@ -16,6 +16,7 @@ import java.util.ArrayList;
  *
  * @author kal bugrara
  * @author Chinh Nguyen (update)
+ * @author Lee Wang (update)
  */
 public class StudentProfile extends Profile {
 
@@ -79,11 +80,5 @@ public class StudentProfile extends Profile {
 
     public void setInterests(String interests) {
         this.interests = interests;
-    }
-    
-    @Override
-    public String toString() {
-        if (person == null) return null;
-        return person.getPersonId();
     }
 }

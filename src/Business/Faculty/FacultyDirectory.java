@@ -12,6 +12,7 @@ import java.util.ArrayList;
 /**
  *
  * @author kal bugrara
+ * @author Lee Wang (update)
  */
 public class FacultyDirectory {
 
@@ -55,5 +56,11 @@ public class FacultyDirectory {
         }
             return null; //not found after going through the whole list
          }
-    
+
+    /**
+     * Gets all faculty profiles.
+     */
+    public ArrayList<FacultyProfile> getTeacherList() {
+        return teacherlist;
+    }
 }

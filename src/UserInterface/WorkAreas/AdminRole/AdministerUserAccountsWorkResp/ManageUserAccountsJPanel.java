@@ -80,6 +80,7 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         Back = new javax.swing.JButton();
+        Create = new javax.swing.JButton();
         Delete = new javax.swing.JButton();
         Next = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -104,6 +105,15 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
         add(Back);
         Back.setBounds(30, 300, 75, 24);
 
+        Create.setText("Create");
+        Create.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CreateActionPerformed(evt);
+            }
+        });
+        add(Create);
+        Create.setBounds(190, 300, 72, 24);
+
         Delete.setText("Delete");
         Delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,7 +121,7 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
             }
         });
         add(Delete);
-        Delete.setBounds(260, 300, 72, 24);
+        Delete.setBounds(340, 300, 72, 24);
 
         Next.setText("Next >>");
         Next.addActionListener(new java.awt.event.ActionListener() {
@@ -231,8 +241,14 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
         refreshTable();
     }//GEN-LAST:event_formComponentShown
 
+    private void CreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateActionPerformed
+        CardSequencePanel.add(new CreateUserAccountJPanel(business, CardSequencePanel));
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+    }//GEN-LAST:event_CreateActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Back;
+    private javax.swing.JButton Create;
     private javax.swing.JButton Delete;
     private javax.swing.JButton Next;
     private javax.swing.JTable UserAccountTable;

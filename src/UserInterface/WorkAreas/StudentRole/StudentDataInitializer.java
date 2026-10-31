@@ -140,11 +140,9 @@ public class StudentDataInitializer {
        // Establish semesters - current
         String currentSemester = "Fall 2026";
         CourseSchedule currentSchedule = dept.getCourseSchedule(currentSemester);
-        boolean isCurrent = false;
         
         if(currentSchedule == null){
             currentSchedule = dept.newCourseSchedule(currentSemester);
-        isCurrent = true;
         }
         
         CourseOffer webOffer = currentSchedule.getCourseOfferByNumber("INFO 6250");
@@ -152,10 +150,9 @@ public class StudentDataInitializer {
         CourseOffer uxOffer = currentSchedule.getCourseOfferByNumber("CSYE 7280");
         if(uxOffer == null) uxOffer = currentSchedule.newCourseOffer("CSYE 7280");
         
-        if(isCurrent){
-            if(webOffer != null) webOffer.generateSeats(10);
-            if(uxOffer != null) uxOffer.generateSeats(10);
-        }
+        // Add seats to offers for existing schedules
+        if(webOffer != null && webOffer.getEmptySeat() == null) webOffer.generateSeats(10);
+        if(uxOffer != null && uxOffer.getEmptySeat() == null) uxOffer.generateSeats(10);
         
         CourseLoad currentLoad = studentProfile.getCourseLoadBySemester(currentSemester);
         
