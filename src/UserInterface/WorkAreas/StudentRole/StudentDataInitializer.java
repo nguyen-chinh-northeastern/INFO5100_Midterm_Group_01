@@ -45,16 +45,6 @@ public class StudentDataInitializer {
         Department dept = business.getDepartment();
         if(dept == null || studentProfile == null) return;
         
-        
-        if (studentProfile.getCourseList() != null) {
-            for (SeatAssignment sa : studentProfile.getCourseList()) {
-                if (sa.getGrade() > 0.0f) {
-                    int totalAssignments = getTotalAssignments(sa);
-                    submittedAssignments.put(sa, totalAssignments);
-                }
-            }
-        }
-        
         // skip only if StudentDataInitializer already populated data
         if(studentProfile.getCourseLoadBySemester("Fall 2025") != null){
             return;
@@ -118,27 +108,33 @@ public class StudentDataInitializer {
         // Establish grades and submissions - past
         
         // Skips aed if the student is already enrolled (Laura in ConfigureABusiness)
-        SeatAssignment sa1 = null;
-        boolean hasAed = false;
+        
+        
+        boolean hasDb = false;
         for(SeatAssignment sa : studentProfile.getCourseList()){
-            if(sa.getAssociatedCourse() == aed){
-                hasAed = true;
+            if(sa.getAssociatedCourse() == db){
+                hasDb = true;
+                break;
             }
         }
-        if (!hasAed)
-            sa1 = aedOffer.assignEmptySeat(pastLoad);
-        SeatAssignment sa2 = dbOffer.assignEmptySeat(pastLoad);
         
-        if(sa1 != null){
-            setGrade(sa1, 4.0f);
-            submittedAssignments.put(sa1, 15);
+        
+        
+        if (!hasDb){
             
+            SeatAssignment sa2 = dbOffer.assignEmptySeat(pastLoad);
+            if(sa2 != null) setGrade(sa2, 4.0f);
         }
-        
-       if(sa2 != null){
-            setGrade(sa2, 4.0f);
-            submittedAssignments.put(sa2, 15);
-            
+    
+        for(SeatAssignment sa : new java.util.ArrayList<>(studentProfile.getCourseList())){
+            if(sa.getAssociatedCourse() != null&& sa.GetCourseStudentScore() > 0){
+                int totalExpected = getTotalAssignments(sa);
+                submittedAssignments.put(sa, totalExpected);
+                
+                for(int i = 1; i <= totalExpected; i++){
+                     assignmentStatusMap.put(sa.hashCode() + "_Assignment " + i, "Submitted");
+                }
+            }
         }
        
        // Establish semesters - current
@@ -206,12 +202,6 @@ public class StudentDataInitializer {
     }
 
     public static int getSubmittedCount(SeatAssignment sa) {
-        if(sa == null || sa.getAssociatedCourse() == null) return 0;
-        
-        if(sa.getGrade() >0.0f){
-            return getTotalAssignments(sa);
-        }
-        
         return submittedAssignments.getOrDefault(sa, 0);
     }
 
@@ -224,9 +214,6 @@ public class StudentDataInitializer {
     }
 
     public static String getAssignmentStatus(SeatAssignment sa, String assignmentName) {
-        if(sa != null && sa.getGrade() > 0.0f){
-            return "Submitted";
-        }
         return assignmentStatusMap.getOrDefault(sa.hashCode() + "_" + assignmentName, "Pending Submission");
     }
     
