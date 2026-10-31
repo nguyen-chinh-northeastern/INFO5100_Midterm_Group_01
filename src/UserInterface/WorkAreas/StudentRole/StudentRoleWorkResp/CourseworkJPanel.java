@@ -49,12 +49,15 @@ public class CourseworkJPanel extends javax.swing.JPanel {
             }
         });
         
+        /*
+        removed for redundancy
+      
         btnViewCourse.addActionListener(new java.awt.event.ActionListener(){
             public void actionPerformed(java.awt.event.ActionEvent evt){
                 btnViewCourseActionPerformed(evt);
             }
         });
-        
+        */
 
         
         populateCoursesTable();
