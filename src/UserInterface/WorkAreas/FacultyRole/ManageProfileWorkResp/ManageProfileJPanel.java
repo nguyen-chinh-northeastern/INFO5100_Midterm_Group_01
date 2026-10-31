@@ -216,11 +216,10 @@ public class ManageProfileJPanel extends javax.swing.JPanel {
         profile.setOfficeLocation(officeLocation);
 
         // Locate if a UserAccount is bound to this person and trigger audit log
-        // TODO: review this after merging
         for (UserAccount ua : business.getUserAccountDirectory().getUserAccountList()) {
             if (ua.getAssociatedPersonProfile() != null &&
                 ua.getAssociatedPersonProfile().getPerson() == person) {
-                //ua.recordUpdate();
+                ua.recordUpdate();
                 break;
             }
         }

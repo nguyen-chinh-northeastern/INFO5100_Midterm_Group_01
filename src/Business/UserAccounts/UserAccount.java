@@ -23,7 +23,9 @@ public class UserAccount {
     LocalDateTime lastUpdated;
     LocalDateTime lastActivity;
 
-    /** Constructor. */
+    /**
+     * Constructor.
+     */
     public UserAccount(Profile profile, String un, String pw) {
         username = un;
         password = pw;
@@ -33,90 +35,117 @@ public class UserAccount {
         lastActivity = null;
     }
 
-    /** Records update. */
+    /**
+     * Records update.
+     */
     public void recordUpdate() {
         lastUpdated = LocalDateTime.now();
     }
 
-    /** Records activity. */
+    /**
+     * Records activity.
+     */
     public void recordActivity() {
         lastActivity = LocalDateTime.now();
     }
 
-    /** Gets person ID. */
+    /**
+     * Gets person ID.
+     */
     public String getPersonId() {
         return profile.getPerson().getPersonId();
     }
 
-    /** Gets login name. */
+    /**
+     * Gets login name.
+     */
     public String getUserLoginName() {
         return username;
     }
 
-    /** Matches ID. */
+    /**
+     * Matches ID.
+     */
     public boolean isMatch(String id) {
         return getPersonId().equals(id);
     }
 
-    /** Validates user. */
+    /**
+     * Validates user.
+     */
     public boolean IsValidUser(String un, String pw) {
         return username.equalsIgnoreCase(un) && password.equals(pw) && active;
     }
 
-    /** Gets role. */
+    /**
+     * Gets role.
+     */
     public String getRole() {
         return profile.getRole();
     }
 
-    /** Gets profile. */
+    /**
+     * Gets profile.
+     */
     public Profile getAssociatedPersonProfile() {
         return profile;
     }
 
-    /** Gets username. */
+    /**
+     * Gets username.
+     */
     public String getUsername() {
         return username;
     }
 
-    /** Sets username. */
+    /**
+     * Sets username.
+     */
     protected void setUsername(String username) {
         this.username = username;
         recordUpdate();
     }
 
-    /** Gets password. */
-    public String getPassword() {
-        return password;
-    }
-
-    /** Sets password. */
+    /**
+     * Sets password.
+     */
     public void setPassword(String password) {
         this.password = password;
         recordUpdate();
     }
 
-    /** Gets active. */
+    /**
+     * Gets active.
+     */
     public boolean isActive() {
         return active;
     }
 
-    /** Sets active. */
+    /**
+     * Sets active.
+     */
     public void setActive(boolean active) {
         this.active = active;
         recordUpdate();
     }
 
-    /** Gets last updated. */
+    /**
+     * Gets last updated.
+     */
     public LocalDateTime getLastUpdated() {
         return lastUpdated;
     }
 
-    /** Gets last activity. */
+    /**
+     * Gets last activity.
+     */
     public LocalDateTime getLastActivity() {
         return lastActivity;
     }
 
-    /** Gets username. */
+    /**
+     * Gets username.
+     */
     @Override
     public String toString() {
         return getUserLoginName();
