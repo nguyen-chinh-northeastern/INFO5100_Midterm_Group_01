@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * @author Lee Wang (update)
  */
 public class UserAccountDirectory {
-    
+
     ArrayList<UserAccount> useraccountlist;
 
     /**
@@ -45,7 +45,7 @@ public class UserAccountDirectory {
         if (findUsername(un) != null) {
             throw new IllegalArgumentException("Username exists: " + un);
         }
-        
+
         UserAccount ua = new UserAccount(p, un, pw);
         useraccountlist.add(ua);
         return ua;
@@ -124,5 +124,17 @@ public class UserAccountDirectory {
      */
     public ArrayList<UserAccount> getUserAccountList() {
         return useraccountlist;
+    }
+
+    /**
+     * Return the account linked to a profile.
+     */
+    public UserAccount findByProfile(Profile p) {
+        for (UserAccount ua : useraccountlist) {
+            if (ua.getAssociatedPersonProfile() == p) {
+                return ua;
+            }
+        }
+        return null;
     }
 }
