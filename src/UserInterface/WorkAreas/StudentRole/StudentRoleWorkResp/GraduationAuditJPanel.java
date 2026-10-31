@@ -232,11 +232,43 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
     
     // Calculate credits earned
     private int calculateTotalCreditsEarned(){
-        return calculateCreditsEarned(studentProfile);
+        int totalCredits = 0;
+        if(studentProfile != null){
+            ArrayList<SeatAssignment> courseList = studentProfile.getCourseList();
+            if (courseList != null){
+                for (SeatAssignment sa : courseList){
+                    String semester = StudentUIUtils.getSemesterForSeatAssignment(studentProfile, sa);
+                    if(!semester.equals("Unknown") && StudentUIUtils.isPastYearSemester(semester)){
+                        totalCredits += sa.getCreditHours();
+                    }
+              
+            
+
+            }
+        }
+       
+        }
+         return totalCredits;
     }
     
     private int calculateTotalCreditsPlanned(){
-        return calculateCreditsPlanned(studentProfile);
+        int totalCredits = 0;
+        if(studentProfile != null){
+        ArrayList<SeatAssignment> courseList = studentProfile.getCourseList();
+        if (courseList != null){
+            for (SeatAssignment sa : courseList){
+                 String semester = StudentUIUtils.getSemesterForSeatAssignment(studentProfile, sa);
+                    if(!semester.equals("Unknown") && StudentUIUtils.isPastYearSemester(semester)){
+                        totalCredits += sa.getCreditHours();
+                    }
+              
+            
+
+            }
+        }
+        
+        }
+        return totalCredits;
     }
     
 
@@ -335,7 +367,8 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
             
             if(matchingAssignment !=null){
                 
-                if(matchingAssignment.getGrade() > 0.0f){
+                String courseSemester = StudentUIUtils.getSemesterForSeatAssignment(studentProfile, matchingAssignment);
+                if(!courseSemester.equals("Unknown") && StudentUIUtils.isPastYearSemester(courseSemester)){
                     status = "Completed";
                 } else {
                     status = "Registered";

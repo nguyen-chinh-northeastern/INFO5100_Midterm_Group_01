@@ -72,12 +72,8 @@ public class StudentUIUtils {
         int gradedCredits = 0;
         
         for (SeatAssignment sa : profile.getCourseList()){
-            
-            if(sa == null || sa.getAssociatedCourse() == null) continue;
-            
-            float gradeValue = sa.getGrade();
-            
-            if(gradeValue > 0.0f){
+            String semester = getSemesterForSeatAssignment(profile, sa);
+            if(!semester.equals("Unknown") && isPastYearSemester(semester)){
                 totalPoints += sa.GetCourseStudentScore();
                 gradedCredits += sa.getCreditHours();
             }
