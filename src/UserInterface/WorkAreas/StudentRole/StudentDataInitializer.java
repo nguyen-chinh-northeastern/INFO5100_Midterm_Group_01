@@ -57,12 +57,16 @@ public class StudentDataInitializer {
                    
                 }
             }
-        }
         
-        // skip only if StudentDataInitializer already populated data
-        if(studentProfile.getCourseLoadBySemester("Fall 2025") != null){
+        //skip if profile is populated w/courses
+        if(!studentProfile.getCourseList().isEmpty()){
             return;
         }
+        
+
+        }
+        
+        
         
         CourseCatalog catalog = dept.getCourseCatalog();
         
