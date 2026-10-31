@@ -115,8 +115,17 @@ public class ManageProfileJPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
 
-        CardSequencePanel.remove(this);
-        ((CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
+       CardSequencePanel.removeAll();
+
+        UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel studentDashboard =
+        new UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel(business, studentProfile, CardSequencePanel);
+
+        CardSequencePanel.add("student", studentDashboard);
+
+        CardLayout layout = (CardLayout) CardSequencePanel.getLayout();
+
+        CardSequencePanel.revalidate();
+        CardSequencePanel.repaint();
     }//GEN-LAST:event_btnBackActionPerformed
 
 

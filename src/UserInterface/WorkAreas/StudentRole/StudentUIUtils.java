@@ -66,18 +66,25 @@ public class StudentUIUtils {
     
     // calculate GPA
     public static float calculateGPA(StudentProfile profile){
-        if (profile == null || profile.getCourseList() == null) return 0.0f;
+        if (profile == null || profile.getCourseList() == null) {
+        return 0.0f;
+    }
         
         float totalPoints = 0;
         int gradedCredits = 0;
         
-        for (SeatAssignment sa : profile.getCourseList()){
-            String semester = getSemesterForSeatAssignment(profile, sa);
-            if(!semester.equals("Unknown") && isPastYearSemester(semester)){
-                totalPoints += sa.GetCourseStudentScore();
-                gradedCredits += sa.getCreditHours();
-            }
+        for (SeatAssignment sa : profile.getCourseList()) {
+        if(sa != null){
+
+                if (sa.getGrade() > 0.0f) { 
+                    totalPoints += sa.GetCourseStudentScore();
+                    gradedCredits += sa.getCreditHours();
+                }
+            
         }
+            
+        
+    }
         
         return (gradedCredits > 0) ? (totalPoints / gradedCredits) : 00f;
     }
