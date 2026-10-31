@@ -99,6 +99,8 @@ public class TranscriptJPanel extends javax.swing.JPanel {
         lblDegree.setText("Degree Program");
         add(lblDegree);
         lblDegree.setBounds(20, 150, 170, 16);
+
+        txtDegree.setEditable(false);
         add(txtDegree);
         txtDegree.setBounds(210, 150, 290, 26);
 
