@@ -13,6 +13,7 @@ package UserInterface.WorkAreas.AdminRole;
 import Business.Business;
 import Business.Profiles.EmployeeProfile;
 import UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp.ManageUserAccountsJPanel;
+import UserInterface.WorkAreas.AdminRole.ManageFacultyWorkResp.ManageFacultyJPanel;
 import UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp.ManagePersonsJPanel;
 import UserInterface.WorkAreas.AdminRole.ManageProfileWorkResp.ManageProfileJPanel;
 import UserInterface.WorkAreas.AdminRole.ManageStudentsWorkResp.ManageStudentsJPanel;
@@ -187,6 +188,9 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnProfileActionPerformed
 
     private void btnFacultyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacultyActionPerformed
+        ManageFacultyJPanel panel = new ManageFacultyJPanel(business, CardSequencePanel);
+        CardSequencePanel.add("ManageFaculty", panel);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
     }//GEN-LAST:event_btnFacultyActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

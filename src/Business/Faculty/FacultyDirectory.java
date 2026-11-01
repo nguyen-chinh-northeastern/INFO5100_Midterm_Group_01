@@ -63,4 +63,13 @@ public class FacultyDirectory {
     public ArrayList<FacultyProfile> getTeacherList() {
         return teacherlist;
     }
+
+    /**
+     * Removes a faculty from the directory.
+     *
+     * @param sp
+     */
+    public void remove(FacultyProfile sp) {
+        teacherlist.remove(sp);
+    }
 }
