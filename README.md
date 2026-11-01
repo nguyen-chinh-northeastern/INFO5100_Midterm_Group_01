@@ -7,7 +7,7 @@ INFO 5100 Midterm Project: Digital University System with Role-Based Access Cont
 
 | Team Member Name | NUID | Assigned Role | Core Responsibilities |
 | :--- | :--- | :--- | :--- |
-| **Lee Wang** | - | University Admin | Administer user accounts, register persons, manage student records, manage faculty records, manage own profile |
+| **Lee Wang** | **3947002** | University Admin | Administer user accounts, register persons, manage student records, manage faculty records, manage own profile, login/logout |
 | **Chinh Nguyen** | **3946343** | Faculty Member | Manage courses, manage own profile, generate performance reports, manage student profiles |
 | **Rachel Macaulay** | **2082631** | Student | Manage coursework, register for classes, perform graduation audit, review transcript |
 
@@ -15,7 +15,7 @@ INFO 5100 Midterm Project: Digital University System with Role-Based Access Cont
 
 ## 2. Project Overview
 
-The **Digital University System** is a java project designed to support real-world University functionality to include the following:
+The **Digital University System** is a Java project designed to support real-world University functionality to include the following:
 
 - **Enforce Secure Access Controls:** Authenticates credentials through a centralized user account directory and enforces role-based authorization to ensure users only access their assigned work areas.
 - **Maintain Architectural Modularity:** Decouples core business domain entities (Person, Department, CourseCatalog, CourseSchedule, Employee, Student, Faculty) from authentication logic and Swing UI presentation.
@@ -71,7 +71,7 @@ Instanceof checks help ensure that sub-panels cannot be loaded without holding t
 * **Register persons**: students, faculty, academic staff.
 * **Manage student records**: update, delete, or view student data.
 * **Manage faculty records**: update, delete, or view faculty data.
-* **Manage own profile**.
+* **Manage own profile**: update, view, but NOT delete or disable (to prevent lockout).
 
 ### 5.2 Faculty Role (Implemented by: Chinh Nguyen)
 
@@ -97,8 +97,8 @@ Instanceof checks help ensure that sub-panels cannot be loaded without holding t
 * **Access Control:** Incorrect credentials will not allow a user access.
 * **Dynamic Routing:** The active panel updates via CardLayout to display a work area particular to the user role.
 
-### 2. Adminitrator (TBD)
-* **2.1 Administer User Accounts:** Click **Administer User Accounts** from the Admin Work Area to view, create, delete, and update user accounts.
+### 2. Adminitrator
+* **2.1 Administer User Accounts:** Click **Administer User Accounts** from the Admin Work Area to view, create, delete, and update user accounts. Note: User's Personnel Profile must already exist in HR to create an account. Profiles are created centrally through the **Register Persons** panel.
 * **2.1.1 Create User:** Click "Create."
     * 2.1.1.1 Select User from combo box.
     * 2.1.1.2 Add Username
@@ -109,13 +109,37 @@ Instanceof checks help ensure that sub-panels cannot be loaded without holding t
     * 2.1.1.2 Select "Yes" to delete the account. Select "No" to retain the account.
 * **2.1.3 Update User:**
     * 2.1.3.1 Select User from table.
-    * 2.1.3.2 click "Next>>" to access selected user account details (name, NUID, username, and password)
-    * 2.1.3.3 TBD Make changes
-    * 2.1.3.4 Click "Update>>" to save changes
-* **2.2 Manage Faculty:**
-* **2.3 Manage Students:**
-* **2.4 Register Persons:**
-* **2.5 Administrator (Own) Profile:**
+    * 2.1.3.2 click "Next>>" to access selected user account details (name, NUID, username, and password).
+    * 2.1.3.3 Make changes to username, password, or enable/disable account.
+    * 2.1.3.4 Click "Update>>" to save changes.
+* **2.2 Manage Faculty:** Click **Manage Faculty** from the Admin Work Area to view, delete, and update faculty profiles. Profiles are created centrally through the **Register Persons** panel.
+* **2.2.1 Delete Profile:** Click "Delete."
+    * 2.2.1.1 Select User from combo box.
+    * 2.2.1.2 Select "Yes" to delete the account. Select "No" to retain the account.
+* **2.2.2 Update Profile:**
+    * 2.2.2.1 Select Profile from table.
+    * 2.2.2.2 click "View>>" to access selected profile details (name, NUID, username, and password, etc).
+    * 2.2.2.3 Make changes to username, password, or enable/disable account.
+    * 2.2.2.4 Click "Update" to save changes.
+* **2.3 Manage Students:** Click **Manage Students** from the Admin Work Area to view, delete, and update students profiles. Profiles are created centrally through the **Register Persons** panel.
+* **2.3.1 Delete Profile:** Click "Delete."
+    * 2.3.1.1 Select User from combo box.
+    * 2.3.1.2 Select "Yes" to delete the account. Select "No" to retain the account.
+* **2.3.2 Update Profile:**
+    * 2.3.2.1 Select Profile from table.
+    * 2.3.2.2 click "View>>" to access selected profile details (name, NUID, username, and password, etc).
+    * 2.3.2.3 Make changes to username, password, or enable/disable account.
+    * 2.3.2.4 Click "Update" to save changes.
+* **2.4 Register Persons:** Click **Register Persons (HR)** from the Admin Work Area to create new HR profiles and view all existing HR profiles.
+* **2.4.1 Create Profile:** Click "Register>>"
+    * 2.4.1.1 Enter profile details into the forms.
+    * 2.4.1.2 Select Role from combo box.
+    * 2.4.1.3 Click "Register" to create the new personnel profile, contingent on successful validation.
+* **2.5 Administrator (Own) Profile:** Click **My Profile** from the Admin Work Area to view and update the Administrator's own profile.
+* **2.5.1 Update Profile:**
+    * 2.5.1.1 Enter profile details into the forms.
+    * 2.4.1.2 Select the "Telework" checkbox if user is working remotely.
+    * 2.4.1.3 Click "Update>>" to update the profile, contingent on successful validation.
   
 ### 3. Faculty
 - **3.1 Manage Courses:** Click **Manage Courses** from the Faculty Work Area to add, view/update and delete courses in the course catalog.
@@ -214,7 +238,132 @@ The system initializes demo accounts for testing authentication, access control 
          * Expected Result: System will allow log in and update via CardLayout to display work area corresponding to the Student role only
            
 ### 3. **Administrative Features**
-     (To be added)
+### 3. **Administrative Features**
+   * Register Persons (HR)
+      * Register Person
+         * Test Case Description: Go to Register Persons (HR). Click Register. Enter Name, a unique 9-digit NUID, a valid email address, and a phone number in the format ###-###-####. Enter Department. Select Admin, Faculty, or Student as the role. Click Register. Repeat for each role.
+         * Expected Result: Success message and addition of the person to the directory with the selected role profile. A user account must be created separately before the person can log in.
+      * Invalid Input - Empty Name
+         * Test Case Description: Go to Register Persons (HR). Click Register. Leave Name blank and enter valid values for the remaining fields. Click Register.
+         * Expected Result: Error message. Person is not registered.
+      * Invalid Input - Invalid NUID
+         * Test Case Description: Go to Register Persons (HR). Click Register. Leave NUID blank, enter an NUID containing non-numeric characters, or enter an NUID that is not exactly 9 digits. Enter valid values for the remaining fields. Click Register.
+         * Expected Result: Error message. Person is not registered.
+      * Invalid Input - Duplicate NUID
+         * Test Case Description: Go to Register Persons (HR). Click Register. Enter an NUID assigned to another person in the directory. Enter valid values for the remaining fields. Click Register.
+         * Expected Result: Error message. Person is not registered.
+      * Invalid Input - Email or Phone
+         * Test Case Description: Go to Register Persons (HR). Click Register. Leave email or phone blank, enter an invalid email address, or enter a phone number that does not match the format ###-###-####. Enter valid values for the remaining fields. Click Register.
+         * Expected Result: Error message. Person is not registered.
+   * Administer User Accounts
+      * Create User Account
+         * Test Case Description: Go to Administer User Accounts. Click Create. Select an available profile. Enter a unique username and a non-empty password. Click Create.
+         * Expected Result: Role displays according to the selected profile. Success message and addition of the account to the user accounts table.
+      * Invalid Input - Missing Credentials
+         * Test Case Description: Go to Administer User Accounts. Click Create. Select an available profile. Leave username or password blank. Click Create.
+         * Expected Result: Error message. User account is not created.
+      * Invalid Input - Duplicate Username
+         * Test Case Description: Go to Administer User Accounts. Click Create. Select an available profile. Enter a username assigned to another account and a non-empty password. Click Create.
+         * Expected Result: Error message. User account is not created.
+      * View/Update User Account
+         * Test Case Description: Go to Administer User Accounts. Select an account from the table. Click Next. Change the username to an available username or enter a new password. Click Update.
+         * Expected Result: Success message and updated account details. System will allow log in with the updated credentials.
+      * Update Account - Blank Password
+         * Test Case Description: Go to Administer User Accounts. Select an account from the table. Click Next. Change the username to an available username and leave the password field blank. Click Update.
+         * Expected Result: Success message. Username is updated and the existing password is retained.
+      * Invalid Input - Empty or Duplicate Username
+         * Test Case Description: Go to Administer User Accounts. Select an account from the table. Click Next. Clear the username or enter a username assigned to another account. Click Update.
+         * Expected Result: Error message. Account details are not updated.
+      * Activate/Deactivate User Account
+         * Test Case Description: Go to Administer User Accounts. Select another user's account from the table. Click Next. Clear Active. Click Update. Attempt to log in with that account. Reactivate the account and attempt to log in again.
+         * Expected Result: Success message after each update. System will not allow log in while the account is inactive and will allow log in with valid credentials after reactivation.
+      * No Changes Made
+         * Test Case Description: Go to Administer User Accounts. Select an account from the table. Click Next. Do not change any fields. Click Update.
+         * Expected Result: Warning message indicating no changes were made.
+      * Delete User Account
+         * Test Case Description: Go to Administer User Accounts. Select an account other than the logged-in administrator's account. Click Delete. Select Yes on confirmation popup.
+         * Expected Result: Success message and account removed from the table. System will no longer allow log in with the deleted account.
+      * Delete User Account - Cancel
+         * Test Case Description: Go to Administer User Accounts. Select an account other than the logged-in administrator's account. Click Delete. Select No on confirmation popup.
+         * Expected Result: Deletion canceled and account retained in the table.
+      * Delete Own Account
+         * Test Case Description: Go to Administer User Accounts. Select the logged-in administrator's account. Click Delete.
+         * Expected Result: Error message. Administrator cannot delete their own account.
+      * Null selection
+         * Test Case Description: Go to Administer User Accounts. Do not select an account from the table. Click Next or Delete.
+         * Expected Result: Warning message.
+   * Manage Students
+      * View/Update Student Profile
+         * Test Case Description: Go to Manage Students. Select a student from the table. Click View. Modify Name, NUID, email, phone, department, hobbies, or interests with valid values. Click Update.
+         * Expected Result: Success message and student profile details updated.
+      * Invalid Input - Empty Name
+         * Test Case Description: Go to Manage Students. Select a student from the table. Click View. Clear the Name field. Click Update.
+         * Expected Result: Validation message. Student profile is not updated.
+      * Invalid Input - Invalid or Duplicate NUID
+         * Test Case Description: Go to Manage Students. Select a student from the table. Click View. Leave NUID blank, enter a value that is not exactly 9 digits, or enter an NUID assigned to another person in the directory. Click Update.
+         * Expected Result: Error or validation message. Student profile is not updated.
+      * Invalid Input - Email or Phone
+         * Test Case Description: Go to Manage Students. Select a student from the table. Click View. Enter an invalid or blank email address, or a phone number that is blank or does not match the format ###-###-####. Click Update.
+         * Expected Result: Error message. Student profile is not updated.
+      * No Changes Made
+         * Test Case Description: Go to Manage Students. Select a student from the table. Click View. Do not change any fields. Click Update.
+         * Expected Result: Informational message indicating no changes were made.
+      * Delete Student
+         * Test Case Description: Go to Manage Students. Select a student from the table. Click Delete. Select Yes on confirmation popup.
+         * Expected Result: Success message and student removed from the table. Associated person record and user account, if one exists, are also removed.
+      * Delete Student - Cancel
+         * Test Case Description: Go to Manage Students. Select a student from the table. Click Delete. Select No on confirmation popup.
+         * Expected Result: Deletion canceled and student retained in the table.
+      * Null selection
+         * Test Case Description: Go to Manage Students. Do not select a student from the table. Click View or Delete.
+         * Expected Result: Warning message.
+   * Manage Faculty
+      * View/Update Faculty Profile
+         * Test Case Description: Go to Manage Faculty. Select a faculty member from the table. Click View. Modify Name, NUID, email, phone, department, academic rank, or office location with valid values. Click Update.
+         * Expected Result: Success message and faculty profile details updated.
+      * Invalid Input - Empty Name
+         * Test Case Description: Go to Manage Faculty. Select a faculty member from the table. Click View. Clear the Name field. Click Update.
+         * Expected Result: Validation message. Faculty profile is not updated.
+      * Invalid Input - Invalid or Duplicate NUID
+         * Test Case Description: Go to Manage Faculty. Select a faculty member from the table. Click View. Leave NUID blank, enter a value that is not exactly 9 digits, or enter an NUID assigned to another person in the directory. Click Update.
+         * Expected Result: Error or validation message. Faculty profile is not updated.
+      * Invalid Input - Email or Phone
+         * Test Case Description: Go to Manage Faculty. Select a faculty member from the table. Click View. Enter an invalid or blank email address, or a phone number that is blank or does not match the format ###-###-####. Click Update.
+         * Expected Result: Error message. Faculty profile is not updated.
+      * No Changes Made
+         * Test Case Description: Go to Manage Faculty. Select a faculty member from the table. Click View. Do not change any fields. Click Update.
+         * Expected Result: Informational message indicating no changes were made.
+      * Delete Faculty
+         * Test Case Description: Go to Manage Faculty. Select a faculty member from the table. Click Delete. Select Yes on confirmation popup.
+         * Expected Result: Success message and faculty member removed from the table. Associated person record and user account, if one exists, are also removed.
+      * Delete Faculty - Cancel
+         * Test Case Description: Go to Manage Faculty. Select a faculty member from the table. Click Delete. Select No on confirmation popup.
+         * Expected Result: Deletion canceled and faculty member retained in the table.
+      * Null selection
+         * Test Case Description: Go to Manage Faculty. Do not select a faculty member from the table. Click View or Delete.
+         * Expected Result: Warning message.
+   * Administrator Profile
+      * View/Update Profile
+         * Test Case Description: Go to My Profile. Modify ID (Name), NUID, email, phone, department, Hours/Week, or Telework with valid values. Click Update.
+         * Expected Result: Success message and administrator profile details updated.
+      * Invalid Input - Empty ID or Department
+         * Test Case Description: Go to My Profile. Clear the ID (Name) or Department field. Click Update.
+         * Expected Result: Validation message. Administrator profile is not updated.
+      * Invalid Input - Invalid or Duplicate NUID
+         * Test Case Description: Go to My Profile. Leave NUID blank, enter a value that is not exactly 9 digits, or enter an NUID assigned to another person in the directory. Click Update.
+         * Expected Result: Error or validation message. Administrator profile is not updated.
+      * Invalid Input - Email or Phone
+         * Test Case Description: Go to My Profile. Enter an invalid or blank email address, or a phone number that is blank or does not match the format ###-###-####. Click Update.
+         * Expected Result: Error message. Administrator profile is not updated.
+      * Invalid Input - Working Hours
+         * Test Case Description: Go to My Profile. Leave Hours/Week blank or enter a non-integer value, a negative value, or a value greater than 168. Click Update.
+         * Expected Result: Error message. Administrator profile is not updated.
+      * Working Hours - Boundary Values
+         * Test Case Description: Go to My Profile. Enter 0 for Hours/Week and click Update. Repeat with 168, keeping the remaining fields valid.
+         * Expected Result: Both boundary values are accepted and saved when they change the existing value.
+      * No Changes Made
+         * Test Case Description: Go to My Profile. Do not change any fields. Click Update.
+         * Expected Result: Informational message indicating no changes were made.
    
 ### 4. **Faculty Features**
    * Manage Courses
@@ -335,6 +484,6 @@ The system initializes demo accounts for testing authentication, access control 
 
 | Contributor | Assigned Role | Key Contributions |
 | --- | --- | --- |
-| **Lee Wang** | University Admin | Administer user accounts, register persons, manage student records, manage faculty records, manage own profile |
+| **Lee Wang** | University Admin | Administer user accounts, register persons, manage student records, manage faculty records, manage own profile, login/logout |
 | **Chinh Nguyen** | Faculty Member | Manage courses, manage own profile, generate performance reports, manage student profiles |
 | **Rachel Macaulay** | Student | Manage coursework, register for classes, perform graduation audit, review transcript |
