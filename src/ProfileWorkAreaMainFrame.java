@@ -16,6 +16,7 @@ import Business.UserAccounts.UserAccountDirectory;
 import UserInterface.WorkAreas.AdminRole.AdminRoleWorkAreaJPanel;
 import UserInterface.WorkAreas.FacultyRole.FacultyWorkAreaJPanel;
 import UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -154,8 +155,22 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
         UserAccountDirectory uad = business.getUserAccountDirectory();
         UserAccount useraccount = uad.AuthenticateUser(un, pw);
         if (useraccount == null) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Invalid username or password.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
+        if (!useraccount.isActive()) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Account is disabled. Contact an admin.",
+                    "Warning",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        useraccount.recordActivity();
         StudentWorkAreaJPanel studentworkareajpanel;
         FacultyWorkAreaJPanel facultyworkarea;
         AdminRoleWorkAreaJPanel adminworkarea;

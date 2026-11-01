@@ -74,7 +74,7 @@ public class UserAccount {
      * Validates user.
      */
     public boolean IsValidUser(String un, String pw) {
-        return username.equalsIgnoreCase(un) && password.equals(pw) && active;
+        return username.equalsIgnoreCase(un) && password.equals(pw);
     }
 
     /**
