@@ -50,8 +50,11 @@ git clone https://github.com/nguyen-chinh-northeastern/INFO5100_Midterm_Group_01
 ## 4. Authentication & Access Control
 
 The Digital University System incorporates Role-Based Access Control (RBAC) architecture that is both localized and decoupled.
+
 System access requires validation against user profiles, which are credentialed. Username and password are used against a directory (UserAccountDirectory) for the authentication process. Access is granted to each user based on their assigned role. Further description of the parameters of these roles is available based on the features attributed to the implementation of each.
+
 The utilization of the CardSequencePanel initializes the correct target panel with its required data dependencies and switches views.
+
 Instanceof checks help ensure that sub-panels cannot be loaded without holding the correct profile type.
 
 ---
@@ -91,7 +94,7 @@ Instanceof checks help ensure that sub-panels cannot be loaded without holding t
 * **Dynamic Routing:** The active panel updates via CardLayout to display a work area particular to the user role.
 
 ### 2. Adminitrator (TBD)
-* **2.1 Administer User Accounts: ** Click **Administer User Accounts** from the Admin Work Area to view, create, delete, and update user accounts.
+* **2.1 Administer User Accounts:** Click **Administer User Accounts** from the Admin Work Area to view, create, delete, and update user accounts.
 * **2.1.1 Create User:** Click "Create."
     * 2.1.1.1 Select User from combo box.
     * 2.1.1.2 Add Username
@@ -111,33 +114,35 @@ Instanceof checks help ensure that sub-panels cannot be loaded without holding t
 * **2.5 Administrator (Own) Profile:**
   
 ### 3. Faculty
-* **3.1 Manage Courses: ** Click **Manage User Accounts** from the Faculty Work Area to add, view, and update class offerings.
-  * **3.1.1 Add a Course:** Click "Add Course."
+- **3.1 Manage Courses:** Click **Manage Courses** from the Faculty Work Area to add, view/update and delete courses in the course catalog.
+  * **3.1.1 Add a Course:** Click **Add Course**.
     * 3.1.1.1 Enter Course Number, Course Name, Credits, and Price.
-    * 3.1.1.1.1 Total price is determined based on the Price and Credits entries
-    * 3.1.1.2 All fields are required. The system performs a check to ensure that all fields are available and suitable (i.e. Price > $0).
-    * 3.1.1.3 Click "Save." Successful entries populate the course list table.
+    * 3.1.1.1.1 Total course price is automatically calculated as **Price * Credits**.
+    * 3.1.1.2 All fields are required. The system performs a check to ensure that all fields are available and valid (i.e. Price > $0, Credits > 0, and non-duplicate Course Number).
+    * 3.1.1.3 Click **Save**. Successful entries populate the course list table.
   * **3.1.2 View and Edit Details:**
-    * 3.1.2.1 Highlight a course in the table
-    * 3.1.2.2 Click **Next >>** to display course detials
-    * 3.1.2.3 Modify fields as needed within expected constraints and click **Update** to save the changes
+    * 3.1.2.1 Highlight a course in the table.
+    * 3.1.2.2 Click **Next >>** to display course details.
+    * 3.1.2.3 Modify fields as needed within expected constraints and click **Update** to save the changes.
   * **3.1.3 Delete a Course:**
-    * 3.1.3.1 Select a Course
-    * 3.1.3.2 Click ** Delete **
-    * 3.1.3.2.1 Review the Popup message. Click ** Yes ** to delete. Click ** No ** to take no action. If they select ** Yes ** a success message will appear.
- * **3.2 Manage Student Profiles: **
-     *  3.2.1 Click ** Manage Student Profiles ** from the Faculty Work Area
-       *  3.2.1.1 Faculty are able to view student details to include hobbies, interests, and academic progress.
- * **3.3 Faculty Profile: **
-     *  3.2.1 Click ** My Profile ** from the Faculty Work Area
-       *  3.2.1.1 Faculty are able to view and update their own profile data including Name, NUID, email, phone, department, academic rank, and office location.
-         * 3.2.1.2 After implementing changes, click ** Update>> ** to save them
- * **3.4 Performance Reports: **
-   *   3.4.1 Click ** Performance Reports ** from the Faculty Work Area
-    *  3.4.1.1 Select a course from the drop down combo box.
-     *  3.4.1.1.1 The panel will show the number of students, class GPA, pass rate, and the highest and lowest grades
-     *  3.4.1.1.2 The table will show individual student performance information, including GPA, letter grade, and status (Passing or Needs Review)
-  
+    * 3.1.3.1 Select a Course from the table.
+    * 3.1.3.2 Click **Delete**
+    * 3.1.3.2.1 Review the Popup message. Click **Yes** to delete. Click **No** to take no action. If **Yes** is selected, a success message will appear.
+- **3.2 Manage Student Profiles:**
+  * 3.2.1 Click **Manage Student Profiles** from the Faculty Work Area.
+  * 3.2.2 The panel displays a list of all registered students.
+  * 3.2.3 Highlight a student in the table and click **View Details**.
+  * 3.2.4 Faculty can view student details including hobbies, interests, and academic progress (enrolled courses, earned credits, and individual course GPAs).
+- **3.3 Faculty Profile:**
+  * 3.3.1 Click **My Profile** from the Faculty Work Area
+  * 3.3.2 Faculty can view and update their own profile data including ID (Name), NUID, email, phone, department, academic rank, and office location.
+  * 3.3.3 After implementing changes, click **Update>>** to save them.
+  * 3.3.4 The system performs validation before persisting: **ID (Name)** is not empty, **NUID** is unique and not already assigned to another person in the directory. Upon completion, a success message will appear.
+- **3.4 Performance Reports:**
+  * 3.4.1 Click **Performance Reports** from the Faculty Work Area
+  * 3.4.2 Select a course from the drop down combo box (shows only courses taught by this faculty member).
+  * 3.4.3 The top panel shows class summary metrics: number of enrolled students, class GPA, passing rate, and the highest and lowest grades.
+  * 3.4.4 The table will show individual student performance information, including GPA, letter grade, and status (Passing or Needs Review).
 
 ### 4. Student
 * **4.1 Coursework:** Click **Course Work** from the Student Work Area to track class progress.
@@ -168,8 +173,16 @@ Instanceof checks help ensure that sub-panels cannot be loaded without holding t
 
 ## 7. Testing Guide
 
-(To be added)
-1. **Authentication and Roles**
+### 1. **Pre-Configured Demo Credentials**
+The system initializes demo accounts for testing authentication, access control boundaries, and role-specific workflows:
+
+| Role | Username |
+| :--- | :--- |
+| **Administrator** | `admin` |
+| **Faculty** | `laura` |
+| **Student** | `adam` |
+
+### 2. **Authentication and Roles**
    * **Invalid Credentials**
       * Administrator
          * Test Case Description: Enter a credentialed Administrator User Name and an incorrect password
@@ -196,13 +209,13 @@ Instanceof checks help ensure that sub-panels cannot be loaded without holding t
          * Test Case Description: Enter the correct user name and password for a student user
          * Expected Result: System will allow log in and update via CardLayout to display work area corresponding to the Student role only
            
-2. **Administrative Features**
+### 3. **Administrative Features**
      (To be added)
    
-4. **Faculty Features**
+### 4. **Faculty Features**
      (To be added)
       
-6. **Student Features**
+### 5. **Student Features**
    * Class Registration
       * Register 
          * Test Case Description: Go to Registration. Enter an existing course number from CourseList in which the user is not enrolled. Select a semester. Attempt to add.
