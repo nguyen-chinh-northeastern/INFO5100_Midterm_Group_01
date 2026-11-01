@@ -47,7 +47,7 @@ public class StudentDirectory {
     /**
      * Removes a student from the directory.
      *
-     * @param sp
+     * @param sp Student
      */
     public void remove(StudentProfile sp) {
         studentlist.remove(sp);

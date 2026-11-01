@@ -4,7 +4,6 @@ import Business.Business;
 import Business.Persona.Person;
 import Business.Profiles.StudentProfile;
 import Business.UserAccounts.UserAccount;
-import Business.UserAccounts.UserAccountDirectory;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -39,7 +38,6 @@ public class ManageStudentsJPanel extends javax.swing.JPanel {
             ((DefaultTableModel) tblStudents.getModel()).removeRow(i);
         }
 
-        UserAccountDirectory uad = business.getUserAccountDirectory();
         for (StudentProfile sp : business.getStudentDirectory().getStudentList()) {
             Person p = sp.getPerson();
             Object[] row = new Object[4];

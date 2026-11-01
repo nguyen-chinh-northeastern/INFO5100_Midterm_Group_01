@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- * Manage faculty profiles.
+ * Update faculty profile.
  *
  * @author Lee Wang
  */
@@ -186,7 +186,7 @@ public class UpdateFacultyJPanel extends javax.swing.JPanel {
         if (id.isEmpty()) {
             JOptionPane.showMessageDialog(
                     this,
-                    "ID is required.",
+                    "Name is required.",
                     "Validation Error",
                     JOptionPane.WARNING_MESSAGE
             );
@@ -203,7 +203,7 @@ public class UpdateFacultyJPanel extends javax.swing.JPanel {
             return;
         }
 
-        // A non-empty NUID must be unique across all p records
+        // A non-empty NUID must be unique across all person records
         if (!nuid.isEmpty()) {
             Person existingPerson = business.getPersonDirectory().findPersonByNuid(nuid);
 

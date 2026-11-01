@@ -67,9 +67,9 @@ public class FacultyDirectory {
     /**
      * Removes a faculty from the directory.
      *
-     * @param sp
+     * @param fp Faculty
      */
-    public void remove(FacultyProfile sp) {
-        teacherlist.remove(sp);
+    public void remove(FacultyProfile fp) {
+        teacherlist.remove(fp);
     }
 }
