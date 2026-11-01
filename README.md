@@ -169,7 +169,69 @@ Instanceof checks help ensure that sub-panels cannot be loaded without holding t
 ## 7. Testing Guide
 
 (To be added)
-
+1. **Authentication and Roles**
+   * **Invalid Credentials**
+      * Administrator
+         * Test Case Description: Enter a credentialed Administrator User Name and an incorrect password
+         * Expected Result: System will not allow log in
+      * Faculty
+        * Test Case Description: Enter a credentialed Faculty User Name and an incorrect password
+         * Expected Result: System will not allow log in
+      * Student
+         * Test Case Description: Enter a credentialed Student User Name and an incorrect password
+         * Expected Result: System will not allow log in
+      * Uncredentialed User
+        * Test Case Description: Enter a User Name that does not correspond to any existing user and:
+           * a null password
+           * a password from a credentialed user
+         * Expected Result: System will not allow log in
+   * **Valid Credentials, Role Routing**
+      * Administrator
+         * Test Case Description: Enter the correct user name and password for an administrator user
+         * Expected Result: System will allow log in and update via CardLayout to display work area corresponding to the Administrator role only
+      * Faculty
+         * Test Case Description: Enter the correct user name and password for a faculty user
+         * Expected Result: System will allow log in and update via CardLayout to display work area corresponding to the Faculty role only
+      * Student
+         * Test Case Description: Enter the correct user name and password for a student user
+         * Expected Result: System will allow log in and update via CardLayout to display work area corresponding to the Student role only
+           
+2. **Administrative Features**
+     (To be added)
+   
+4. **Faculty Features**
+     (To be added)
+      
+6. **Student Features**
+   * Class Registration
+      * Register 
+         * Test Case Description: Go to Registration. Enter an existing course number from CourseList in which the user is not enrolled. Select a semester. Attempt to add.
+         * Expected Result: Success message and addition of course to the table.
+      * Invalid Selection - Course ID Not Found
+         * Test Case Description: Go to Registration. Enter a course number that does not exist in CourseList. Select a semester. Attempt to add.
+         * Expected Result: Error message.
+     * Invalid Selection - Course ID Null
+         * Test Case Description: Go to Registration. Do not enter a course number. Select a semester. Attempt to add.
+         * Expected Result: Error message.
+     * Invalid Selection - Duplicate Course
+         * Test Case Description: Go to Registration. Enter a course number in which the user has already enrolled. Select a semester. Attempt to add.
+         * Expected Result: Error message.
+   * Course Work
+      * Submit work to current course
+         * Test Case Description: Go to Course Work. Select Active Course. Select View Course. Select Assignment Pending Submission. Attach file. Submit.
+         * Expected Result: Assignment Status Updated to Submitted. Course Progress increased to account for new submission.
+      * Submit work to past course
+         * Test Case Description: Go to Course Work. Select Completed Course. Select View Course.
+         * Expected Result: Error Message
+      * Null selection
+         * Test Case Description: Go to Course Work. Click View Course.
+         * Expected Result: Error Message
+    * Transcript
+         * Test Case Description: Go to Transcript.
+         * Expected Result: Transcript displays with Name, NUID, Degree Program, Credits Earned, Cumulative Satisfaction Index, GPA, and Course List. GPA reflects Grades not "In Progress." Courses "In Progress" are consistent with those with pending submissions in Course Work.  User cannot change fields.
+   * Graduation Audit
+         * Test Case Description: Go to Graduation Audit.
+         * Expected Result: Graduation Audit displays with message regarding fulfillment of graduation requirements dependent on if credits earned is equal to or greater than credits required. Courses listed based on degree with their status and type (Core or Elective) displayed. User cannot change fields.
 ---
 
 ## 8. Challenges & Solutions
