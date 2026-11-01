@@ -31,6 +31,7 @@ import Business.UserAccounts.UserAccountDirectory;
  *
  * @author kal bugrara
  * @author Chinh Nguyen (update)
+ * @author Lee Wang (update)
  */
 class ConfigureABusiness {
 
@@ -79,6 +80,8 @@ class ConfigureABusiness {
         // Create Admins to manage the business
         EmployeeDirectory employeedirectory = business.getEmployeeDirectory();
         EmployeeProfile employeeprofile0 = employeedirectory.newEmployeeProfile(person001);
+        employeeprofile0.setTelework(true);
+        employeeprofile0.setWorkingHoursPerWeek(40);
         
         StudentDirectory studentdirectory = business.getStudentDirectory();
         // Adam Rollen
