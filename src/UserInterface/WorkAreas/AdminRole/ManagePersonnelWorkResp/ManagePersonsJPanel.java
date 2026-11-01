@@ -6,30 +6,51 @@
 package UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp;
 
 import Business.Business;
-
-
+import Business.Faculty.FacultyProfile;
+import Business.Persona.Person;
+import Business.Profiles.EmployeeProfile;
+import Business.Profiles.StudentProfile;
+import java.awt.CardLayout;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
+ * Lists every person in the system with their role and opens the register
+ * screen.
  *
  * @author kal bugrara
+ * @author Lee Wang (update)
  */
 public class ManagePersonsJPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ManageSuppliersJPanel
-     */
     JPanel CardSequencePanel;
     Business business;
 
-
+    /**
+     * Creates new form ManagePersonsJPanel
+     */
     public ManagePersonsJPanel(Business bz, JPanel jp) {
         CardSequencePanel = jp;
         this.business = bz;
         initComponents();
-
+        refreshTable();
     }
 
+    /**
+     * Refresh table contents.
+     */
+    public void refreshTable() {
+        DefaultTableModel model = (DefaultTableModel) PersonTable.getModel();
+        model.setRowCount(0);
+        for (Person p : business.getPersonDirectory().getPersonList()) {
+            Object[] row = new Object[4];
+            row[0] = p;
+            row[1] = p.getNuid();
+            row[2] = p.getEmail();
+            row[3] = p.getDepartment();
+            model.addRow(row);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,13 +61,46 @@ public class ManagePersonsJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblTitle = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        PersonTable = new javax.swing.JTable();
         Back = new javax.swing.JButton();
-        Next = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        Register = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 153, 153));
+        setPreferredSize(new java.awt.Dimension(800, 600));
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
         setLayout(null);
+
+        lblTitle.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        lblTitle.setText("Manage Persons (HR)");
+        add(lblTitle);
+        lblTitle.setBounds(31, 20, 540, 28);
+
+        PersonTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Name", "NUID", "Email", "Department"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(PersonTable);
+
+        add(jScrollPane1);
+        jScrollPane1.setBounds(30, 70, 560, 200);
 
         Back.setText("<< Back");
         Back.addActionListener(new java.awt.event.ActionListener() {
@@ -55,50 +109,39 @@ public class ManagePersonsJPanel extends javax.swing.JPanel {
             }
         });
         add(Back);
-        Back.setBounds(20, 260, 76, 32);
+        Back.setBounds(30, 300, 80, 24);
 
-        Next.setText("Next >>");
-        Next.addActionListener(new java.awt.event.ActionListener() {
+        Register.setText("Register >>");
+        Register.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NextActionPerformed(evt);
+                RegisterActionPerformed(evt);
             }
         });
-        add(Next);
-        Next.setBounds(500, 260, 80, 32);
-
-        jLabel1.setText("Name");
-        add(jLabel1);
-        jLabel1.setBounds(20, 60, 190, 16);
-
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel2.setText("Manage Personnel (HR)");
-        add(jLabel2);
-        jLabel2.setBounds(21, 20, 550, 29);
+        add(Register);
+        Register.setBounds(490, 300, 100, 24);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
-        // TODO add your handling code here:
         CardSequencePanel.remove(this);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
- //       ((java.awt.CardLayout)CardSequencePanel.getLayout()).show(CardSequencePanel, "IdentifyEventTypes");
-
+        ((CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
     }//GEN-LAST:event_BackActionPerformed
 
-    private void NextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextActionPerformed
-        // TODO add your handling code here:
-        
-        AdministerPersonJPanel mppd = new AdministerPersonJPanel(business, CardSequencePanel);
-        CardSequencePanel.add(mppd);
+    private void RegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterActionPerformed
+        AdministerPersonJPanel app = new AdministerPersonJPanel(business, CardSequencePanel);
+        CardSequencePanel.add(app);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+    }//GEN-LAST:event_RegisterActionPerformed
 
-    }//GEN-LAST:event_NextActionPerformed
-
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        refreshTable();
+    }//GEN-LAST:event_formComponentShown
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Back;
-    private javax.swing.JButton Next;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JTable PersonTable;
+    private javax.swing.JButton Register;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblTitle;
     // End of variables declaration//GEN-END:variables
 
 }

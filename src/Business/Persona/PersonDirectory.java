@@ -57,4 +57,13 @@ public class PersonDirectory {
         }
         return null;
     }
+
+    /**
+     * Gets all persons in the directory.
+     *
+     * @return the list of persons
+     */
+    public ArrayList<Person> getPersonList() {
+        return personlist;
+    }
 }
