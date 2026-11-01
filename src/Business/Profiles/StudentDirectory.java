@@ -13,6 +13,7 @@ import java.util.ArrayList;
  *
  * @author kal bugrara
  * @author Chinh Nguyen (update)
+ * @author Lee Wang (update)
  */
 public class StudentDirectory {
 
@@ -20,23 +21,18 @@ public class StudentDirectory {
     ArrayList<StudentProfile> studentlist;
 
     public StudentDirectory(Department d) {
-
         department = d;
         studentlist = new ArrayList();
-
     }
 
     public StudentProfile newStudentProfile(Person p) {
-
         StudentProfile sp = new StudentProfile(p);
         studentlist.add(sp);
         return sp;
     }
 
     public StudentProfile findStudent(String id) {
-
         for (StudentProfile sp : studentlist) {
-
             if (sp.isMatch(id)) {
                 return sp;
             }
@@ -47,5 +43,13 @@ public class StudentDirectory {
     public ArrayList<StudentProfile> getStudentList() {
         return studentlist;
     }
-    
+
+    /**
+     * Removes a student from the directory.
+     *
+     * @param sp
+     */
+    public void remove(StudentProfile sp) {
+        studentlist.remove(sp);
+    }
 }

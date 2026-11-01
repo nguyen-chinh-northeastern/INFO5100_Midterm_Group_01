@@ -66,4 +66,13 @@ public class PersonDirectory {
     public ArrayList<Person> getPersonList() {
         return personlist;
     }
+
+    /**
+     * Remove person from directory.
+     *
+     * @param p
+     */
+    public void removePerson(Person p) {
+        personlist.remove(p);
+    }
 }
