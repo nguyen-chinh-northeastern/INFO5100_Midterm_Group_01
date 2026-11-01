@@ -6,33 +6,33 @@
 package UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp;
 
 import Business.Business;
-
+import Business.Faculty.FacultyDirectory;
+import Business.Persona.Person;
+import Business.Persona.PersonDirectory;
+import Business.Profiles.EmployeeDirectory;
+import Business.Profiles.StudentDirectory;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
+ * Register a new person's HR profile.
  *
  * @author kal bugrara
+ * @author Lee Wang (update)
  */
 public class AdministerPersonJPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ManageSuppliersJPanel
-     */
     JPanel CardSequencePanel;
-
     Business business;
 
+    /**
+     * Creates new form AdministerPersonJPanel
+     */
     public AdministerPersonJPanel(Business bz, JPanel jp) {
-
         CardSequencePanel = jp;
         this.business = bz;
         initComponents();
-
-
-    }
-
-    public void refreshTable() {
-
     }
 
     /**
@@ -44,39 +44,199 @@ public class AdministerPersonJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Back = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        lblTitle = new javax.swing.JLabel();
+        lblName = new javax.swing.JLabel();
+        txtName = new javax.swing.JTextField();
+        lblNuid = new javax.swing.JLabel();
+        txtNuid = new javax.swing.JTextField();
+        lblEmail = new javax.swing.JLabel();
+        txtEmail = new javax.swing.JTextField();
+        lblPhone = new javax.swing.JLabel();
+        txtPhone = new javax.swing.JTextField();
+        lblDepartment = new javax.swing.JLabel();
+        txtDepartment = new javax.swing.JTextField();
+        lblRole = new javax.swing.JLabel();
+        cmbRole = new javax.swing.JComboBox<>();
+        btnBack = new javax.swing.JButton();
+        btnRegister = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 153, 153));
+        setPreferredSize(new java.awt.Dimension(800, 600));
         setLayout(null);
 
-        Back.setText("<< Back");
-        Back.addActionListener(new java.awt.event.ActionListener() {
+        lblTitle.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        lblTitle.setText("Register Person (HR)");
+        add(lblTitle);
+        lblTitle.setBounds(21, 20, 550, 28);
+
+        lblName.setLabelFor(txtName);
+        lblName.setText("Name");
+        add(lblName);
+        lblName.setBounds(30, 60, 100, 24);
+        add(txtName);
+        txtName.setBounds(140, 60, 220, 24);
+
+        lblNuid.setLabelFor(txtNuid);
+        lblNuid.setText("NUID");
+        add(lblNuid);
+        lblNuid.setBounds(30, 100, 100, 24);
+        add(txtNuid);
+        txtNuid.setBounds(140, 100, 220, 24);
+
+        lblEmail.setLabelFor(txtEmail);
+        lblEmail.setText("Email");
+        add(lblEmail);
+        lblEmail.setBounds(30, 130, 100, 24);
+        add(txtEmail);
+        txtEmail.setBounds(140, 130, 220, 24);
+
+        lblPhone.setLabelFor(txtPhone);
+        lblPhone.setText("Phone");
+        add(lblPhone);
+        lblPhone.setBounds(30, 170, 100, 24);
+        add(txtPhone);
+        txtPhone.setBounds(140, 170, 220, 24);
+
+        lblDepartment.setLabelFor(txtDepartment);
+        lblDepartment.setText("Department");
+        add(lblDepartment);
+        lblDepartment.setBounds(30, 200, 100, 24);
+        add(txtDepartment);
+        txtDepartment.setBounds(140, 200, 220, 24);
+
+        lblRole.setLabelFor(cmbRole);
+        lblRole.setText("Role");
+        add(lblRole);
+        lblRole.setBounds(30, 240, 100, 24);
+
+        cmbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Student", "Faculty", "Admin" }));
+        add(cmbRole);
+        cmbRole.setBounds(140, 240, 220, 24);
+
+        btnBack.setText("<< Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BackActionPerformed(evt);
+                btnBackActionPerformed(evt);
             }
         });
-        add(Back);
-        Back.setBounds(30, 290, 76, 32);
+        add(btnBack);
+        btnBack.setBounds(30, 300, 75, 24);
 
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel2.setText("Manage Person Profile");
-        add(jLabel2);
-        jLabel2.setBounds(21, 20, 550, 29);
+        btnRegister.setText("Register");
+        btnRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegisterActionPerformed(evt);
+            }
+        });
+        add(btnRegister);
+        btnRegister.setBounds(460, 300, 100, 24);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
-        // TODO add your handling code here:
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         CardSequencePanel.remove(this);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+        ((CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
+    }//GEN-LAST:event_btnBackActionPerformed
 
+    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
+        String name = txtName.getText().trim();
+        String nuid = txtNuid.getText().trim();
+        String email = txtEmail.getText().trim();
+        String phone = txtPhone.getText().trim();
+        String department = txtDepartment.getText().trim();
+        String role = (String) cmbRole.getSelectedItem();
 
-    }//GEN-LAST:event_BackActionPerformed
+        if (name.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Name cannot be blank.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
 
+        if (!nuid.matches("\\d{9}")) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "NUID must be exactly 9 digits.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        {
+            Person p = business.getPersonDirectory().findPersonByNuid(nuid);
+            if (p != null) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "NUID already exists.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+        }
+
+        if (!email.matches("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}")) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Email must be a valid address.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!phone.matches("\\d{3}-\\d{3}-\\d{4}")) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Phone must be in the format ###-###-####.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        PersonDirectory pd = business.getPersonDirectory();
+        Person p = pd.newPerson(name);
+        p.setNuid(nuid);
+        p.setEmail(email);
+        p.setPhone(phone);
+        p.setDepartment(department);
+
+        if ("Admin".equals(role)) {
+            EmployeeDirectory d = business.getEmployeeDirectory();
+            d.newEmployeeProfile(p);
+        } else if ("Faculty".equals(role)) {
+            FacultyDirectory d = business.getFacultyDirectory();
+            d.newFacultyProfile(p);
+        } else {
+            StudentDirectory d = business.getStudentDirectory();
+            d.newStudentProfile(p);
+        }
+
+        JOptionPane.showMessageDialog(
+                this,
+                "Successfully registered. An admin must create their account.",
+                "Success",
+                JOptionPane.INFORMATION_MESSAGE);
+        CardSequencePanel.remove(this);
+        ((CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
+    }//GEN-LAST:event_btnRegisterActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Back;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnRegister;
+    private javax.swing.JComboBox<String> cmbRole;
+    private javax.swing.JLabel lblDepartment;
+    private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblName;
+    private javax.swing.JLabel lblNuid;
+    private javax.swing.JLabel lblPhone;
+    private javax.swing.JLabel lblRole;
+    private javax.swing.JLabel lblTitle;
+    private javax.swing.JTextField txtDepartment;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtNuid;
+    private javax.swing.JTextField txtPhone;
     // End of variables declaration//GEN-END:variables
-
 }
