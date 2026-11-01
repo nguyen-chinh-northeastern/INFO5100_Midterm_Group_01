@@ -89,7 +89,15 @@ public class ManageFacultyJPanel extends javax.swing.JPanel {
             new String [] {
                 "Name", "NUID", "Email", "Phone"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblFaculty);
 
         add(jScrollPane1);
