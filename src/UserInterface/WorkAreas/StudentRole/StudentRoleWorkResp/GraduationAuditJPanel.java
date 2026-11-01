@@ -368,7 +368,9 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
             if(matchingAssignment !=null){
                 
                 String courseSemester = StudentUIUtils.getSemesterForSeatAssignment(studentProfile, matchingAssignment);
-                if(!courseSemester.equals("Unknown") && StudentUIUtils.isPastYearSemester(courseSemester)){
+                if(matchingAssignment.getGrade() > 0.0f){
+                    status = "Completed";
+                } else if(!courseSemester.equals("Unknown") && StudentUIUtils.isPastYearSemester(courseSemester)){
                     status = "Completed";
                 } else {
                     status = "Registered";

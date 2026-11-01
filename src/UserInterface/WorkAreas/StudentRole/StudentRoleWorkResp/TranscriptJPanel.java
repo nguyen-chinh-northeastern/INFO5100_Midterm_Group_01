@@ -219,8 +219,10 @@ public class TranscriptJPanel extends javax.swing.JPanel {
             if (courseList != null){
                 for (SeatAssignment sa : courseList){
                     String semester = StudentUIUtils.getSemesterForSeatAssignment(studentProfile, sa);
-                    if(!semester.equals("Unknown") && isPastYearSemester(semester)){
-                        totalCredits += sa.getCreditHours();
+                    if(!semester.equals("Unknown") && (isPastYearSemester(semester) || semester.equals("Fall 2026"))){
+                        if(sa.getGrade() > 0.0f){
+                            totalCredits += sa.getCreditHours();
+                        }
                     }
               
             

@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 /**
  *
  * @author Lee Wang
+ * @author rachel macaulay (update)
  */
 public class ManageProfileJPanel extends javax.swing.JPanel {
 
@@ -181,6 +182,16 @@ public class ManageProfileJPanel extends javax.swing.JPanel {
                     "Validation Error",
                     JOptionPane.WARNING_MESSAGE
             );
+            return;
+        }
+        
+        // Adding null check against department
+        if(department.isEmpty()){
+            JOptionPane.showMessageDialog(
+                this,
+                    "Department is required.",
+                    "Validation Error",
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
 
