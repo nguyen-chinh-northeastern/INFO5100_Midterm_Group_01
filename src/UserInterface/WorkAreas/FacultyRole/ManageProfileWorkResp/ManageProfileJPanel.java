@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 /**
  *
  * @author Chinh Nguyen
+ * @author Lee Wang (update)
  */
 public class ManageProfileJPanel extends javax.swing.JPanel {
 
@@ -161,6 +162,15 @@ public class ManageProfileJPanel extends javax.swing.JPanel {
         String academicRank = txtAcademicRank.getText().trim();
         String officeLocation = txtOfficeLocation.getText().trim();
 
+        if (!nuid.matches("\\d{9}")) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "NUID must be exactly 9 digits.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         if (id.isEmpty()) {
             JOptionPane.showMessageDialog(
                 this,
@@ -184,6 +194,24 @@ public class ManageProfileJPanel extends javax.swing.JPanel {
                 );
                 return;
             }
+        }
+
+        if (!email.matches("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}")) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Email must be a valid address.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!phone.matches("\\d{3}-\\d{3}-\\d{4}")) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Phone must be in the format ###-###-####.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
         // Detect changes so an unnecessary update does not report a successful save
