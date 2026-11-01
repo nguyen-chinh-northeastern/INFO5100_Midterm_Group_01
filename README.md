@@ -91,9 +91,27 @@ Instanceof checks help ensure that sub-panels cannot be loaded without holding t
 * **Dynamic Routing:** The active panel updates via CardLayout to display a work area particular to the user role.
 
 ### 2. Adminitrator (TBD)
-
+* **2.1 Administer User Accounts: ** Click **Administer User Accounts** from the Admin Work Area to view, create, delete, and update user accounts.
+* **2.1.1 Create User:** Click "Create."
+    * 2.1.1.1 Select User from combo box.
+    * 2.1.1.2 Add Username
+    * 2.1.1.3 Add Password
+    * 2.1.1.4 Click "Create."
+* **2.1.2 Delete User:** Click "Delete."
+    * 2.1.1.1 Select User from combo box.
+    * 2.1.1.2 Select "Yes" to delete the account. Select "No" to retain the account.
+* **2.1.3 Update User:**
+    * 2.1.3.1 Select User from table.
+    * 2.1.3.2 click "Next>>" to access selected user account details (name, NUID, username, and password)
+    * 2.1.3.3 TBD Make changes
+    * 2.1.3.4 Click "Update>>" to save changes
+* **2.2 Manage Faculty:**
+* **2.3 Manage Students:**
+* **2.4 Register Persons:**
+* **2.5 Administrator (Own) Profile:**
+  
 ### 3. Faculty
-* **3.1 Manage Courses: ** Click **Manage User Accounts** from the Admin Work Area  add, view, and update class offerings.
+* **3.1 Manage Courses: ** Click **Manage User Accounts** from the Faculty Work Area to add, view, and update class offerings.
   * **3.1.1 Add a Course:** Click "Add Course."
     * 3.1.1.1 Enter Course Number, Course Name, Credits, and Price.
     * 3.1.1.1.1 Total price is determined based on the Price and Credits entries
@@ -111,8 +129,14 @@ Instanceof checks help ensure that sub-panels cannot be loaded without holding t
      *  3.2.1 Click ** Manage Student Profiles ** from the Faculty Work Area
        *  3.2.1.1 Faculty are able to view student details to include hobbies, interests, and academic progress.
  * **3.3 Faculty Profile: **
+     *  3.2.1 Click ** My Profile ** from the Faculty Work Area
+       *  3.2.1.1 Faculty are able to view and update their own profile data including Name, NUID, email, phone, department, academic rank, and office location.
+         * 3.2.1.2 After implementing changes, click ** Update>> ** to save them
  * **3.4 Performance Reports: **
-   *   (CONTINUE)
+   *   3.4.1 Click ** Performance Reports ** from the Faculty Work Area
+    *  3.4.1.1 Select a course from the drop down combo box.
+     *  3.4.1.1.1 The panel will show the number of students, class GPA, pass rate, and the highest and lowest grades
+     *  3.4.1.1.2 The table will show individual student performance information, including GPA, letter grade, and status (Passing or Needs Review)
   
 
 ### 4. Student
