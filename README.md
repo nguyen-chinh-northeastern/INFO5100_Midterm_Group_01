@@ -15,11 +15,15 @@ INFO 5100 Midterm Project: Digital University System with Role-Based Access Cont
 
 ## 2. Project Overview
 
-- The **Digital University System** is a java project designed to support real-world University functionality to include the following:
-- **Enforce Secure Access Controls **
-- **Maintain Architectural Modularity**
-- **Role-Based Functionality** for Administrators, Faculty, and Students
-- **Minimum Features:**
+The **Digital University System** is a java project designed to support real-world University functionality to include the following:
+
+- **Enforce Secure Access Controls:** Authenticates credentials through a centralized user account directory and enforces role-based authorization to ensure users only access their assigned work areas.
+- **Maintain Architectural Modularity:** Decouples core business domain entities (Person, Department, CourseCatalog, CourseSchedule, Employee, Student, Faculty) from authentication logic and Swing UI presentation.
+- **Role-Based Functionality:** Provides specialized, role-specific workflows for Administrators, Faculty, and Students.
+- **Core Implemented Use Cases:**
+  - **Administrator:** Administer user accounts, registers university personnel, manages student and faculty records, and manages administrator profile data.
+  - **Faculty:** Manages the course catalog (view/update/add/delete), reviews student profiles and academic progress, manages faculty profile attributes, and generates class performance reports.
+  - **Student:** Manages coursework (submit assignments, track progress), enrolls in and drops courses, monitors degree completion via graduation audit, and reviews academic transcripts.
 
 ---
 
@@ -213,7 +217,55 @@ The system initializes demo accounts for testing authentication, access control 
      (To be added)
    
 ### 4. **Faculty Features**
-     (To be added)
+   * Manage Courses
+      * Add Course
+         * Test Case Description: Go to Manage Courses. Click Add Course. Enter valid Course Number, Course Name, Credits, and Price. Click Save.
+         * Expected Result: Total price calculates automatically (Price * Credits). Success message and addition of course to the catalog table.
+      * Invalid Input - Missing or Negative Fields
+         * Test Case Description: Go to Manage Courses. Click Add Course. Leave fields blank or enter non-positive values (Price <= 0 or Credits <= 0). Click Save.
+         * Expected Result: Error message. Course is not added.
+      * Invalid Input - Duplicate Course
+         * Test Case Description: Go to Manage Courses. Click Add Course. Enter a course number that already exists in the course catalog. Click Save.
+         * Expected Result: Error message.
+      * Update Course
+         * Test Case Description: Go to Manage Courses. Select a course from the table. Click Next. Modify course details with valid values. Click Update.
+         * Expected Result: Success message and updated course details reflected in the table.
+      * Delete Course
+         * Test Case Description: Go to Manage Courses. Select a course from the table. Click Delete. Select Yes on confirmation popup.
+         * Expected Result: Success message and course removed from the table.
+      * Delete Course - Cancel
+         * Test Case Description: Go to Manage Courses. Select a course from the table. Click Delete. Select No on confirmation popup.
+         * Expected Result: Deletion canceled and course retained in the table.
+      * Null selection
+         * Test Case Description: Go to Manage Courses. Do not select a course from the table. Click Next or Delete.
+         * Expected Result: Error message.
+   * Manage Student Profiles
+      * View Student Details
+         * Test Case Description: Go to Manage Student Profiles. Select a student from the table. Click View Details.
+         * Expected Result: Detail view displays with student personal information (Name, NUID), hobbies, interests, and academic progress (enrolled courses, credits, and GPAs).
+      * Null selection
+         * Test Case Description: Go to Manage Student Profiles. Do not select a student from the table. Click View Details.
+         * Expected Result: Error message.
+   * Faculty Profile
+      * View/Update Profile
+         * Test Case Description: Go to My Profile. Modify email, phone, department, academic rank, or office location. Click Update.
+         * Expected Result: Success message and profile details updated.
+      * Invalid Input - Empty ID
+         * Test Case Description: Go to My Profile. Clear the ID (Name) field. Click Update.
+         * Expected Result: Error message.
+      * Invalid Input - Duplicate NUID
+         * Test Case Description: Go to My Profile. Enter an NUID assigned to another person in the directory. Click Update.
+         * Expected Result: Error message.
+      * No Changes Made
+         * Test Case Description: Go to My Profile. Do not change any fields. Click Update.
+         * Expected Result: Informational message indicating no changes were made.
+   * Performance Reports
+      * View Course Performance
+         * Test Case Description: Go to Performance Reports. Select an assigned course from the drop-down combo box.
+         * Expected Result:
+           * Combo box only displays courses assigned to the logged-in faculty member.
+           * Summary metrics display number of enrolled students, class GPA, passing rate, and highest/lowest grades.
+           * Table displays students enrolled with Name, NUID, GPA, Letter Grade, and Status (Passing or Needs Review).
       
 ### 5. **Student Features**
    * Class Registration
@@ -239,12 +291,13 @@ The system initializes demo accounts for testing authentication, access control 
       * Null selection
          * Test Case Description: Go to Course Work. Click View Course.
          * Expected Result: Error Message
-    * Transcript
-         * Test Case Description: Go to Transcript.
-         * Expected Result: Transcript displays with Name, NUID, Degree Program, Credits Earned, Cumulative Satisfaction Index, GPA, and Course List. GPA reflects Grades not "In Progress." Courses "In Progress" are consistent with those with pending submissions in Course Work.  User cannot change fields.
+   * Transcript
+     * Test Case Description: Go to Transcript.
+     * Expected Result: Transcript displays with Name, NUID, Degree Program, Credits Earned, Cumulative Satisfaction Index, GPA, and Course List. GPA reflects Grades not "In Progress." Courses "In Progress" are consistent with those with pending submissions in Course Work.  User cannot change fields.
    * Graduation Audit
-         * Test Case Description: Go to Graduation Audit.
-         * Expected Result: Graduation Audit displays with message regarding fulfillment of graduation requirements dependent on if credits earned is equal to or greater than credits required. Courses listed based on degree with their status and type (Core or Elective) displayed. User cannot change fields.
+     * Test Case Description: Go to Graduation Audit.
+     * Expected Result: Graduation Audit displays with message regarding fulfillment of graduation requirements dependent on if credits earned is equal to or greater than credits required. Courses listed based on degree with their status and type (Core or Elective) displayed. User cannot change fields.
+
 ---
 
 ## 8. Challenges & Solutions
@@ -263,6 +316,10 @@ The system initializes demo accounts for testing authentication, access control 
 ---
 
 ## 9. Future Enhancements
+
+- **Additional University Modules & Features:**
+   - **Current State:** The system focuses on core workflows across Administrator, Faculty, and Student roles with baseline catalog and registration capabilities.
+   - **Enhancement:** Implement supplementary institutional modules including student self-service profile management (updating personal hobbies, interests, and portfolio links), classroom scheduling, tuition billing, payment processing, and prerequisite enforcement.
 
 - **Persistent Database Integration:**
    - **Current State:** The system stores all data in-memory, resetting all state upon application restart.
