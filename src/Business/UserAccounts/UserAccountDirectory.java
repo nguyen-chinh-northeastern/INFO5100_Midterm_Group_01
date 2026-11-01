@@ -112,7 +112,6 @@ public class UserAccountDirectory {
     public UserAccount AuthenticateUser(String un, String pw) {
         for (UserAccount ua : useraccountlist) {
             if (ua.IsValidUser(un, pw)) {
-                ua.recordActivity();
                 return ua;
             }
         }
