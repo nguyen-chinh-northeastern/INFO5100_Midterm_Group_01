@@ -5,30 +5,71 @@
  */
 package UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp;
 
+import Business.Business;
+import Business.Profiles.EmployeeProfile;
 import Business.UserAccounts.UserAccount;
+import Business.UserAccounts.UserAccountDirectory;
+import java.awt.CardLayout;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- *h
+ * Update an account's username, password, and active status.
+ *
  * @author kal bugrara
+ * @author Lee Wang (update)
  */
-
 public class AdminUserAccount extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ManageSuppliersJPanel
-     */
+    private static final DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    Business business;
+    UserAccount selecteduseraccount;
+    EmployeeProfile currentProfile;
     JPanel CardSequencePanel;
 
-    UserAccount selecteduseraccount;
-
-    public AdminUserAccount(UserAccount sua, JPanel jp) {
-
+    /**
+     * Creates new form AdminUserAccount
+     */
+    public AdminUserAccount(Business bz, UserAccount ua, EmployeeProfile current, JPanel jp) {
+        business = bz;
+        selecteduseraccount = ua;
+        this.currentProfile = current;
         CardSequencePanel = jp;
-        selecteduseraccount= sua;
         initComponents();
-        //display user details here
+        populateFields();
+        
+        // Prevent admins from disabling their own account.
+        if (ua.getAssociatedPersonProfile() == current) {
+            chkActive.setEnabled(false);
+        }
+    }
 
+    /**
+     * Populate fields.
+     */
+    private void populateFields() {
+        if (selecteduseraccount == null) {
+            return;
+        }
+        txtPerson.setText(String.valueOf(selecteduseraccount.getAssociatedPersonProfile()));
+        txtRole.setText(selecteduseraccount.getRole());
+        txtUsername.setText(selecteduseraccount.getUsername());
+        chkActive.setSelected(selecteduseraccount.isActive());
+        txtLastActivity.setText(format(selecteduseraccount.getLastActivity()));
+        txtLastUpdated.setText(format(selecteduseraccount.getLastUpdated()));
+    }
+
+    /**
+     * Formats a LocalDateTime.
+     */
+    private String format(LocalDateTime dt) {
+        if (dt == null) {
+            return "Never";
+        }
+        return dt.format(dtFormat);
     }
 
     /**
@@ -40,58 +81,177 @@ public class AdminUserAccount extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Back = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        Back1 = new javax.swing.JButton();
+        lblTitle = new javax.swing.JLabel();
+        lblPerson = new javax.swing.JLabel();
+        txtPerson = new javax.swing.JTextField();
+        lblRole = new javax.swing.JLabel();
+        txtRole = new javax.swing.JTextField();
+        lblUsername = new javax.swing.JLabel();
+        txtUsername = new javax.swing.JTextField();
+        lblPassword = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JPasswordField();
+        lblActive = new javax.swing.JLabel();
+        chkActive = new javax.swing.JCheckBox();
+        lblLastActivity = new javax.swing.JLabel();
+        txtLastActivity = new javax.swing.JTextField();
+        lblLastUpdated = new javax.swing.JLabel();
+        txtLastUpdated = new javax.swing.JTextField();
+        btnBack = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 153, 153));
+        setPreferredSize(new java.awt.Dimension(800, 600));
         setLayout(null);
 
-        Back.setText("Update>>");
-        Back.addActionListener(new java.awt.event.ActionListener() {
+        lblTitle.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        lblTitle.setText("Administer User Account");
+        add(lblTitle);
+        lblTitle.setBounds(21, 20, 550, 28);
+
+        lblPerson.setText("Person");
+        add(lblPerson);
+        lblPerson.setBounds(20, 70, 125, 18);
+
+        txtPerson.setEditable(false);
+        add(txtPerson);
+        txtPerson.setBounds(150, 70, 220, 24);
+
+        lblRole.setText("Role");
+        add(lblRole);
+        lblRole.setBounds(20, 100, 125, 18);
+
+        txtRole.setEditable(false);
+        add(txtRole);
+        txtRole.setBounds(150, 100, 220, 24);
+
+        lblUsername.setText("Username");
+        add(lblUsername);
+        lblUsername.setBounds(20, 140, 125, 18);
+        add(txtUsername);
+        txtUsername.setBounds(150, 140, 220, 24);
+
+        lblPassword.setText("Password");
+        add(lblPassword);
+        lblPassword.setBounds(20, 170, 125, 18);
+        add(txtPassword);
+        txtPassword.setBounds(150, 170, 220, 24);
+
+        lblActive.setText("Active");
+        add(lblActive);
+        lblActive.setBounds(20, 210, 125, 18);
+        add(chkActive);
+        chkActive.setBounds(150, 210, 24, 24);
+
+        lblLastActivity.setText("Last Activity");
+        add(lblLastActivity);
+        lblLastActivity.setBounds(20, 250, 125, 18);
+
+        txtLastActivity.setEditable(false);
+        add(txtLastActivity);
+        txtLastActivity.setBounds(150, 250, 220, 24);
+
+        lblLastUpdated.setText("Last Updated");
+        add(lblLastUpdated);
+        lblLastUpdated.setBounds(20, 280, 125, 18);
+
+        txtLastUpdated.setEditable(false);
+        add(txtLastUpdated);
+        txtLastUpdated.setBounds(150, 280, 220, 24);
+
+        btnBack.setText("<< Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BackActionPerformed(evt);
+                btnBackActionPerformed(evt);
             }
         });
-        add(Back);
-        Back.setBounds(480, 290, 100, 32);
+        add(btnBack);
+        btnBack.setBounds(30, 360, 75, 24);
 
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel2.setText("Administer User Account");
-        add(jLabel2);
-        jLabel2.setBounds(21, 20, 550, 29);
-
-        Back1.setText("<< Back");
-        Back1.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Back1ActionPerformed(evt);
+                btnUpdateActionPerformed(evt);
             }
         });
-        add(Back1);
-        Back1.setBounds(40, 290, 100, 32);
+        add(btnUpdate);
+        btnUpdate.setBounds(480, 360, 100, 24);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
-        // TODO add your handling code here:
-
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         CardSequencePanel.remove(this);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+        ((CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
+    }//GEN-LAST:event_btnBackActionPerformed
 
-    }//GEN-LAST:event_BackActionPerformed
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        UserAccountDirectory uad = business.getUserAccountDirectory();
+        String un = txtUsername.getText().trim();
+        String pw = new String(txtPassword.getPassword());
+        boolean active = chkActive.isSelected();
 
-    private void Back1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Back1ActionPerformed
-        // TODO add your handling code here:
-         CardSequencePanel.remove(this);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+        boolean changed = false;
 
+        if (un.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Invalid/empty username.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!un.equals(selecteduseraccount.getUsername())) {
+            UserAccount ua = uad.findUsername(un);
+            if (ua != null && ua != selecteduseraccount) {
+                JOptionPane.showMessageDialog(this,
+                        "Username taken.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            changed = true;
+        }
 
-    }//GEN-LAST:event_Back1ActionPerformed
+        if (!pw.isEmpty()) {
+            changed = true;
+        }
 
+        if (active != selecteduseraccount.isActive()) {
+            changed = true;
+        }
+
+        if (!changed) {
+            JOptionPane.showMessageDialog(this,
+                    "No changes were made.",
+                    "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        uad.renameUsername(selecteduseraccount, un);
+        if (!pw.isEmpty()) {
+            selecteduseraccount.setPassword(pw);
+        }
+        selecteduseraccount.setActive(active);
+
+        JOptionPane.showMessageDialog(this,
+                "Successfully updated account.",
+                "Success", JOptionPane.INFORMATION_MESSAGE);
+        CardSequencePanel.remove(this);
+        ((CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
+    }//GEN-LAST:event_btnUpdateActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Back;
-    private javax.swing.JButton Back1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JCheckBox chkActive;
+    private javax.swing.JLabel lblActive;
+    private javax.swing.JLabel lblLastActivity;
+    private javax.swing.JLabel lblLastUpdated;
+    private javax.swing.JLabel lblPassword;
+    private javax.swing.JLabel lblPerson;
+    private javax.swing.JLabel lblRole;
+    private javax.swing.JLabel lblTitle;
+    private javax.swing.JLabel lblUsername;
+    private javax.swing.JTextField txtLastActivity;
+    private javax.swing.JTextField txtLastUpdated;
+    private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtPerson;
+    private javax.swing.JTextField txtRole;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
-
 }
