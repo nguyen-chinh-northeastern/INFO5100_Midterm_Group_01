@@ -11,41 +11,38 @@ import java.util.ArrayList;
  *
  * @author kal bugrara
  * @author Chinh Nguyen (update)
+ * @author Lee Wang (update)
  */
 public class PersonDirectory {
-    
-    ArrayList<Person> personlist ;
-    
-    public PersonDirectory (){
-          
-        personlist = new ArrayList();
 
+    ArrayList<Person> personlist;
+
+    public PersonDirectory() {
+        personlist = new ArrayList();
     }
 
     public Person newPerson(String id) {
-
         Person p = new Person(id);
         personlist.add(p);
         return p;
     }
-    
+
     /**
-     * Finds a person by their existing person ID.
+     * Finds people matching a person ID.
      *
      * @param id the person ID to search for
-     * @return the matching person, or null if not found
+     * @return the matching people
      */
-    public Person findPerson(String id) {
-
+    public ArrayList<Person> findPerson(String id) {
+        ArrayList<Person> matches = new ArrayList<>();
         for (Person p : personlist) {
-
             if (p.isMatch(id)) {
-                return p;
+                matches.add(p);
             }
         }
-        return null; //not found after going through the whole list
+        return matches;
     }
-    
+
     /**
      * Finds a person by their NUID.
      *
@@ -60,5 +57,4 @@ public class PersonDirectory {
         }
         return null;
     }
-    
 }
