@@ -238,7 +238,6 @@ The system initializes demo accounts for testing authentication, access control 
          * Expected Result: System will allow log in and update via CardLayout to display work area corresponding to the Student role only
            
 ### 3. **Administrative Features**
-### 3. **Administrative Features**
    * Register Persons (HR)
       * Register Person
          * Test Case Description: Go to Register Persons (HR). Click Register. Enter Name, a unique 9-digit NUID, a valid email address, and a phone number in the format ###-###-####. Enter Department. Select Admin, Faculty, or Student as the role. Click Register. Repeat for each role.
